@@ -823,8 +823,21 @@ def _fetch_channel(ch: dict) -> dict:
     return out
 
 
-def scan_discovery(channels: list[dict], state: dict) -> dict:
-    """扫描全部启用渠道,更新 state(候选、页面基线/新增行、健康、时间戳)。"""
+def scan_discovery(channels: list[dict], state: dict | None = None, force: bool = False) -> dict:
+    """扫描全部启用渠道,更新 state(候选、页面基线/新增行、健康、时间戳)。
+
+    并发安全:忽略调用方传入的 state 快照,落盘前重读文件——两个会话同开时
+    (本地+云端很常见),旧快照整体回写会抹掉对方刚保存的「忽略/已读」。
+    """
+    state = _load_state()
+    last = state.get("last_scan")
+    if not force and last:
+        try:  # 另一会话 10 分钟内刚扫过 → 直接复用,防双扫
+            if datetime.now(timezone.utc) - datetime.fromisoformat(last) < timedelta(minutes=10):
+                return state
+        except ValueError:
+            pass
+
     enabled = [c for c in channels if c.get("enabled", True)]
     with cf.ThreadPoolExecutor(max_workers=8) as ex:
         results = list(ex.map(_fetch_channel, enabled))
@@ -841,10 +854,12 @@ def scan_discovery(channels: list[dict], state: dict) -> dict:
         if not r["ok"]:
             continue
         if r["type"] == "page":
-            base = set(snapshots.get(r["id"], {}).get("lines", []))
-            if not base:  # 首次:建基线,不报警
+            # 「从未扫描过」才建基线;「扫过但当时 0 条相关行」是合法基线(空集),
+            # 必须走 diff——否则中国过滤页面从无到有的第一条永远不报警(评审确认的 high)
+            if r["id"] not in snapshots:
                 snapshots[r["id"]] = {"lines": r["lines"], "checked": date.today().isoformat()}
                 continue
+            base = set(snapshots[r["id"]].get("lines", []))
             fresh = [l for l in r["lines"] if l not in base
                      and hashlib.sha1(l.encode()).hexdigest()[:12] not in dismissed]
             merged = list(dict.fromkeys(alerts.get(r["id"], {}).get("lines", []) + fresh))[:30]
@@ -858,13 +873,14 @@ def scan_discovery(channels: list[dict], state: dict) -> dict:
                     continue
                 candidates.append(c)
 
-    # 跨渠道按标题去重(同一活动常被多个 gnews 查询同时命中)
-    seen_t, unique = set(), []
+    # 跨渠道去重:标题(同一活动被多个查询命中)+ 链接(同链接会撞 widget key)
+    seen_t, seen_l, unique = set(), set(), []
     for c in sorted(candidates, key=lambda x: x.get("published", ""), reverse=True):
         key = re.sub(r"\W+", "", c["title"].lower())[:70]
-        if key in seen_t:
+        if key in seen_t or c["link"] in seen_l:
             continue
         seen_t.add(key)
+        seen_l.add(c["link"])
         unique.append(c)
 
     state.update(candidates=unique[:80], page_snapshots=snapshots, page_alerts=alerts,
@@ -919,9 +935,12 @@ def _render_discovery(today: date) -> None:
                    f"{' · 已超 ' + str(DISCOVERY_TTL_DAYS) + ' 天,建议重扫' if last and stale else ''}")
     with c2:
         rescan = st.button("🔍 立即扫描", use_container_width=True)
+    if msg := st.session_state.pop("disc_msg", None):  # 放顶部:候选列表可能长达 40 卡
+        st.success(msg)
+
     if rescan or stale:  # stale 含「从未扫描」;打开视图即自动补扫
         with st.spinner(f"正在扫描 {sum(1 for c in src['channels'] if c.get('enabled', True))} 个渠道 …"):
-            state = scan_discovery(src["channels"], state)
+            state = scan_discovery(src["channels"], force=rescan)
         if rescan:
             st.rerun()
 
@@ -939,7 +958,14 @@ def _render_discovery(today: date) -> None:
                     st.markdown(f"[打开页面核实]({al['url']})")
                 with cc2:
                     if st.button("✓ 标记已读", key=f"ack_{cid}"):
-                        state["page_alerts"].pop(cid, None)
+                        # 重读状态再改(防并发会话覆盖);已读行的指纹入忽略清单,
+                        # 否则该行因页面轮换短暂消失再出现时,已读提醒会复燃
+                        state = _load_state()
+                        acked = state.get("page_alerts", {}).get(cid, {}).get("lines", [])
+                        dis = state.setdefault("dismissed", [])
+                        dis.extend(hashlib.sha1(l.encode()).hexdigest()[:12] for l in acked)
+                        state["dismissed"] = dis[-2000:]
+                        state.get("page_alerts", {}).pop(cid, None)
                         _save_state(state)
                         st.rerun()
 
@@ -956,20 +982,20 @@ def _render_discovery(today: date) -> None:
                 st.markdown(f"**[{cand['title']}]({cand['link']})**")
                 st.caption(f"{cand['channel']} · {cand.get('published') or '日期未知'}")
             with cc2:
-                key = hashlib.sha1(cand["link"].encode()).hexdigest()[:12]
+                key = f"{i}_{hashlib.sha1(cand['link'].encode()).hexdigest()[:12]}"
                 if st.button("➕ 跟踪", key=f"add_{key}"):
                     ev_id = _add_candidate_as_event(cand)
+                    state = _load_state()  # 重读再改,防并发会话覆盖
                     state["candidates"] = [c for c in state.get("candidates", []) if c["link"] != cand["link"]]
                     _save_state(state)
                     st.session_state["disc_msg"] = f"已加入跟踪(待核实): {ev_id} — 请到「⚙️ 管理」核实日期"
                     st.rerun()
                 if st.button("✕ 忽略", key=f"dis_{key}"):
+                    state = _load_state()
                     state.setdefault("dismissed", []).append(cand["link"])
                     state["candidates"] = [c for c in state.get("candidates", []) if c["link"] != cand["link"]]
                     _save_state(state)
                     st.rerun()
-    if msg := st.session_state.pop("disc_msg", None):
-        st.success(msg)
 
     # --- 渠道健康 ---
     health = state.get("discovery_health", [])
