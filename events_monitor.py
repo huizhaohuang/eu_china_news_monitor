@@ -17,13 +17,20 @@
 
 from __future__ import annotations
 
+import concurrent.futures as cf
+import hashlib
+import html as html_mod
 import json
 import re
-from datetime import date, datetime, timedelta
+import time
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
 
+import feedparser
 import pandas as pd
+import requests
 import streamlit as st
 
 BERLIN = ZoneInfo("Europe/Berlin")
@@ -588,6 +595,393 @@ def _render_manage(data: dict, today: date) -> None:
 
 
 # ---------------------------------------------------------------------------
+# 📡 发现 —— 会议/论坛公告雷达(v2)
+# 渠道清单来自 2026-07 多机构实测:德国主要机构(Kiel/DIHK/MERICS/SWP/DGAP)
+# 均无活动 RSS,但活动页多为服务端渲染 → 三类渠道:
+#   rss   活动型 feed(ECFR/DIW/Politico Live/DG TRADE,实测确认含活动条目)
+#   gnews 机构名查询(被墙机构的唯一通道;多数需德语区 locale)
+#   page  页面变化侦测:抓取纯文本行,与基线比对,新增的中国相关行 → 提示
+# 原则不变:任何发现只进候选收件箱,由人工「加入跟踪」;不自动写库、不猜日期。
+# ---------------------------------------------------------------------------
+
+EVENT_SOURCES_PATH = Path(__file__).with_name("event_sources.json")
+DISCOVERY_TTL_DAYS = 3          # 打开发现视图时,距上次扫描超过此天数自动重扫
+_GNEWS = {
+    "en": "https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en",
+    "de": "https://news.google.com/rss/search?q={q}&hl=de&gl=DE&ceid=DE:de",
+}
+_HEADERS = {  # Asia Society / euagenda 等站点要求完整浏览器头,仅 UA 会 403
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.8,de;q=0.6",
+    "Sec-Fetch-Site": "none", "Sec-Fetch-Mode": "navigate", "Sec-Fetch-Dest": "document",
+}
+
+# relevance: china=须含中国词 | beat=中国词或条线词(贸易/稀土/芯片…) | all=整页/整源皆相关
+DEFAULT_EVENT_SOURCES = {
+    "schema_version": 1,
+    "channels": [
+        # --- 活动型 RSS(实测确认条目为活动) ---
+        {"id": "ecfr-events", "name": "ECFR · 活动 feed", "type": "rss",
+         "value": "https://ecfr.eu/feed/?post_type=event", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "diw-events", "name": "DIW Berlin · 活动 feed", "type": "rss",
+         "value": "https://www.diw.de/de/rss_events.xml", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "politico-live", "name": "Politico Live · 活动 feed", "type": "rss",
+         "value": "https://www.politico.eu/events/feed/", "relevance": "beat", "sector": "policy", "enabled": True},
+        {"id": "dgtrade-events", "name": "DG TRADE · 活动 feed", "type": "rss",
+         "value": "https://policy.trade.ec.europa.eu/node/5/rss_en", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "euiss-rss", "name": "EUISS · feed(混合)", "type": "rss",
+         "value": "https://www.iss.europa.eu/rss.xml", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "gmf-rss", "name": "GMF · feed(混合)", "type": "rss",
+         "value": "https://www.gmfus.org/rss.xml", "relevance": "china", "sector": "thinktank", "enabled": True},
+        # --- 页面变化侦测(服务端渲染,实测可抓) ---
+        {"id": "kiel-gcc", "name": "Kiel · Global China Conversations", "type": "page",
+         "value": "https://www.kielinstitut.de/events/global-china-conversations/", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "kiel-events", "name": "Kiel Institut · 活动页", "type": "page",
+         "value": "https://www.kielinstitut.de/events/", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "dihk-newsroom", "name": "DIHK · Newsroom", "type": "page",
+         "value": "https://www.dihk.de/de/newsroom", "relevance": "china", "sector": "policy", "enabled": True},
+        {"id": "merics-events", "name": "MERICS · 活动页", "type": "page",
+         "value": "https://merics.org/en/events", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "dgap-events", "name": "DGAP · 活动页", "type": "page",
+         "value": "https://dgap.org/en/events", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "ahk-china", "name": "AHK 大中华区 · Events Hub", "type": "page",
+         "value": "https://china.ahk.de/en/events-hub", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "bruegel-events", "name": "Bruegel · 活动页", "type": "page",
+         "value": "https://www.bruegel.org/events", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "ceps-events", "name": "CEPS · 活动页", "type": "page",
+         "value": "https://www.ceps.eu/ceps-events/", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "cer-events", "name": "CER · 活动页", "type": "page",
+         "value": "https://www.cer.eu/events", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "apa-events", "name": "APA(亚太委员会/APK)· 活动页", "type": "page",
+         "value": "https://asien-pazifik-ausschuss.de/en/events/", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "dcw-events", "name": "DCW 德中经济联合会 · 活动日历", "type": "page",
+         "value": "https://www.dcw-ev.de/de/veranstaltungen.html", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "oav-events", "name": "OAV 东亚协会 · 活动页", "type": "page",
+         "value": "https://www.oav.de/veranstaltungen/", "relevance": "china", "sector": "policy", "enabled": True},
+        {"id": "gmf-berlin", "name": "GMF · 柏林活动页", "type": "page",
+         "value": "https://www.gmfus.org/events?location[12]=12", "relevance": "china", "sector": "thinktank", "enabled": True},
+        {"id": "euractiv-events", "name": "EURACTIV · 活动日历", "type": "page",
+         "value": "https://events.euractiv.com/", "relevance": "china", "sector": "policy", "enabled": True},
+        {"id": "asiasociety-ch", "name": "Asia Society Switzerland · 活动页", "type": "page",
+         "value": "https://asiasociety.org/switzerland/events", "relevance": "china", "sector": "thinktank", "enabled": False},
+        {"id": "fes-events", "name": "FES · 活动页", "type": "page",
+         "value": "https://www.fes.de/veranstaltungen", "relevance": "china", "sector": "thinktank", "enabled": False},
+        # --- gnews(被墙机构与通用雷达;de = 德语区) ---
+        {"id": "gn-kiel", "name": "Kiel Institute(gnews)", "type": "gnews",
+         "value": '"Kiel Institute" China when:30d', "locale": "en", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-dihk", "name": "DIHK China(gnews·德)", "type": "gnews",
+         "value": "DIHK China when:30d", "locale": "de", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "gn-merics", "name": "MERICS(gnews·德)", "type": "gnews",
+         "value": "MERICS China when:30d", "locale": "de", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-swp", "name": "SWP(gnews·德)", "type": "gnews",
+         "value": '"Stiftung Wissenschaft und Politik" China when:30d', "locale": "de", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-koerber", "name": "Körber(gnews·德)", "type": "gnews",
+         "value": '"Körber-Stiftung" (China OR "Berlin Foreign Policy Forum") when:60d', "locale": "de", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-kas", "name": "KAS(gnews·德)", "type": "gnews",
+         "value": '"Konrad-Adenauer-Stiftung" China when:30d', "locale": "de", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-chatham", "name": "Chatham House(gnews)", "type": "gnews",
+         "value": '"Chatham House" China when:30d', "locale": "en", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-euccc", "name": "中国欧盟商会(gnews)", "type": "gnews",
+         "value": '"European Chamber of Commerce in China" when:30d', "locale": "en", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "gn-apk", "name": "APK 亚太大会(gnews·德)", "type": "gnews",
+         "value": '"Asien-Pazifik-Konferenz" (Wirtschaft OR APK OR BDI) when:90d', "locale": "de", "relevance": "all", "sector": "policy", "enabled": True},
+        {"id": "gn-inta", "name": "欧洲议会 INTA(gnews)", "type": "gnews",
+         "value": '"European Parliament" INTA China when:30d', "locale": "en", "relevance": "all", "sector": "policy", "enabled": True},
+        # 通用雷达:gnews 按正文匹配查询词,须再加标题级中国闸门(relevance=china),
+        # 否则 "AfD kicks off conference" 这类正文提中国的无关标题会漏进来(实测)
+        {"id": "gn-de-generic", "name": "德语通用雷达(intitle:China)", "type": "gnews",
+         "value": "intitle:China (Konferenz OR Forum OR Gipfel OR Tagung OR Kongress) (Berlin OR Frankfurt OR Deutschland) when:14d", "locale": "de", "relevance": "china", "sector": "policy", "enabled": True},
+        {"id": "gn-en-generic", "name": "英语通用雷达(Berlin/Brussels)", "type": "gnews",
+         "value": "(conference OR forum OR summit) China (Berlin OR Brussels) when:14d", "locale": "en", "relevance": "china", "sector": "policy", "enabled": True},
+        {"id": "gn-thinktank", "name": "智库活动雷达(gnews)", "type": "gnews",
+         "value": "Bruegel OR MERICS OR ECFR China (event OR conference OR roundtable) when:30d", "locale": "en", "relevance": "all", "sector": "thinktank", "enabled": True},
+        {"id": "gn-kammer", "name": "商会邀请雷达(gnews·德)", "type": "gnews",
+         "value": '"China" ("lädt ein" OR Anmeldung OR Veranstaltung OR Konferenz) (DIHK OR IHK OR BDI OR Handelskammer) when:30d', "locale": "de", "relevance": "china", "sector": "policy", "enabled": True},
+    ],
+}
+
+# 中国相关(候选/页面行的相关性闸门,四语)
+_CHINA_HINTS = [" china", " chine", " chines", " chinois", " sino", " peking", " beijing",
+                " pékin", " taiwan", " hongkong", " hong kong", "中国", "中德", "中欧", "中法",
+                "北京", "台湾", "稀土", " byd ", " catl ", "huawei", "greater china",
+                "deutsch-chinesisch", "德中", "中方"]
+# 条线相关(relevance=beat 的补充词)
+_BEAT_HINTS = _CHINA_HINTS + [" trade", " tariff", " zoll", "handels", "export control",
+                              "exportkontroll", "rare earth", "seltene erden", "semiconductor",
+                              "halbleiter", " chip", "battery", "batterie", " ev ", "solar",
+                              "competitiveness", "wettbewerbsfähigkeit", "economic security",
+                              "wirtschaftssicherheit", "supply chain", "lieferkette", "de-risking"]
+# 活动词(gnews 候选须在标题中含活动词,过滤普通报道)
+_EVENT_HINTS = ["conference", "forum", "summit", "roundtable", "briefing", "webinar", "workshop",
+                "symposium", "hearing", "panel", "lecture", " talk", "dialogue", " dialog",
+                "konferenz", "tagung", "gipfel", "kongress", "veranstaltung", "podium",
+                "diskussion", "vortrag", "einladung", "lädt ein", "anmeldung", "colloque",
+                "sommet", "论坛", "峰会", "研讨会", "讲座", "年会"]
+
+
+def _lnorm(text: str) -> str:
+    text = re.sub(r"[^\w\s]", " ", text.lower())
+    return " " + " ".join(text.split()) + " "
+
+
+def _hit(text_norm: str, hints: list[str]) -> bool:
+    return any(h in text_norm for h in hints)
+
+
+def load_event_sources() -> dict:
+    if EVENT_SOURCES_PATH.exists():
+        try:
+            data = json.loads(EVENT_SOURCES_PATH.read_text(encoding="utf-8"))
+            assert isinstance(data.get("channels"), list)
+            return data
+        except Exception:
+            pass
+    data = json.loads(json.dumps(DEFAULT_EVENT_SOURCES))
+    EVENT_SOURCES_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    return data
+
+
+def _load_state() -> dict:
+    try:
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _save_state(state: dict) -> None:
+    try:
+        STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _page_lines(html_text: str, relevance: str) -> list[str]:
+    """HTML → 规整文本行(标签边界即断行),按相关性过滤。"""
+    text = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", " ", html_text, flags=re.S | re.I)
+    text = re.sub(r"<[^>]+>", "\n", text)
+    text = html_mod.unescape(text)
+    hints = {"china": _CHINA_HINTS, "beat": _BEAT_HINTS}.get(relevance)
+    out, seen = [], set()
+    for raw in text.splitlines():
+        line = " ".join(raw.split())
+        if not (15 <= len(line) <= 220) or line in seen:
+            continue
+        if hints and not _hit(_lnorm(line), hints):
+            continue
+        seen.add(line)
+        out.append(line)
+    return out[:120]
+
+
+def _fetch_channel(ch: dict) -> dict:
+    """抓取单个发现渠道 → {id, ok, candidates|lines, error}。线程池内运行。"""
+    out = {"id": ch["id"], "name": ch["name"], "type": ch["type"], "ok": False,
+           "candidates": [], "lines": [], "error": ""}
+    try:
+        if ch["type"] == "page":
+            r = requests.get(ch["value"], headers=_HEADERS, timeout=(6, 15))
+            r.raise_for_status()
+            out["lines"] = _page_lines(r.text, ch.get("relevance", "china"))
+            out["ok"] = True
+            return out
+        if ch["type"] == "gnews":
+            url = _GNEWS.get(ch.get("locale", "en"), _GNEWS["en"]).format(q=quote_plus(ch["value"]))
+        else:
+            url = ch["value"]
+        # feed 抓取只带 UA:完整浏览器头(Sec-Fetch 等)会让部分 RSS 端点 403;
+        # 部分站点(实测 DIW)反而封浏览器 UA、放行阅读器 UA → 403 时用阅读器标识重试
+        r = requests.get(url, headers={"User-Agent": _HEADERS["User-Agent"]}, timeout=(6, 15))
+        if r.status_code == 403:
+            r = requests.get(url, headers={"User-Agent": "ChinaEUMonitor/1.0 (RSS reader; private research use)"},
+                             timeout=(6, 15))
+        r.raise_for_status()
+        parsed = feedparser.parse(r.content)
+        hints = {"china": _CHINA_HINTS, "beat": _BEAT_HINTS}.get(ch.get("relevance", "china"))
+        for e in parsed.entries[:40]:
+            title = (getattr(e, "title", "") or "").strip()
+            link = (getattr(e, "link", "") or "").strip()
+            if not title or not link:
+                continue
+            if ch["type"] == "gnews":
+                title = re.sub(r"\s+-\s+[^-]+$", "", title).strip()  # 去媒体名后缀
+                if not _hit(_lnorm(title), _EVENT_HINTS):
+                    continue  # gnews 候选须含活动词,过滤普通报道
+            nt = _lnorm(title)
+            if hints and not _hit(nt, hints):
+                continue
+            pub = ""
+            t = getattr(e, "published_parsed", None) or getattr(e, "updated_parsed", None)
+            if t:
+                pub = f"{t.tm_year}-{t.tm_mon:02d}-{t.tm_mday:02d}"
+            out["candidates"].append({"title": title, "link": link, "published": pub,
+                                      "channel": ch["name"], "sector": ch.get("sector", "policy")})
+        out["ok"] = True
+    except Exception as exc:  # noqa: BLE001
+        out["error"] = f"{type(exc).__name__}: {str(exc)[:120]}"
+    return out
+
+
+def scan_discovery(channels: list[dict], state: dict) -> dict:
+    """扫描全部启用渠道,更新 state(候选、页面基线/新增行、健康、时间戳)。"""
+    enabled = [c for c in channels if c.get("enabled", True)]
+    with cf.ThreadPoolExecutor(max_workers=8) as ex:
+        results = list(ex.map(_fetch_channel, enabled))
+
+    dismissed = set(state.get("dismissed", []))
+    known_links = {ev.get("source_url") for ev in load_events()["events"] if ev.get("source_url")}
+    snapshots = state.get("page_snapshots", {})
+    alerts = state.get("page_alerts", {})
+    candidates, health = [], []
+
+    for r in results:
+        health.append({"name": r["name"], "ok": r["ok"], "error": r["error"],
+                       "n": len(r["candidates"]) or len(r["lines"])})
+        if not r["ok"]:
+            continue
+        if r["type"] == "page":
+            base = set(snapshots.get(r["id"], {}).get("lines", []))
+            if not base:  # 首次:建基线,不报警
+                snapshots[r["id"]] = {"lines": r["lines"], "checked": date.today().isoformat()}
+                continue
+            fresh = [l for l in r["lines"] if l not in base
+                     and hashlib.sha1(l.encode()).hexdigest()[:12] not in dismissed]
+            merged = list(dict.fromkeys(alerts.get(r["id"], {}).get("lines", []) + fresh))[:30]
+            if merged:
+                alerts[r["id"]] = {"name": r["name"], "url": next(
+                    c["value"] for c in enabled if c["id"] == r["id"]), "lines": merged}
+            snapshots[r["id"]] = {"lines": r["lines"], "checked": date.today().isoformat()}
+        else:
+            for c in r["candidates"]:
+                if c["link"] in dismissed or c["link"] in known_links:
+                    continue
+                candidates.append(c)
+
+    # 跨渠道按标题去重(同一活动常被多个 gnews 查询同时命中)
+    seen_t, unique = set(), []
+    for c in sorted(candidates, key=lambda x: x.get("published", ""), reverse=True):
+        key = re.sub(r"\W+", "", c["title"].lower())[:70]
+        if key in seen_t:
+            continue
+        seen_t.add(key)
+        unique.append(c)
+
+    state.update(candidates=unique[:80], page_snapshots=snapshots, page_alerts=alerts,
+                 discovery_health=health, last_scan=datetime.now(timezone.utc).isoformat())
+    _save_state(state)
+    return state
+
+
+def _slugify(title: str, fallback: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48].strip("-")
+    return s or f"event-{fallback}"
+
+
+def _add_candidate_as_event(cand: dict) -> str:
+    """候选 → needs_verification 活动条目(不猜日期;source_url 来自公告链接本身)。"""
+    data = load_events()
+    year = int(cand["published"][:4]) if cand.get("published") else _today_berlin().year
+    base_id = _slugify(cand["title"], hashlib.sha1(cand["link"].encode()).hexdigest()[:8])
+    ev_id, n = base_id, 2
+    existing = {e["id"] for e in data["events"]}
+    while ev_id in existing:
+        ev_id, n = f"{base_id}-{n}", n + 1
+    data["events"].append({
+        "id": ev_id, "name": cand["title"], "edition_year": year,
+        "sector": cand.get("sector", "policy"), "city": None, "venue": None,
+        "start_date": None, "end_date": None, "conference_start": None, "press_deadline": None,
+        "action_status": "todo", "reminder_offsets": [21, 7],
+        "source_url": cand["link"],
+        "notes": f"来自发现雷达 · {cand['channel']} · {cand.get('published', '')}",
+        "needs_verification": True, "last_checked": None,
+    })
+    save_events(data)
+    return ev_id
+
+
+def _render_discovery(today: date) -> None:
+    src = load_event_sources()
+    state = _load_state()
+    last = state.get("last_scan")
+    stale = True
+    if last:
+        try:
+            stale = (datetime.now(timezone.utc) - datetime.fromisoformat(last)) > timedelta(days=DISCOVERY_TTL_DAYS)
+        except ValueError:
+            pass
+
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        n_ch = sum(1 for c in src["channels"] if c.get("enabled", True))
+        st.caption(f"{n_ch} 个公告渠道 · 上次扫描: "
+                   f"{last[:16].replace('T', ' ') + ' UTC' if last else '从未'}"
+                   f"{' · 已超 ' + str(DISCOVERY_TTL_DAYS) + ' 天,建议重扫' if last and stale else ''}")
+    with c2:
+        rescan = st.button("🔍 立即扫描", use_container_width=True)
+    if rescan or stale:  # stale 含「从未扫描」;打开视图即自动补扫
+        with st.spinner(f"正在扫描 {sum(1 for c in src['channels'] if c.get('enabled', True))} 个渠道 …"):
+            state = scan_discovery(src["channels"], state)
+        if rescan:
+            st.rerun()
+
+    # --- 页面变化提示 ---
+    alerts = {k: v for k, v in state.get("page_alerts", {}).items() if v.get("lines")}
+    if alerts:
+        st.subheader(f"📄 页面新增内容 ({len(alerts)})")
+        st.caption("以下机构活动页出现了上次扫描时没有的中国相关内容——点链接人工确认,确认后「标记已读」。")
+        for cid, al in alerts.items():
+            with st.expander(f"⚠️ {al['name']} — 新增 {len(al['lines'])} 行", expanded=True):
+                for l in al["lines"]:
+                    st.markdown(f"- {l}")
+                cc1, cc2 = st.columns([1, 1])
+                with cc1:
+                    st.markdown(f"[打开页面核实]({al['url']})")
+                with cc2:
+                    if st.button("✓ 标记已读", key=f"ack_{cid}"):
+                        state["page_alerts"].pop(cid, None)
+                        _save_state(state)
+                        st.rerun()
+
+    # --- 公告候选 ---
+    cands = state.get("candidates", [])
+    st.subheader(f"📰 公告候选 ({len(cands)})")
+    if not cands and not alerts:
+        st.info("暂无新发现。渠道会在打开本视图时自动重扫(间隔 "
+                f"{DISCOVERY_TTL_DAYS} 天),也可点「立即扫描」。")
+    for i, cand in enumerate(cands[:40]):
+        with st.container(border=True):
+            cc1, cc2 = st.columns([4, 1])
+            with cc1:
+                st.markdown(f"**[{cand['title']}]({cand['link']})**")
+                st.caption(f"{cand['channel']} · {cand.get('published') or '日期未知'}")
+            with cc2:
+                key = hashlib.sha1(cand["link"].encode()).hexdigest()[:12]
+                if st.button("➕ 跟踪", key=f"add_{key}"):
+                    ev_id = _add_candidate_as_event(cand)
+                    state["candidates"] = [c for c in state.get("candidates", []) if c["link"] != cand["link"]]
+                    _save_state(state)
+                    st.session_state["disc_msg"] = f"已加入跟踪(待核实): {ev_id} — 请到「⚙️ 管理」核实日期"
+                    st.rerun()
+                if st.button("✕ 忽略", key=f"dis_{key}"):
+                    state.setdefault("dismissed", []).append(cand["link"])
+                    state["candidates"] = [c for c in state.get("candidates", []) if c["link"] != cand["link"]]
+                    _save_state(state)
+                    st.rerun()
+    if msg := st.session_state.pop("disc_msg", None):
+        st.success(msg)
+
+    # --- 渠道健康 ---
+    health = state.get("discovery_health", [])
+    if health:
+        n_bad = sum(1 for h in health if not h["ok"])
+        with st.expander(f"📡 渠道状态 {'🔴 ' + str(n_bad) + ' 个失败' if n_bad else '🟢 全部正常'}"):
+            for h in health:
+                dot = "🟢" if h["ok"] else "🔴"
+                st.caption(f"{dot} {h['name']} — {h['n']} 条" + (f" · {h['error']}" if h["error"] else ""))
+
+
+# ---------------------------------------------------------------------------
 # 入口
 # ---------------------------------------------------------------------------
 
@@ -597,11 +991,13 @@ def render_events_tab() -> None:
     n_pending = len({r["id"] for r in compute_reminders(data["events"], today)})
     if n_pending:
         st.markdown(f"🔔 **{n_pending} 个活动有待处理提醒**")
-    view = st.radio("视图", ["⏰ 行动倒计时", "🗓️ 年历", "⚙️ 管理"],
+    view = st.radio("视图", ["⏰ 行动倒计时", "🗓️ 年历", "📡 发现", "⚙️ 管理"],
                     horizontal=True, label_visibility="collapsed", key="ev_view")
     if view.startswith("⏰"):
         _render_countdown(data, today)
     elif view.startswith("🗓️"):
         _render_calendar(data, today)
+    elif view.startswith("📡"):
+        _render_discovery(today)
     else:
         _render_manage(data, today)

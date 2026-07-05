@@ -99,6 +99,14 @@ China Forecast)需要你花 10 分钟核实一次:去 [AUMA 展会数据库](htt
 **添加新活动**:「⚙️ 管理」底部空行直接填;`id` 用 `活动名-年份` 格式(如
 `eu-china-summit-2027`);智库讲座这类短周期活动把提醒档位改成 `21,7` 即可。
 
+**📡 发现(会议雷达)**:短周期会议(Kiel China Shock 研讨、DIHK China Business Forum
+这类提前几周才公布的)靠这个子视图自动发现——34 个公告渠道(智库/商会/欧盟机构的
+活动 feed、活动页变化侦测、Google News 查询),打开视图时超过 3 天自动重扫,
+也可点「🔍 立即扫描」。发现的候选进收件箱:**➕ 跟踪**(转成待核实活动,核实日期后
+参与提醒)或 **✕ 忽略**(永久不再出现)。「页面新增内容」板块是机构活动页出现的
+新中国相关内容,点链接人工确认后「标记已读」。渠道清单在 `event_sources.json`,
+可自行增删(type: rss/gnews/page;gnews 德语查询需 `"locale": "de"`)。
+
 ## 五、管理信源
 
 侧边栏「监控源」按类型分组(德媒/欧盟/国际媒体/中方/行业/政府/智库),勾选框即开即关。
@@ -115,16 +123,36 @@ China Forecast)需要你花 10 分钟核实一次:去 [AUMA 展会数据库](htt
 
 ## 六、与同事共享(免费,同事零安装)
 
-推荐 **Streamlit Community Cloud**(Streamlit 官方免费托管),同事只需 Google 账号 + 一个链接:
+用 **Streamlit Community Cloud**(官方免费托管),两种模式选一:
 
-1. 把仓库转私有(公开仓库部署的应用任何人可见):
-   GitHub 仓库页 → Settings → General → 最底部 Danger Zone → Change visibility → Private
-2. 打开 https://share.streamlit.io → 用 GitHub 账号登录(授权访问你的仓库)
-3. 「Create app」→ 选仓库 `huizhaohuang/eu_china_news_monitor`、分支 `main`、
-   主文件 `china_europe_monitor.py` → Deploy(首次构建约 2-3 分钟)
-4. 部署完成后:应用右上角菜单 → Settings → Sharing →
-   「Who can view this app」选 **Only specific people can view this app**,
-   填入同事邮箱 → 同事收到邀请,用 Google/GitHub 登录即可访问
+### 模式 A:链接即用(推荐起步,最低摩擦)
+
+仓库保持 public(当前状态),部署出的应用公开——同事拿链接直接用,**无需任何登录**:
+
+1. 打开 https://share.streamlit.io → 「Continue to sign-in」→ 用 **GitHub 账号**登录并授权
+2. 右上角「Create app」→「Deploy a public app from GitHub」→ 填:
+   - Repository: `huizhaohuang/eu_china_news_monitor`
+   - Branch: `main`
+   - Main file path: `china_europe_monitor.py`
+   - (可选)App URL 自定义子域名,如 `china-eu-monitor`
+3. 「Deploy」→ 首次构建约 2-3 分钟 → 得到 `https://xxx.streamlit.app` 链接,发给同事即可
+
+代价:理论上任何拿到链接的人都能访问,且能在网页里改配置(重启即还原,无持久破坏)。
+新闻聚合内容不敏感,以浏览为主的用法下风险很小。
+
+### 模式 B:私有 + 邀请(想收紧时随时切换)
+
+1. GitHub 仓库页 → Settings → General → Danger Zone → Change visibility → **Private**
+   (Streamlit 会随仓库自动把应用转为私有;免费版可有 1 个私有应用)
+2. share.streamlit.io 应用列表 → 该应用「⋮」→ Settings → **Sharing** →
+   在 viewers 里填同事邮箱 → 同事用该邮箱的 Google/GitHub 登录即可访问
+
+### 部署后的日常
+
+- **`git push` 即自动重新部署**——你本地改了信源/词表/活动种子,推送后 1-2 分钟云端同步,
+  这就是「配置改动由你 push」工作流的闭环
+- 云端应用右上角「Manage app」可看日志、手动 Reboot
+- 应用信息页(App settings → General)可随时改自定义域名
 
 **免费版注意事项**:
 - **云端改动不持久**:在云端网页里增删信源、编辑活动,容器重启后会还原为仓库里的版本。

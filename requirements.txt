@@ -1,3 +1,4 @@
 streamlit>=1.50
 feedparser>=6.0
 requests>=2.31
+tzdata>=2024.1  # 云端容器可能缺系统时区库,zoneinfo("Europe/Berlin") 的保险

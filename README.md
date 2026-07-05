@@ -68,9 +68,24 @@ streamlit run china_europe_monitor.py
 | `action_status` | `todo` / `registered` / `interview_requested` / `skipped` / `done`;倒计时视图只显示前三种 |
 | 三个子视图 | ⏰ 行动倒计时(90 天内或已触发提醒,🔴≤14 天/🟡≤30 天)· 🗓️ 年历(未来 18 个月按月分组,可按板块筛选)· ⚙️ 管理(全字段表格编辑+校验保存+Markdown 导出) |
 
-约束:代码**严禁构造/猜测任何 URL**,`source_url` 只允许人工填入;
+**📡 发现(会议雷达,v2)**:短周期会议(智库研讨/商会论坛,提前数周才公布)的
+自动发现。34 个渠道(2026-07 逐一实测),三种类型:
+
+| 类型 | 说明 | 例 |
+|---|---|---|
+| `rss` | 活动型 feed(实测确认条目为活动) | ECFR `?post_type=event`、DIW `rss_events.xml`、Politico Live、DG TRADE |
+| `page` | 页面变化侦测:抓纯文本行与基线比对,新增的中国相关行 → ⚠️ 提示 | Kiel GCC、DIHK Newsroom、MERICS、DCW(整页皆中德活动) |
+| `gnews` | 被墙机构(KAS/Chatham/欧盟商会/Körber)与通用雷达;德语查询须 `"locale": "de"` | `"Kiel Institute" China`、`DIHK China` |
+
+渠道清单在 `event_sources.json`;扫描状态/页面基线/已忽略清单在
+`events_state.json`(不入库)。原则:发现只进候选收件箱,**人工「加入跟踪」后仍为
+待核实状态**——不自动写库、不自动解析日期。经验:德国主要机构(Kiel/DIHK/MERICS/
+SWP/DGAP)均无活动 RSS;DIW 的 RSS 端点封浏览器 UA、放行阅读器 UA(代码已做 403 退避)。
+
+约束:代码**严禁构造/猜测任何 URL**,`source_url` 只允许人工填入
+(发现雷达候选的链接来自公告 feed 本身,经人工点击确认后写入);
 无 `start_date` 的条目保存时自动标记待核实。
-v2 计划(未实现,见 `check_date_drift()` 桩):7 天节流的日期漂移检测——仅检测
+v2 后续(未实现,见 `check_date_drift()` 桩):日期漂移检测——仅检测
 已知日期是否从官网页面消失并打回待核实,不自动解析新日期。
 
 ## 归类与优先级调校

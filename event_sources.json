@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "channels": [
+    {
+      "id": "ecfr-events",
+      "name": "ECFR · 活动 feed",
+      "type": "rss",
+      "value": "https://ecfr.eu/feed/?post_type=event",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "diw-events",
+      "name": "DIW Berlin · 活动 feed",
+      "type": "rss",
+      "value": "https://www.diw.de/de/rss_events.xml",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "politico-live",
+      "name": "Politico Live · 活动 feed",
+      "type": "rss",
+      "value": "https://www.politico.eu/events/feed/",
+      "relevance": "beat",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "dgtrade-events",
+      "name": "DG TRADE · 活动 feed",
+      "type": "rss",
+      "value": "https://policy.trade.ec.europa.eu/node/5/rss_en",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "euiss-rss",
+      "name": "EUISS · feed(混合)",
+      "type": "rss",
+      "value": "https://www.iss.europa.eu/rss.xml",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gmf-rss",
+      "name": "GMF · feed(混合)",
+      "type": "rss",
+      "value": "https://www.gmfus.org/rss.xml",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "kiel-gcc",
+      "name": "Kiel · Global China Conversations",
+      "type": "page",
+      "value": "https://www.kielinstitut.de/events/global-china-conversations/",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "kiel-events",
+      "name": "Kiel Institut · 活动页",
+      "type": "page",
+      "value": "https://www.kielinstitut.de/events/",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "dihk-newsroom",
+      "name": "DIHK · Newsroom",
+      "type": "page",
+      "value": "https://www.dihk.de/de/newsroom",
+      "relevance": "china",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "merics-events",
+      "name": "MERICS · 活动页",
+      "type": "page",
+      "value": "https://merics.org/en/events",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "dgap-events",
+      "name": "DGAP · 活动页",
+      "type": "page",
+      "value": "https://dgap.org/en/events",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "ahk-china",
+      "name": "AHK 大中华区 · Events Hub",
+      "type": "page",
+      "value": "https://china.ahk.de/en/events-hub",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "bruegel-events",
+      "name": "Bruegel · 活动页",
+      "type": "page",
+      "value": "https://www.bruegel.org/events",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "ceps-events",
+      "name": "CEPS · 活动页",
+      "type": "page",
+      "value": "https://www.ceps.eu/ceps-events/",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "cer-events",
+      "name": "CER · 活动页",
+      "type": "page",
+      "value": "https://www.cer.eu/events",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "apa-events",
+      "name": "APA(亚太委员会/APK)· 活动页",
+      "type": "page",
+      "value": "https://asien-pazifik-ausschuss.de/en/events/",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "dcw-events",
+      "name": "DCW 德中经济联合会 · 活动日历",
+      "type": "page",
+      "value": "https://www.dcw-ev.de/de/veranstaltungen.html",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "oav-events",
+      "name": "OAV 东亚协会 · 活动页",
+      "type": "page",
+      "value": "https://www.oav.de/veranstaltungen/",
+      "relevance": "china",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gmf-berlin",
+      "name": "GMF · 柏林活动页",
+      "type": "page",
+      "value": "https://www.gmfus.org/events?location[12]=12",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "euractiv-events",
+      "name": "EURACTIV · 活动日历",
+      "type": "page",
+      "value": "https://events.euractiv.com/",
+      "relevance": "china",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "asiasociety-ch",
+      "name": "Asia Society Switzerland · 活动页",
+      "type": "page",
+      "value": "https://asiasociety.org/switzerland/events",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": false
+    },
+    {
+      "id": "fes-events",
+      "name": "FES · 活动页",
+      "type": "page",
+      "value": "https://www.fes.de/veranstaltungen",
+      "relevance": "china",
+      "sector": "thinktank",
+      "enabled": false
+    },
+    {
+      "id": "gn-kiel",
+      "name": "Kiel Institute(gnews)",
+      "type": "gnews",
+      "value": "\"Kiel Institute\" China when:30d",
+      "locale": "en",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-dihk",
+      "name": "DIHK China(gnews·德)",
+      "type": "gnews",
+      "value": "DIHK China when:30d",
+      "locale": "de",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gn-merics",
+      "name": "MERICS(gnews·德)",
+      "type": "gnews",
+      "value": "MERICS China when:30d",
+      "locale": "de",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-swp",
+      "name": "SWP(gnews·德)",
+      "type": "gnews",
+      "value": "\"Stiftung Wissenschaft und Politik\" China when:30d",
+      "locale": "de",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-koerber",
+      "name": "Körber(gnews·德)",
+      "type": "gnews",
+      "value": "\"Körber-Stiftung\" (China OR \"Berlin Foreign Policy Forum\") when:60d",
+      "locale": "de",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-kas",
+      "name": "KAS(gnews·德)",
+      "type": "gnews",
+      "value": "\"Konrad-Adenauer-Stiftung\" China when:30d",
+      "locale": "de",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-chatham",
+      "name": "Chatham House(gnews)",
+      "type": "gnews",
+      "value": "\"Chatham House\" China when:30d",
+      "locale": "en",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-euccc",
+      "name": "中国欧盟商会(gnews)",
+      "type": "gnews",
+      "value": "\"European Chamber of Commerce in China\" when:30d",
+      "locale": "en",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gn-apk",
+      "name": "APK 亚太大会(gnews·德)",
+      "type": "gnews",
+      "value": "\"Asien-Pazifik-Konferenz\" (Wirtschaft OR APK OR BDI) when:90d",
+      "locale": "de",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gn-inta",
+      "name": "欧洲议会 INTA(gnews)",
+      "type": "gnews",
+      "value": "\"European Parliament\" INTA China when:30d",
+      "locale": "en",
+      "relevance": "all",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gn-de-generic",
+      "name": "德语通用雷达(intitle:China)",
+      "type": "gnews",
+      "value": "intitle:China (Konferenz OR Forum OR Gipfel OR Tagung OR Kongress) (Berlin OR Frankfurt OR Deutschland) when:14d",
+      "locale": "de",
+      "relevance": "china",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gn-en-generic",
+      "name": "英语通用雷达(Berlin/Brussels)",
+      "type": "gnews",
+      "value": "(conference OR forum OR summit) China (Berlin OR Brussels) when:14d",
+      "locale": "en",
+      "relevance": "china",
+      "sector": "policy",
+      "enabled": true
+    },
+    {
+      "id": "gn-thinktank",
+      "name": "智库活动雷达(gnews)",
+      "type": "gnews",
+      "value": "Bruegel OR MERICS OR ECFR China (event OR conference OR roundtable) when:30d",
+      "locale": "en",
+      "relevance": "all",
+      "sector": "thinktank",
+      "enabled": true
+    },
+    {
+      "id": "gn-kammer",
+      "name": "商会邀请雷达(gnews·德)",
+      "type": "gnews",
+      "value": "\"China\" (\"lädt ein\" OR Anmeldung OR Veranstaltung OR Konferenz) (DIHK OR IHK OR BDI OR Handelskammer) when:30d",
+      "locale": "de",
+      "relevance": "china",
+      "sector": "policy",
+      "enabled": true
+    }
+  ]
+}
