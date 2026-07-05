@@ -113,7 +113,32 @@ China Forecast)需要你花 10 分钟核实一次:去 [AUMA 展会数据库](htt
 
 **📡 抓取状态**(侧边栏底部):红点 = 该源本轮抓取失败,展开看原因。个别源偶尔超时正常,持续失败再处理。
 
-## 六、常见问题
+## 六、与同事共享(免费,同事零安装)
+
+推荐 **Streamlit Community Cloud**(Streamlit 官方免费托管),同事只需 Google 账号 + 一个链接:
+
+1. 把仓库转私有(公开仓库部署的应用任何人可见):
+   GitHub 仓库页 → Settings → General → 最底部 Danger Zone → Change visibility → Private
+2. 打开 https://share.streamlit.io → 用 GitHub 账号登录(授权访问你的仓库)
+3. 「Create app」→ 选仓库 `huizhaohuang/eu_china_news_monitor`、分支 `main`、
+   主文件 `china_europe_monitor.py` → Deploy(首次构建约 2-3 分钟)
+4. 部署完成后:应用右上角菜单 → Settings → Sharing →
+   「Who can view this app」选 **Only specific people can view this app**,
+   填入同事邮箱 → 同事收到邀请,用 Google/GitHub 登录即可访问
+
+**免费版注意事项**:
+- **云端改动不持久**:在云端网页里增删信源、编辑活动,容器重启后会还原为仓库里的版本。
+  分工建议:同事以浏览/搜索/导出摘要为主;改配置(加源、加活动)由你在本地改好
+  `git push`——推送后云端应用会自动重新部署,同事那边就同步了。
+- 应用闲置一段时间会休眠,下次访问自动唤醒(约半分钟加载)。
+- 免费额度:1 GB 内存,本应用远用不满。
+- 本地的 07:00/12:00 推送不受影响(那是你 Mac 上的 launchd,与云端互不相干)。
+
+临时替代方案(不想动 GitHub 时):你 Mac 在线时运行
+`brew install cloudflared && cloudflared tunnel --url http://localhost:8501`,
+会生成一个临时公网链接发给同事——缺点是链接每次变、无访问控制、你的 Mac 必须开着。
+
+## 七、常见问题
 
 | 问题 | 处理 |
 |---|---|
@@ -125,7 +150,7 @@ China Forecast)需要你花 10 分钟核实一次:去 [AUMA 展会数据库](htt
 | 误删了信源 | `sources.json` 在 git 里有底,`git checkout sources.json` 恢复后点刷新 |
 | 换了电脑/移动了文件夹 | 重新 `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`,再重跑 `setup_schedule.sh` |
 
-## 七、进阶调校
+## 八、进阶调校
 
 想让某类新闻更容易/更不容易被抓到,编辑 `china_europe_monitor.py`:
 

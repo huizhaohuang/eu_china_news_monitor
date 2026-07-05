@@ -144,6 +144,117 @@
     "enabled": true
   },
   {
+    "name": "Le Monde · International",
+    "type": "rss",
+    "value": "https://www.lemonde.fr/international/rss_full.xml",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Le Monde · Économie",
+    "type": "rss",
+    "value": "https://www.lemonde.fr/economie/rss_full.xml",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Le Figaro · Économie",
+    "type": "rss",
+    "value": "https://www.lefigaro.fr/rss/figaro_economie.xml",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Le Figaro · International",
+    "type": "rss",
+    "value": "https://www.lefigaro.fr/rss/figaro_international.xml",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "France 24 (EN)",
+    "type": "rss",
+    "value": "https://www.france24.com/en/rss",
+    "lane": "fr-media",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "France 24 (FR)",
+    "type": "rss",
+    "value": "https://www.france24.com/fr/rss",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "RFI (EN)",
+    "type": "rss",
+    "value": "https://www.rfi.fr/en/rss",
+    "lane": "fr-media",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "RFI · 中文",
+    "type": "rss",
+    "value": "https://www.rfi.fr/cn/rss",
+    "lane": "fr-media",
+    "lang": "zh",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Les Echos · Chine",
+    "type": "gnews",
+    "value": "site:lesechos.fr (Chine OR chinois OR Pékin) when:2d",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "none",
+    "gnews_locale": "fr",
+    "enabled": true
+  },
+  {
+    "name": "La Tribune · Chine",
+    "type": "gnews",
+    "value": "site:latribune.fr (Chine OR chinois) when:2d",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "none",
+    "gnews_locale": "fr",
+    "enabled": true
+  },
+  {
+    "name": "L'Usine Nouvelle · Chine",
+    "type": "gnews",
+    "value": "site:usinenouvelle.com (Chine OR chinois) when:7d",
+    "lane": "fr-media",
+    "lang": "fr",
+    "filter": "none",
+    "gnews_locale": "fr",
+    "enabled": true
+  },
+  {
+    "name": "兜底 · China×France (全网)",
+    "type": "gnews",
+    "value": "(China OR Chinese) (France OR Paris OR Macron) when:1d",
+    "lane": "fr-media",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
     "name": "Politico Europe · China",
     "type": "gnews",
     "value": "site:politico.eu (China OR Chinese OR Beijing) when:2d",

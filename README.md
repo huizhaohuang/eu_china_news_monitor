@@ -18,7 +18,7 @@ streamlit run china_europe_monitor.py
 | 功能 | 说明 |
 |---|---|
 | ⚡ 重点 tab | 突发信号词(制裁/关税裁决/搜查/召见/国事访问…,中英德三语)+ ≥2 家独立媒体同题报道,最近 12h |
-| 8 个主题 tab | 中欧政治外交 / 德中关系 / 贸易防御 / 汽车与电池 / 能源光伏 / 科技AI芯片 / 安全间谍 / 中国宏观(兜底);**多标签归类**,一篇稿可同时出现在多个相关 tab |
+| 9 个主题 tab | 中欧政治外交 / 德中关系 / **法中关系** / 贸易防御 / 汽车与电池 / 能源光伏 / 科技AI芯片 / **国防与战略原材料** / 中国宏观(兜底);**多标签归类**,一篇稿可同时出现在多个相关 tab |
 | 跨源聚类 | 同题报道合并为一张卡,标注首发媒体与时间,可展开看各家标题("Handelsblatt 首发…"的出处依据) |
 | 🌐 独立报道数 | 通稿被聚合站原样转载只算一家;各家自拟标题才算独立编辑判断 |
 | 📋 早报摘要 | 一键生成 Markdown(按主题分组、柏林时间戳、链接),可下载或直接粘给编辑 |
@@ -33,12 +33,17 @@ streamlit run china_europe_monitor.py
   "name": "Reuters · China×Europe",
   "type": "gnews",            // rss = 原生 feed;gnews = Google News RSS 查询
   "value": "site:reuters.com (China OR Chinese) (EU OR Europe ...) when:1d",
-  "lane": "wires",            // de-media | eu-brussels | wires | cn-media | industry | gov | thinktank | custom
-  "lang": "en",               // en | de | zh
+  "lane": "wires",            // de-media | fr-media | eu-brussels | wires | cn-media | industry | gov | thinktank | custom
+  "lang": "en",               // en | de | fr | zh
   "filter": "china",          // china | europe | none(相关性闸门)
+  "gnews_locale": "fr",       // 可选:gnews 查询的 Google News 语言区(en/de/fr,默认 en)
   "enabled": true
 }
 ```
+
+注意:**法语 site: 查询在英文区(hl=en-US)返回 0 条**(2026-07 实测,Les Echos/La Tribune),
+法语 gnews 源必须带 `"gnews_locale": "fr"`。闸门词表为中英德法四语
+(RFI 中文、DW 中文等中文源的闸门为中文词)。
 
 约定俗成的经验(2026-07 实测):
 
