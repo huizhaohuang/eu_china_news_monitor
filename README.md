@@ -1,0 +1,59 @@
+# 中欧新闻监测 · China-Europe News Monitor
+
+为柏林中欧地缘政治 + 产经条线记者定制的新闻监测台。刷新即得过去 6–72 小时内、
+59 个精选信源(46 个默认启用)的中欧交叉新闻,按 8 个主题自动归类,突发信号自动标红。
+
+## 运行
+
+```bash
+pip install -r requirements.txt
+streamlit run china_europe_monitor.py
+```
+
+首次运行会在脚本旁生成 `sources.json`(信源配置,侧边栏可增删启停)和
+`monitor_state.json`(上次访问时间,用于 🆕 标记)。
+
+## 功能
+
+| 功能 | 说明 |
+|---|---|
+| ⚡ 重点 tab | 突发信号词(制裁/关税裁决/搜查/召见/国事访问…,中英德三语)+ ≥2 家独立媒体同题报道,最近 12h |
+| 8 个主题 tab | 中欧政治外交 / 德中关系 / 贸易防御 / 汽车与电池 / 能源光伏 / 科技AI芯片 / 安全间谍 / 中国宏观(兜底);**多标签归类**,一篇稿可同时出现在多个相关 tab |
+| 跨源聚类 | 同题报道合并为一张卡,标注首发媒体与时间,可展开看各家标题("Handelsblatt 首发…"的出处依据) |
+| 🌐 独立报道数 | 通稿被聚合站原样转载只算一家;各家自拟标题才算独立编辑判断 |
+| 📋 早报摘要 | 一键生成 Markdown(按主题分组、柏林时间戳、链接),可下载或直接粘给编辑 |
+| 相关性闸门 | 欧洲综合流须提到中国(`china` 闸门),中方宽流须提到欧洲(`europe` 闸门),已限定的查询不过滤(`none`) |
+| 并发抓取 | 46 源约 6 秒,每源独立超时;📡 抓取状态面板可见每源健康度;缓存 10 分钟 |
+| 兜底安全网 | 两条不限站点的 Google News 全网查询(China×Germany / China×EU),未订阅媒体的大新闻也不漏 |
+
+## 信源结构(sources.json)
+
+```json
+{
+  "name": "Reuters · China×Europe",
+  "type": "gnews",            // rss = 原生 feed;gnews = Google News RSS 查询
+  "value": "site:reuters.com (China OR Chinese) (EU OR Europe ...) when:1d",
+  "lane": "wires",            // de-media | eu-brussels | wires | cn-media | industry | gov | thinktank | custom
+  "lang": "en",               // en | de | zh
+  "filter": "china",          // china | europe | none(相关性闸门)
+  "enabled": true
+}
+```
+
+约定俗成的经验(2026-07 实测):
+
+- Politico.eu / Euractiv / consilium.europa.eu 的原生 RSS 被 Cloudflare 挡,走 gnews。
+- Global Times / Xinhua 的原生 RSS 已停止更新(内容停在 2018),必须走 gnews。
+- FT / Reuters / Bloomberg / WSJ 无公开内容 RSS,走 gnews site: 查询。
+- SCMP feed 模式:`scmp.com/rss/{id}/feed`(318199 中国外交、318421 中国经济、36 科技)。
+- gnews 按**正文**匹配查询词,标题可能与中国无关,所以通讯社 gnews 源配 `filter: "china"`。
+- 时间窗放宽到 >24h 时,gnews 查询里的 `when:1d` 会自动放宽(只放宽不收窄)。
+
+## 归类与优先级调校
+
+关键词表在 `china_europe_monitor.py` 的 `CATEGORIES` / `BREAKING_KEYWORDS` /
+`PRIORITY_PAIRS` / `CHINA_GATE` / `EUROPE_GATE`。匹配在规范化文本(小写、标点转空格、
+首尾补空格)上进行,短词用 `" ev "` 形式的空格包裹做词边界保护。
+
+计分:关键词命中 1 分、实体命中 3 分、标题命中 ×2,总分 ≥2 归入该类;
+`china-macro` 是兜底类,仅在未命中任何其他类时归入。

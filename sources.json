@@ -1,0 +1,533 @@
+[
+  {
+    "name": "Handelsblatt · Schlagzeilen",
+    "type": "rss",
+    "value": "https://feeds.cms.handelsblatt.com/schlagzeilen",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Handelsblatt · Politik",
+    "type": "rss",
+    "value": "https://feeds.cms.handelsblatt.com/politik",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Handelsblatt · Unternehmen",
+    "type": "rss",
+    "value": "https://feeds.cms.handelsblatt.com/unternehmen",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "FAZ · Wirtschaft",
+    "type": "rss",
+    "value": "https://www.faz.net/rss/aktuell/wirtschaft/",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "FAZ · Politik",
+    "type": "rss",
+    "value": "https://www.faz.net/rss/aktuell/politik/",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Spiegel · International (EN)",
+    "type": "rss",
+    "value": "https://www.spiegel.de/international/index.rss",
+    "lane": "de-media",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Spiegel · Wirtschaft",
+    "type": "rss",
+    "value": "https://www.spiegel.de/wirtschaft/index.rss",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "SZ · Wirtschaft",
+    "type": "rss",
+    "value": "https://rss.sueddeutsche.de/rss/Wirtschaft",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Die Zeit · Wirtschaft",
+    "type": "rss",
+    "value": "https://newsfeed.zeit.de/wirtschaft/index",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "WiWo · Unternehmen",
+    "type": "rss",
+    "value": "https://www.wiwo.de/contentexport/feed/rss/unternehmen",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "Tagesschau · Wirtschaft",
+    "type": "rss",
+    "value": "https://www.tagesschau.de/wirtschaft/index~rss2.xml",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "n-tv · Wirtschaft",
+    "type": "rss",
+    "value": "https://www.n-tv.de/wirtschaft/rss",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "DW · Business (EN)",
+    "type": "rss",
+    "value": "https://rss.dw.com/xml/rss-en-bus",
+    "lane": "de-media",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "DW · Asia (EN)",
+    "type": "rss",
+    "value": "https://rss.dw.com/rdf/rss-en-asia",
+    "lane": "de-media",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "DW · 中文",
+    "type": "rss",
+    "value": "https://rss.dw.com/xml/rss-chi-all",
+    "lane": "de-media",
+    "lang": "zh",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "China.Table (Table.Briefings)",
+    "type": "gnews",
+    "value": "site:table.media (China OR Peking) when:2d",
+    "lane": "de-media",
+    "lang": "de",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Politico Europe · China",
+    "type": "gnews",
+    "value": "site:politico.eu (China OR Chinese OR Beijing) when:2d",
+    "lane": "eu-brussels",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Euractiv · China",
+    "type": "gnews",
+    "value": "site:euractiv.com (China OR Chinese OR Beijing) when:2d",
+    "lane": "eu-brussels",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "EUobserver",
+    "type": "rss",
+    "value": "https://euobserver.com/rss",
+    "lane": "eu-brussels",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "EU Commission · Press corner",
+    "type": "rss",
+    "value": "https://ec.europa.eu/commission/presscorner/api/rss?language=en",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "DG TRADE · 贸易与经济安全",
+    "type": "rss",
+    "value": "https://policy.trade.ec.europa.eu/node/2/rss_en",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "European Parliament · Press",
+    "type": "rss",
+    "value": "https://www.europarl.europa.eu/rss/doc/press-releases/en.xml",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Council of the EU (via GNews)",
+    "type": "gnews",
+    "value": "site:consilium.europa.eu (China OR Chinese) when:2d",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "EEAS (via GNews)",
+    "type": "gnews",
+    "value": "site:eeas.europa.eu (China OR Chinese) when:7d",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "none",
+    "enabled": false
+  },
+  {
+    "name": "Reuters · China×Europe",
+    "type": "gnews",
+    "value": "site:reuters.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Bloomberg · China×Europe",
+    "type": "gnews",
+    "value": "site:bloomberg.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Financial Times · China×Europe",
+    "type": "gnews",
+    "value": "site:ft.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "WSJ · China×Europe",
+    "type": "gnews",
+    "value": "site:wsj.com (China) (EU OR Germany OR Europe) when:1d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Nikkei Asia · China×Europe",
+    "type": "gnews",
+    "value": "site:asia.nikkei.com (China OR Chinese) (Europe OR EU OR Germany OR Netherlands) when:2d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "兜底 · China×Germany (全网)",
+    "type": "gnews",
+    "value": "(China OR Chinese) (Germany OR Berlin OR Bundestag OR Merz) when:1d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "兜底 · China×EU (全网)",
+    "type": "gnews",
+    "value": "(China OR Chinese) (\"European Union\" OR Brussels OR \"European Commission\") when:1d",
+    "lane": "wires",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "SCMP · China Diplomacy",
+    "type": "rss",
+    "value": "https://www.scmp.com/rss/318199/feed",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": true
+  },
+  {
+    "name": "SCMP · China Economy",
+    "type": "rss",
+    "value": "https://www.scmp.com/rss/318421/feed",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": true
+  },
+  {
+    "name": "SCMP · Tech",
+    "type": "rss",
+    "value": "https://www.scmp.com/rss/36/feed",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": true
+  },
+  {
+    "name": "Caixin Global (via GNews)",
+    "type": "gnews",
+    "value": "site:caixinglobal.com when:2d",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Yicai Global (via GNews)",
+    "type": "gnews",
+    "value": "site:yicaiglobal.com when:2d",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Global Times · Europe",
+    "type": "gnews",
+    "value": "site:globaltimes.cn (Europe OR EU OR Germany OR Brussels) when:1d",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": true
+  },
+  {
+    "name": "Xinhua EN · Europe",
+    "type": "gnews",
+    "value": "site:english.news.cn (China OR Chinese) (Europe OR EU OR Germany) when:1d",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": true
+  },
+  {
+    "name": "MOFCOM / 外交部 公告",
+    "type": "gnews",
+    "value": "(site:english.mofcom.gov.cn OR site:mfa.gov.cn) when:7d",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Sixth Tone",
+    "type": "rss",
+    "value": "https://www.sixthtone.com/rss",
+    "lane": "cn-media",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": false
+  },
+  {
+    "name": "CnEVPost",
+    "type": "rss",
+    "value": "https://cnevpost.com/feed/",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "electrive (EN)",
+    "type": "rss",
+    "value": "https://www.electrive.com/feed/",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "electrive.net (DE)",
+    "type": "rss",
+    "value": "https://www.electrive.net/feed/",
+    "lane": "industry",
+    "lang": "de",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "Automobilwoche",
+    "type": "rss",
+    "value": "https://www.automobilwoche.de/arc/outboundfeeds/rss/?outputType=xml",
+    "lane": "industry",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "pv magazine Global",
+    "type": "rss",
+    "value": "https://www.pv-magazine.com/feed/",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "CarNewsChina",
+    "type": "rss",
+    "value": "https://carnewschina.com/feed/",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": false
+  },
+  {
+    "name": "Electrek · China",
+    "type": "rss",
+    "value": "https://electrek.co/guides/china/feed/",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "europe",
+    "enabled": false
+  },
+  {
+    "name": "芯片 · 中欧半导体 (全网)",
+    "type": "gnews",
+    "value": "(China) (ASML OR semiconductor OR chips OR \"export controls\") (Europe OR Netherlands OR EU OR Germany) when:1d",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "电池 · 中企在欧 (全网)",
+    "type": "gnews",
+    "value": "(CATL OR BYD OR Gotion OR \"battery plant\" OR gigafactory) (Europe OR Germany OR Hungary OR EU) when:2d",
+    "lane": "industry",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Bundesregierung · Presse",
+    "type": "rss",
+    "value": "https://www.bundesregierung.de/service/rss/breg-de/1151244/feed.xml",
+    "lane": "gov",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Auswärtiges Amt · Press (EN)",
+    "type": "rss",
+    "value": "https://www.auswaertiges-amt.de/static/includes/rss_en/RSS_Pressemitteilungen_Reden.xml",
+    "lane": "gov",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "BMWE · Presse",
+    "type": "rss",
+    "value": "https://www.bundeswirtschaftsministerium.de/SiteGlobals/BMWI/Functions/RSSFeed/DE/RSSFeed-Pressemitteilung.xml",
+    "lane": "gov",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "BMWE · Außenwirtschaft",
+    "type": "rss",
+    "value": "https://www.bundeswirtschaftsministerium.de/SiteGlobals/BMWI/Functions/RSSFeed/DE/RSSFeed-Aussenwirtschaft.xml",
+    "lane": "gov",
+    "lang": "de",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "MERICS",
+    "type": "rss",
+    "value": "https://merics.org/en/rss",
+    "lane": "thinktank",
+    "lang": "en",
+    "filter": "none",
+    "enabled": true
+  },
+  {
+    "name": "Bruegel",
+    "type": "rss",
+    "value": "https://www.bruegel.org/rss.xml",
+    "lane": "thinktank",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "Rhodium Group",
+    "type": "rss",
+    "value": "https://rhg.com/feed/",
+    "lane": "thinktank",
+    "lang": "en",
+    "filter": "china",
+    "enabled": true
+  },
+  {
+    "name": "ECFR",
+    "type": "rss",
+    "value": "https://ecfr.eu/feed/",
+    "lane": "thinktank",
+    "lang": "en",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "SWP Berlin (EN)",
+    "type": "rss",
+    "value": "https://www.swp-berlin.org/en/SWPPublications.xml",
+    "lane": "thinktank",
+    "lang": "en",
+    "filter": "china",
+    "enabled": false
+  },
+  {
+    "name": "CER",
+    "type": "rss",
+    "value": "https://www.cer.eu/rss.xml",
+    "lane": "thinktank",
+    "lang": "en",
+    "filter": "china",
+    "enabled": false
+  }
+]

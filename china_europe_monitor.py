@@ -1,0 +1,952 @@
+"""
+中欧新闻监测 · China-Europe News Monitor (v3)
+=============================================
+为柏林中欧地缘政治+产经条线记者定制的监测台。
+
+设计要点
+--------
+- 59 个精选源(德媒/欧盟/国际媒体/中方/行业垂直/政府/智库),全部经过实测验证;
+  sources.json 持久化,侧边栏可增删启停。
+- 8 个主题标签页,多标签归类:一篇"欧盟对比亚迪反补贴调查"同时出现在
+  「贸易防御」和「汽车」两个 tab——tab 是工作场景,不是档案柜。
+- ⚡重点 tab:突发信号词(制裁/关税裁决/搜查/逮捕/国事访问…)+ 多源交叉报道
+  (≥2 家独立媒体同题 = 重要性信号)。
+- 跨源聚类去重:同题报道合并成一张卡,可展开看各家标题与首发时间。
+- 并发抓取 + 每源超时保护;抓取健康状态在侧边栏可见。
+- 「生成早报摘要」:一键导出 Markdown,按主题分组,直接粘给编辑。
+
+Run:  streamlit run china_europe_monitor.py
+Deps: pip install -r requirements.txt   (streamlit, feedparser, requests)
+"""
+
+from __future__ import annotations
+
+import concurrent.futures as cf
+import json
+import math
+import re
+import time
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from urllib.parse import quote_plus
+from zoneinfo import ZoneInfo
+
+import feedparser
+import requests
+import streamlit as st
+
+BERLIN = ZoneInfo("Europe/Berlin")
+CONFIG_PATH = Path(__file__).with_name("sources.json")
+STATE_PATH = Path(__file__).with_name("monitor_state.json")
+GNEWS_BASE = "https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
+UA = {"User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36")}
+FETCH_TIMEOUT = (6, 12)          # (connect, read) seconds per feed
+MAX_WORKERS = 12
+PER_SOURCE_CAP = 80              # max items kept per source per fetch
+
+# ---------------------------------------------------------------------------
+# 1. 源配置 —— 首次运行写入 sources.json,此后完全由侧边栏管理
+#    lane: de-media | eu-brussels | wires | cn-media | industry | gov | thinktank | custom
+#    filter: china(欧洲综合流,须提到中国) | europe(中方宽流,须提到欧洲) | none(已自带限定)
+# ---------------------------------------------------------------------------
+
+LANE_LABELS = {
+    "de-media": "🇩🇪 德国媒体",
+    "eu-brussels": "🇪🇺 欧盟/布鲁塞尔",
+    "wires": "🌍 国际媒体/通讯社",
+    "cn-media": "🇨🇳 中方媒体",
+    "industry": "🏭 行业垂直",
+    "gov": "🏛️ 政府/官方",
+    "thinktank": "🎓 智库",
+    "custom": "⭐ 自定义",
+}
+
+DEFAULT_SOURCES = [
+    # --- 德国媒体 ---
+    {"name": "Handelsblatt · Schlagzeilen", "type": "rss", "value": "https://feeds.cms.handelsblatt.com/schlagzeilen", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "Handelsblatt · Politik", "type": "rss", "value": "https://feeds.cms.handelsblatt.com/politik", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "Handelsblatt · Unternehmen", "type": "rss", "value": "https://feeds.cms.handelsblatt.com/unternehmen", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "FAZ · Wirtschaft", "type": "rss", "value": "https://www.faz.net/rss/aktuell/wirtschaft/", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "FAZ · Politik", "type": "rss", "value": "https://www.faz.net/rss/aktuell/politik/", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "Spiegel · International (EN)", "type": "rss", "value": "https://www.spiegel.de/international/index.rss", "lane": "de-media", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "Spiegel · Wirtschaft", "type": "rss", "value": "https://www.spiegel.de/wirtschaft/index.rss", "lane": "de-media", "lang": "de", "filter": "china", "enabled": False},
+    {"name": "SZ · Wirtschaft", "type": "rss", "value": "https://rss.sueddeutsche.de/rss/Wirtschaft", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "Die Zeit · Wirtschaft", "type": "rss", "value": "https://newsfeed.zeit.de/wirtschaft/index", "lane": "de-media", "lang": "de", "filter": "china", "enabled": False},
+    {"name": "WiWo · Unternehmen", "type": "rss", "value": "https://www.wiwo.de/contentexport/feed/rss/unternehmen", "lane": "de-media", "lang": "de", "filter": "china", "enabled": False},
+    {"name": "Tagesschau · Wirtschaft", "type": "rss", "value": "https://www.tagesschau.de/wirtschaft/index~rss2.xml", "lane": "de-media", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "n-tv · Wirtschaft", "type": "rss", "value": "https://www.n-tv.de/wirtschaft/rss", "lane": "de-media", "lang": "de", "filter": "china", "enabled": False},
+    {"name": "DW · Business (EN)", "type": "rss", "value": "https://rss.dw.com/xml/rss-en-bus", "lane": "de-media", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "DW · Asia (EN)", "type": "rss", "value": "https://rss.dw.com/rdf/rss-en-asia", "lane": "de-media", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "DW · 中文", "type": "rss", "value": "https://rss.dw.com/xml/rss-chi-all", "lane": "de-media", "lang": "zh", "filter": "china", "enabled": False},
+    {"name": "China.Table (Table.Briefings)", "type": "gnews", "value": "site:table.media (China OR Peking) when:2d", "lane": "de-media", "lang": "de", "filter": "none", "enabled": True},
+    # --- 欧盟 / 布鲁塞尔 ---
+    {"name": "Politico Europe · China", "type": "gnews", "value": "site:politico.eu (China OR Chinese OR Beijing) when:2d", "lane": "eu-brussels", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "Euractiv · China", "type": "gnews", "value": "site:euractiv.com (China OR Chinese OR Beijing) when:2d", "lane": "eu-brussels", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "EUobserver", "type": "rss", "value": "https://euobserver.com/rss", "lane": "eu-brussels", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "EU Commission · Press corner", "type": "rss", "value": "https://ec.europa.eu/commission/presscorner/api/rss?language=en", "lane": "gov", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "DG TRADE · 贸易与经济安全", "type": "rss", "value": "https://policy.trade.ec.europa.eu/node/2/rss_en", "lane": "gov", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "European Parliament · Press", "type": "rss", "value": "https://www.europarl.europa.eu/rss/doc/press-releases/en.xml", "lane": "gov", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "Council of the EU (via GNews)", "type": "gnews", "value": "site:consilium.europa.eu (China OR Chinese) when:2d", "lane": "gov", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "EEAS (via GNews)", "type": "gnews", "value": "site:eeas.europa.eu (China OR Chinese) when:7d", "lane": "gov", "lang": "en", "filter": "none", "enabled": False},
+    # --- 国际媒体 / 通讯社 (无公开 RSS → Google News) ---
+    # 注:gnews 按正文匹配查询词,标题可能与中国无关 → 加 china 闸门(gnews 无摘要,即标题闸门)
+    {"name": "Reuters · China×Europe", "type": "gnews", "value": "site:reuters.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d", "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "Bloomberg · China×Europe", "type": "gnews", "value": "site:bloomberg.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d", "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "Financial Times · China×Europe", "type": "gnews", "value": "site:ft.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d", "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "WSJ · China×Europe", "type": "gnews", "value": "site:wsj.com (China) (EU OR Germany OR Europe) when:1d", "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "Nikkei Asia · China×Europe", "type": "gnews", "value": "site:asia.nikkei.com (China OR Chinese) (Europe OR EU OR Germany OR Netherlands) when:2d", "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "兜底 · China×Germany (全网)", "type": "gnews", "value": "(China OR Chinese) (Germany OR Berlin OR Bundestag OR Merz) when:1d", "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "兜底 · China×EU (全网)", "type": "gnews", "value": '(China OR Chinese) ("European Union" OR Brussels OR "European Commission") when:1d', "lane": "wires", "lang": "en", "filter": "china", "enabled": True},
+    # --- 中方媒体 ---
+    {"name": "SCMP · China Diplomacy", "type": "rss", "value": "https://www.scmp.com/rss/318199/feed", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": True},
+    {"name": "SCMP · China Economy", "type": "rss", "value": "https://www.scmp.com/rss/318421/feed", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": True},
+    {"name": "SCMP · Tech", "type": "rss", "value": "https://www.scmp.com/rss/36/feed", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": True},
+    {"name": "Caixin Global (via GNews)", "type": "gnews", "value": "site:caixinglobal.com when:2d", "lane": "cn-media", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "Yicai Global (via GNews)", "type": "gnews", "value": "site:yicaiglobal.com when:2d", "lane": "cn-media", "lang": "en", "filter": "none", "enabled": True},
+    # 官媒查询很宽(体育/文化通稿也会命中欧洲地名)→ 加 europe 闸门收紧到中欧交叉
+    {"name": "Global Times · Europe", "type": "gnews", "value": "site:globaltimes.cn (Europe OR EU OR Germany OR Brussels) when:1d", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": True},
+    {"name": "Xinhua EN · Europe", "type": "gnews", "value": "site:english.news.cn (China OR Chinese) (Europe OR EU OR Germany) when:1d", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": True},
+    {"name": "MOFCOM / 外交部 公告", "type": "gnews", "value": "(site:english.mofcom.gov.cn OR site:mfa.gov.cn) when:7d", "lane": "gov", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "Sixth Tone", "type": "rss", "value": "https://www.sixthtone.com/rss", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": False},
+    # --- 行业垂直 ---
+    {"name": "CnEVPost", "type": "rss", "value": "https://cnevpost.com/feed/", "lane": "industry", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "electrive (EN)", "type": "rss", "value": "https://www.electrive.com/feed/", "lane": "industry", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "electrive.net (DE)", "type": "rss", "value": "https://www.electrive.net/feed/", "lane": "industry", "lang": "de", "filter": "china", "enabled": False},
+    {"name": "Automobilwoche", "type": "rss", "value": "https://www.automobilwoche.de/arc/outboundfeeds/rss/?outputType=xml", "lane": "industry", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "pv magazine Global", "type": "rss", "value": "https://www.pv-magazine.com/feed/", "lane": "industry", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "CarNewsChina", "type": "rss", "value": "https://carnewschina.com/feed/", "lane": "industry", "lang": "en", "filter": "europe", "enabled": False},
+    {"name": "Electrek · China", "type": "rss", "value": "https://electrek.co/guides/china/feed/", "lane": "industry", "lang": "en", "filter": "europe", "enabled": False},
+    {"name": "芯片 · 中欧半导体 (全网)", "type": "gnews", "value": '(China) (ASML OR semiconductor OR chips OR "export controls") (Europe OR Netherlands OR EU OR Germany) when:1d', "lane": "industry", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "电池 · 中企在欧 (全网)", "type": "gnews", "value": '(CATL OR BYD OR Gotion OR "battery plant" OR gigafactory) (Europe OR Germany OR Hungary OR EU) when:2d', "lane": "industry", "lang": "en", "filter": "none", "enabled": True},
+    # --- 德国政府 ---
+    {"name": "Bundesregierung · Presse", "type": "rss", "value": "https://www.bundesregierung.de/service/rss/breg-de/1151244/feed.xml", "lane": "gov", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "Auswärtiges Amt · Press (EN)", "type": "rss", "value": "https://www.auswaertiges-amt.de/static/includes/rss_en/RSS_Pressemitteilungen_Reden.xml", "lane": "gov", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "BMWE · Presse", "type": "rss", "value": "https://www.bundeswirtschaftsministerium.de/SiteGlobals/BMWI/Functions/RSSFeed/DE/RSSFeed-Pressemitteilung.xml", "lane": "gov", "lang": "de", "filter": "china", "enabled": True},
+    {"name": "BMWE · Außenwirtschaft", "type": "rss", "value": "https://www.bundeswirtschaftsministerium.de/SiteGlobals/BMWI/Functions/RSSFeed/DE/RSSFeed-Aussenwirtschaft.xml", "lane": "gov", "lang": "de", "filter": "china", "enabled": True},
+    # --- 智库 ---
+    {"name": "MERICS", "type": "rss", "value": "https://merics.org/en/rss", "lane": "thinktank", "lang": "en", "filter": "none", "enabled": True},
+    {"name": "Bruegel", "type": "rss", "value": "https://www.bruegel.org/rss.xml", "lane": "thinktank", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "Rhodium Group", "type": "rss", "value": "https://rhg.com/feed/", "lane": "thinktank", "lang": "en", "filter": "china", "enabled": True},
+    {"name": "ECFR", "type": "rss", "value": "https://ecfr.eu/feed/", "lane": "thinktank", "lang": "en", "filter": "china", "enabled": False},
+    {"name": "SWP Berlin (EN)", "type": "rss", "value": "https://www.swp-berlin.org/en/SWPPublications.xml", "lane": "thinktank", "lang": "en", "filter": "china", "enabled": False},
+    {"name": "CER", "type": "rss", "value": "https://www.cer.eu/rss.xml", "lane": "thinktank", "lang": "en", "filter": "china", "enabled": False},
+]
+
+# v2 版 sources.json 里的自动种子条目(升级时静默丢弃,新版默认源已覆盖同等功能)
+_V2_SEED_VALUES = {
+    "https://feeds.cms.handelsblatt.com/schlagzeilen",
+    "https://feeds.cms.handelsblatt.com/unternehmen",
+    "https://feeds.cms.handelsblatt.com/politik",
+    "https://rss.dw.com/rdf/rss-en-bus",
+    "https://rss.dw.com/rdf/rss-en-asia",
+    "site:reuters.com (China OR Chinese) (Europe OR EU OR Germany OR German) when:1d",
+    "site:bloomberg.com (China OR Chinese) (Europe OR EU OR Germany OR German) when:1d",
+}
+
+
+def load_sources() -> list[dict]:
+    sources = None
+    if CONFIG_PATH.exists():
+        try:
+            sources = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            # 解析失败不静默覆盖用户配置:先备份损坏文件再重建默认
+            try:
+                CONFIG_PATH.rename(CONFIG_PATH.with_suffix(".json.bak"))
+            except OSError:
+                pass
+            sources = None
+    if sources is None:
+        save_sources(DEFAULT_SOURCES)
+        return json.loads(json.dumps(DEFAULT_SOURCES))
+    # v2 -> v3 迁移:老格式条目没有 lane 字段
+    if any("lane" not in s for s in sources):
+        default_values = {s["value"] for s in DEFAULT_SOURCES}
+        migrated = json.loads(json.dumps(DEFAULT_SOURCES))
+        for s in sources:
+            if "lane" in s or s.get("value") in _V2_SEED_VALUES or s.get("value") in default_values:
+                continue  # v2 种子条目或与新默认重复 → 由新默认源接管
+            migrated.append({
+                "name": s.get("name", "未命名"), "type": s.get("type", "rss"),
+                "value": s.get("value", ""), "lane": "custom", "lang": "en",
+                "filter": "china" if s.get("keyword_filter", True) else "none",
+                "enabled": s.get("enabled", True),
+            })
+        save_sources(migrated)
+        return migrated
+    return sources
+
+
+def save_sources(sources: list[dict]) -> None:
+    CONFIG_PATH.write_text(
+        json.dumps(sources, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+
+# ---------------------------------------------------------------------------
+# 2. 归类体系(8 类,双语关键词+实体表)与优先级规则
+#    匹配在规范化文本上进行:小写、标点转空格、首尾补空格,
+#    因此短词可用 " ev " 形式做词边界保护。
+#    计分:关键词命中=1、实体命中=3,标题命中权重×2;总分≥2 归入该类。
+# ---------------------------------------------------------------------------
+
+CATEGORIES = [
+    dict(id="china-eu-politics", emoji="🏛️", zh="中欧政治外交", en="EU-China Politics",
+         kw=["eu-china", "china-eu", "sino-european", "summit", "state visit", "diplomat", "ambassador",
+             "foreign minister", "foreign policy", "embassy", "taiwan", "one china", "tibet", "dalai lama",
+             "uyghur", "xinjiang", "hong kong", "human rights", "forced labour", "forced labor", "ukraine",
+             "russia", "peace plan", "no-limits", "dual-use", "sanction", "de-risking", "derisking",
+             "decoupling", "systemic rival", "economic coercion", "lithuania", "european parliament",
+             "european commission", "european council", "eeas", "nato", " g7 ", " g20 ", "belt and road",
+             "global gateway", "strategic autonomy", "united front", "confucius institute", "interference",
+             "disinformation", "reciprocity", " 16+1 ", " 17+1 ", "investment agreement", "wolf warrior",
+             "visa-free", "munich security conference",
+             "gipfel", "staatsbesuch", "botschafter", "außenminister", "außenpolitik", "botschaft",
+             "uigur", "hongkong", "menschenrechte", "zwangsarbeit", "russland", "friedensplan", "sanktion",
+             "entkopplung", "risikominderung", "systemrival", "seidenstraße", "einflussnahme",
+             "desinformation", "europaparlament", "europäisches parlament", "eu-kommission",
+             "europäischer rat", "chinapolitik", "china-politik", "konfuzius-institut", "gegenseitigkeit",
+             "investitionsabkommen", "münchner sicherheitskonferenz", "visafrei"],
+         entities=["xi jinping", " xi ", "li qiang", "wang yi", "fu cong", "lin jian", "mao ning",
+                   "von der leyen", "kallas", "antonio costa", "antónio costa", "rutte", "orban", "orbán",
+                   "macron", " ccp ", " cpc ", "politburo", "merics", " ecfr ", "bruegel", "rhodium group"]),
+    dict(id="germany-china", emoji="🇩🇪", zh="德中关系", en="Germany-China",
+         kw=["germany", "german", "berlin", "bundestag", "chancellor", "chancellery", "sino-german",
+             "german-chinese", "mittelstand", "china strategy", "government consultations",
+             "port of hamburg", "hamburg", "duisburg", "german intelligence",
+             "bundesregierung", "bundeskanzler", "kanzler", "kanzleramt", "bundesrat", "auswärtiges amt",
+             "außenministerium", "wirtschaftsministerium", "verteidigungsministerium", "china-strategie",
+             "chinastrategie", "chinareise", "china-reise", "regierungskonsultationen",
+             "deutsche wirtschaft", "deutsche unternehmen", "deutsche industrie", "deutsche autobauer",
+             "hamburger hafen", "koalition", " cdu ", " csu ", " spd ", " afd ", "grüne", " linke ",
+             "verfassungsschutz", "umfrage", "asien-pazifik-ausschuss", "deutsch-chinesisch"],
+         entities=[" merz ", "friedrich merz", "wadephul", "klingbeil", "katherina reiche", "steinmeier",
+                   "pistorius", "scholz", " vw ", "volkswagen", " audi ", "porsche", " bmw ", "mercedes",
+                   "basf", "siemens", "bosch", " zf ", "continental", "schaeffler", "thyssenkrupp",
+                   "infineon", "kuka", "cosco", "hhla", " bdi ", " dihk ", " vda ", "bundeswehr"]),
+    dict(id="trade-defence", emoji="⚖️", zh="贸易防御与经济安全", en="Trade Defence",
+         kw=["tariff", "anti-subsidy", "antisubsidy", "anti-dumping", "antidumping", "countervailing",
+             "trade defence", "trade defense", "trade war", "trade dispute", "trade talks", "trade barrier",
+             "dumping", "overcapacity", "subsidy", "subsidies", "state aid", "export control",
+             "export restriction", "export ban", "export licence", "export license", "import ban",
+             "rare earth", "gallium", "germanium", "graphite", "antimony", "critical raw material",
+             "critical minerals", "foreign subsidies regulation", "investment screening", "fdi screening",
+             "golden power", " wto ", "market access", "anti-coercion", "de minimis", "customs",
+             "minimum price", "price undertaking", "price commitment", "provisional duties",
+             "definitive duties", "quota", "retaliat", "economic security", "supply chain",
+             "brandy", "cognac", "market economy status", "safeguard",
+             "zoll", "zölle", "strafzoll", "strafzölle", "ausgleichszoll", "antisubvention",
+             "anti-subvention", "subvention", "handelskrieg", "handelsstreit", "handelskonflikt",
+             "handelsgespräche", "handelsbarriere", "überkapazität", "exportkontroll", "ausfuhrkontroll",
+             "exportbeschränkung", "ausfuhrverbot", "exportverbot", "exportstopp", "einfuhrverbot",
+             "seltene erden", "seltenerd", "graphit", "antimon", "kritische rohstoffe",
+             "drittstaatliche subventionen", "investitionsprüfung", "investitionskontrolle",
+             "außenwirtschaftsgesetz", "welthandelsorganisation", "marktzugang", "vergeltung",
+             "mindestpreis", "preisverpflichtung", "kontingent", "wirtschaftssicherheit", "lieferkette",
+             "beihilfe", "schweinefleisch", "milchprodukte", "weinbrand"],
+         entities=["sefcovic", "šefčovič", "weyand", "dg trade", "mofcom", "wang wentao", "he lifeng",
+                   "cccme", "eurofer", " crrc ", " temu ", " shein", "eu chamber", "eskelund"]),
+    dict(id="autos-ev", emoji="🚗", zh="汽车与电池", en="Autos, EVs & Batteries",
+         kw=["electric vehicle", "electric car", " ev ", " evs ", "ev maker", "ev tariff", "ev plant",
+             "battery", "batteries", "battery cell", "gigafactory", "cathode", "anode", " lfp ",
+             "solid-state", "plug-in", "phev", "hybrid", "automaker", "carmaker", "car maker",
+             "automotive", "auto industry", "car industry", "price war", "charging", "car plant",
+             "autonomous driving", "self-driving", "robotaxi", "new energy vehicle", "car sales",
+             "ev sales", "registrations", "szeged", "debrecen",
+             "elektroauto", " e-auto", "elektrofahrzeug", "elektromobilität", " e-mobilität", "autobauer",
+             "autohersteller", "automobil", "autoindustrie", "autozulieferer", "zulieferer", "batterie",
+             "batteriezelle", "batteriefabrik", "gigafabrik", "feststoffbatterie", "plug-in-hybrid",
+             "preiskrieg", "ladeinfrastruktur", "ladesäule", "verbrenner", "neuzulassungen",
+             "autonomes fahren", "autogipfel", " pkw "],
+         entities=[" byd ", " catl ", " nio ", "xpeng", "geely", " chery", " saic ", "mg motor", "leapmotor",
+                   "great wall", " gwm ", "zeekr", "lynk", "polestar", "volvo", "denza", "dongfeng",
+                   "changan", "hongqi", "gotion", "svolt", "eve energy", " calb ", "farasis", "northvolt",
+                   "tesla", "stellantis", "renault", " vw ", "volkswagen", " audi ", "porsche", " bmw ",
+                   "mercedes", "opel", " vda ", " acea ", " kba "]),
+    dict(id="energy-solar", emoji="☀️", zh="能源与光伏", en="Energy & Solar",
+         kw=["solar", "photovoltaic", "polysilicon", "wafer", "inverter", "wind turbine", "wind farm",
+             "wind power", "offshore wind", "onshore wind", "hydrogen", "electrolyser", "electrolyzer",
+             "heat pump", "power grid", "electricity grid", "grid operator", "energy storage",
+             "battery storage", "renewable", "clean tech", "cleantech", "green tech", "energy transition",
+             "nuclear", "cbam", "carbon border",
+             "photovoltaik", "solarmodul", "solarzelle", "solarindustrie", "solarhersteller",
+             "polysilizium", "wechselrichter", "windkraft", "windrad", "windturbine", "windpark",
+             "offshore-wind", "wasserstoff", "elektrolyseur", "wärmepumpe", "stromnetz", "netzbetreiber",
+             "energiespeicher", "erneuerbare", "energiewende", "atomkraft", "co2-grenzausgleich",
+             "klimatechnologie"],
+         entities=["longi", "jinko", " trina", "ja solar", "tongwei", "sungrow", " deye ", "goldwind",
+                   "mingyang", "ming yang", "envision", "meyer burger", "solarwatt", "sma solar",
+                   "siemens energy", "siemens gamesa", "vestas", "orsted", "ørsted", "nordex",
+                   "state grid", " cgn ", "solarpower europe", "windeurope", "bundesnetzagentur"]),
+    dict(id="tech-ai-chips", emoji="🤖", zh="科技·AI·芯片", en="Tech, AI & Chips",
+         kw=["semiconductor", "chip", "chips act", "foundry", "lithography", " euv", "artificial intelligence",
+             " ai ", "ai act", "ai model", "large language model", " llm ", " gpu ", "computing power",
+             "data center", "data centre", " 5g ", " 6g ", "telecom", "network equipment", "cybersecurity",
+             "data protection", "data transfer", "cloud", "quantum", "surveillance", "facial recognition",
+             "spyware", "social media", "robotics", "humanoid", "drone",
+             "halbleiter", "chiphersteller", "chipfabrik", "chipindustrie", "lithografie", "lithographie",
+             "künstliche intelligenz", " ki ", "cybersicherheit", "datenschutz", "datentransfer",
+             "überwachung", "gesichtserkennung", "mobilfunk", "netzausrüster", "rechenzentrum", "quanten",
+             "robotik", "humanoide", "drohne", "tiktok-verbot", "spionagesoftware", "digitalpolitik"],
+         entities=["huawei", " zte ", "asml", "zeiss", "trumpf", "tsmc", " smic ", "nvidia", "infineon",
+                   "aixtron", "nexperia", "wingtech", "tiktok", "bytedance", "deepseek", "alibaba",
+                   "tencent", "baidu", "xiaomi", " dji ", "hikvision", "dahua", "unitree",
+                   "deutsche telekom", "vodafone", "ericsson", "nokia", " bsi ", " sap "]),
+    dict(id="security-espionage", emoji="🕵️", zh="安全与间谍", en="Security & Espionage",
+         kw=["spy", "espionage", "counterintelligence", "intelligence agency", "intelligence service",
+             "arrest", "detained", " raid", "infiltration", "sabotage", "undersea cable", "subsea cable",
+             "baltic", "hybrid warfare", "hybrid threat", "overseas police", "police station",
+             "transnational repression", "cyberattack", "cyber attack", "cyberespionage", "hacker",
+             "hacking", "critical infrastructure", "front company", "expelled", "double agent",
+             "indicted", "charged with", "treason", "state secrets", "nord stream",
+             "spionage", "spion", "geheimdienst", "nachrichtendienst", "spionageabwehr", "verhaftet",
+             "festgenommen", "festnahme", "razzia", "durchsuchung", "unterseekabel", "seekabel", "ostsee",
+             "hybride", "kritische infrastruktur", "tarnfirma", "ausgewiesen", "doppelagent", "angeklagt",
+             "anklage", "landesverrat", "staatsgeheimnis", "geheimnisverrat", "staatsschutz",
+             "polizeistation", "einflussoperation", "cyberangriff", "hackerangriff", "spionageverdacht"],
+         entities=[" bfv ", " bnd ", "verfassungsschutz", "generalbundesanwalt", "bundesanwaltschaft",
+                   "europol", "ministry of state security", " mss ", "jian guo", "maximilian krah",
+                   " krah ", "salt typhoon", "volt typhoon", "apt31", "apt 31", "apt41", "yi peng 3",
+                   "zpmc", " mi5 ", " mi6 "]),
+    # china-macro 是兜底类:仅当条目未命中任何其他类时才归入(避免宏观词污染主题 tab)
+    dict(id="china-macro", emoji="📊", zh="中国宏观(参考)", en="China Macro",
+         kw=[" gdp ", "growth target", "economic growth", "stimulus", "deflation", "consumer prices",
+             " cpi ", "producer prices", "property market", "property crisis", "real estate",
+             "local government debt", "trade surplus", "export growth", "exports rose", "exports fell",
+             "yuan", "renminbi", " rmb ", "five-year plan", "third plenum", "national people's congress",
+             "two sessions", "youth unemployment", "retail sales", " pmi ", "involution",
+             "common prosperity", "capital flight", " fdi ",
+             "wachstum", "wirtschaftswachstum", "konjunktur", "konjunkturpaket", "verbraucherpreise",
+             "immobilienkrise", "immobilienmarkt", "handelsüberschuss", "handelsbilanz",
+             "exportüberschuss", "fünfjahresplan", "volkskongress", "jugendarbeitslosigkeit",
+             "binnennachfrage", "chinas wirtschaft", "chinesische wirtschaft", "kapitalflucht"],
+         entities=[" pboc ", "pan gongsheng", " ndrc ", "evergrande", "country garden", "vanke",
+                   " imf ", " iwf "]),
+]
+
+# 摘要导出时的主分类顺序:具体压倒宽泛
+SPECIFICITY = ["security-espionage", "trade-defence", "autos-ev", "tech-ai-chips",
+               "energy-solar", "germany-china", "china-eu-politics", "china-macro"]
+CAT_BY_ID = {c["id"]: c for c in CATEGORIES}
+
+# --- 突发/优先信号 ---
+BREAKING_KEYWORDS = [
+    "sanction", "tariff", " raid", "arrest", "detained", "spy", "espionage", "export ban",
+    "export control", "export restriction", "import ban", "entity list", "blacklist",
+    "unreliable entity", "state visit", "summit", "anti-subsidy", "anti-dumping", "countervailing",
+    "investigation launched", "launches investigation", "opens investigation", "launches probe",
+    "opens probe", "probe into", "blocked", "blocks", "vetoed", "veto", "banned", " ban ", " bans ",
+    "expel", "summon", "retaliat", "seiz", "suspend", "halt", "cyberattack", "hacked",
+    "indict", "charged with", "convict", "provisional duties", "definitive duties",
+    "minimum import price", "wto complaint", "files complaint",
+    "razzia", "festnahme", "festgenommen", "verhaftet", "spionage", "spion", "staatsbesuch",
+    "sanktion", "strafzoll", "strafzölle", "ausfuhrverbot", "exportverbot", "exportstopp",
+    "einfuhrverbot", "exportkontroll", "gipfel", "untersagt", "blockiert", "verboten",
+    "einbestellt", "ausgewiesen", "vergeltung", "beschlagnahmt", "gestoppt", "ermittlungen",
+    "anklage", "angeklagt", "verurteilt", "durchsuchung", "cyberangriff", "hackerangriff",
+    "eilmeldung", "spionageverdacht", "übernahme untersagt",
+]
+
+_EU_CTX = [" europ", " eu ", " germany", " german ", " germans ", " deutschland", " berlin",
+           " brussels", " brüssel"]
+_CN_CTX = [" china", " chines", " peking", " beijing", " sino"]
+# (实体, 语境词表) —— 实体+语境同现即标记优先;语境为 None 表示实体单独出现即优先
+PRIORITY_PAIRS = [
+    ("xi jinping", _EU_CTX), ("li qiang", _EU_CTX), ("wang yi", _EU_CTX),
+    ("he lifeng", _EU_CTX), ("wang wentao", _EU_CTX),
+    ("fu cong", None), ("nexperia", None),
+    (" merz ", _CN_CTX), ("wadephul", _CN_CTX), ("klingbeil", _CN_CTX), ("steinmeier", _CN_CTX),
+    ("von der leyen", _CN_CTX), ("sefcovic", _CN_CTX), ("šefčovič", _CN_CTX), ("kallas", _CN_CTX),
+    ("antonio costa", _CN_CTX), ("antónio costa", _CN_CTX), ("orban", _CN_CTX), ("orbán", _CN_CTX),
+    ("generalbundesanwalt", _CN_CTX), ("bundesanwaltschaft", _CN_CTX),
+    (" cosco", [" hamburg", " germany", " deutschland", " europ", " hafen"]),
+    (" catl ", [" hungary", " ungarn", " debrecen", " erfurt", " thuringia", " thüringen",
+                " germany", " europ", " eu "]),
+    (" byd ", [" hungary", " ungarn", " szeged", " germany", " deutschland", " europ", " eu ",
+               " tariff", " zoll", " plant", " factory", " werk"]),
+]
+
+# --- 相关性闸门 ---
+# 词首空格 = 词首边界保护(否则 "chines"⊂machines、"sino"⊂casino、"chery"⊂archery)
+# china: 欧洲综合流必须提到中国相关词才保留
+CHINA_GATE = [
+    " china", " chines", " sino", " peking", " beijing", " hongkong", " hong kong", " taiwan",
+    " taipei", " tibet", " xinjiang", " uigur", " uyghur", " macau", " macao", "volksrepublik",
+    " südchines", " ostchines",  # südchinesisches Meer 等德语复合词
+    " xi jinping", " li qiang", " wang yi", " mofcom",
+    " byd ", " catl ", " nio ", " xpeng", " geely", " chery", " saic ", " mg motor", " leapmotor",
+    " great wall motor", " gwm ", " zeekr", " denza", " dongfeng", " changan", " hongqi",
+    " gotion", " svolt", " eve energy", " calb ", " farasis",
+    " huawei", " zte ", " xiaomi", " alibaba", " tencent", " baidu", " bytedance", " tiktok",
+    " deepseek", " temu ", " shein", " dji ", " hikvision", " dahua", " unitree", " smic ",
+    " wingtech", " nexperia", " lenovo", " cosco", " longi", " jinko", " trina", " ja solar",
+    " tongwei", " sungrow", " deye ", " goldwind", " mingyang", " zpmc", " crrc ", " cccme",
+    " seltene erden", " rare earth", " konfuzius", " confucius",
+]
+# europe: 中方宽流必须提到欧洲相关词才保留
+EUROPE_GATE = [
+    " europ", " eu ", " germany", " german ", " germans ", " deutschland", " berlin", " brussels",
+    " brüssel", " france", " french", " paris", " netherlands", " dutch", " hague", " italy",
+    " italian", " spain", " spanish", " madrid", " poland", " polish ", " warsaw", " hungary",
+    " hungarian", " budapest", " szeged", " debrecen", " britain", " british", " uk ", " london",
+    " lithuania", " latvia", " estonia", " czech", " slovak", " belgium", " austria", " swiss",
+    " switzerland", " sweden", " swedish", " denmark", " danish", " norway", " finland", " finnish",
+    " greece", " greek", " portugal", " ireland", " romania", " bulgaria", " serbia", " nato ",
+    " ecb ",
+    " asml", " airbus", " volkswagen", " vw ", " bmw ", " mercedes", " porsche", " audi ", " basf",
+    " siemens", " bosch", " stellantis", " renault", " volvo", " polestar", " northvolt",
+    " meyer burger", " vestas", " nordex", " ericsson", " nokia", " maersk",
+    " von der leyen", " macron", " merz ", " orban", " orbán", " kallas", " sefcovic", " šefčovič",
+    " starmer", " tusk ",
+]
+
+def _nt(term: str) -> str:
+    """词表项经过与 _norm 相同的清洗(小写、标点/连字符转空格),
+    并保留显式写出的首尾空格(词边界保护,如 " ev "、" 16+1 ")。
+    否则 "16+1"、"national people's congress" 这类含符号的词永远匹配不上正文。"""
+    lead = " " if term.startswith(" ") else ""
+    trail = " " if term.endswith(" ") else ""
+    core = " ".join(re.sub(r"[^\w\s]", " ", term.lower()).split())
+    return lead + core + trail
+
+
+def _ntl(terms: list[str]) -> list[str]:
+    return [_nt(t) for t in terms]
+
+
+for _c in CATEGORIES:
+    _c["kw"] = _ntl(_c["kw"])
+    _c["entities"] = _ntl(_c["entities"])
+BREAKING_KEYWORDS = _ntl(BREAKING_KEYWORDS)
+CHINA_GATE = _ntl(CHINA_GATE)
+EUROPE_GATE = _ntl(EUROPE_GATE)
+PRIORITY_PAIRS = [(_nt(e), _ntl(c) if c else None) for e, c in PRIORITY_PAIRS]
+
+# 垃圾稿黑名单:市场研究 PR 通稿等(命中即丢,保守收录以免误伤真新闻)
+TITLE_BLOCKLIST = ["market analysis", "market report", "market size", "market forecast",
+                   "market research", "market outlook", "fifa world cup"]
+
+_TOKEN_STOP = {
+    # 聚类分词停用词:本条线新闻里几乎每条都有的词,保留会虚增相似度
+    "the", "and", "for", "with", "from", "this", "that", "after", "over", "into", "amid", "says",
+    "say", "said", "will", "would", "could", "has", "have", "had", "are", "was", "were", "been",
+    "its", "his", "her", "new", "more", "als", "auf", "aus", "bei", "das", "dem", "den", "der",
+    "des", "die", "ein", "eine", "einen", "für", "gegen", "mit", "nach", "und", "von", "vor",
+    "wegen", "wie", "will", "wird", "sind", "ist", "hat", "sich", "über",
+    "china", "chinas", "chinese", "chinesische", "chinesischen", "beijing", "peking",
+    "europe", "european", "europa", "germany", "german", "deutschland", "brussels",
+}
+
+
+def _norm(text: str) -> str:
+    """小写、标点(含连字符)转空格、空白归一,首尾补空格 —— 供子串匹配用。
+    连字符也转空格,使 "EU-China"/"Sino-German"/"E-Auto" 与词表统一到空格形式。"""
+    text = re.sub(r"[^\w\s]", " ", text.lower())
+    return " " + " ".join(text.split()) + " "
+
+
+def categorize(ntitle: str, nsummary: str) -> tuple[list[str], str | None]:
+    """返回 (命中的类别 id 列表, 主分类 id)。计分:kw=1/实体=3,标题×2,总分≥2 入类。"""
+    scores: dict[str, int] = {}
+    for cat in CATEGORIES:
+        if cat["id"] == "china-macro":
+            continue
+        s = 0
+        for kw in cat["kw"]:
+            if kw in ntitle:
+                s += 2
+            elif kw in nsummary:
+                s += 1
+        for ent in cat["entities"]:
+            if ent in ntitle:
+                s += 6
+            elif ent in nsummary:
+                s += 3
+        if s >= 2:
+            scores[cat["id"]] = s
+    if not scores:  # 宏观是兜底类
+        macro = CAT_BY_ID["china-macro"]
+        s = sum(2 if kw in ntitle else (1 if kw in nsummary else 0) for kw in macro["kw"]) \
+            + sum(6 if e in ntitle else (3 if e in nsummary else 0) for e in macro["entities"])
+        if s >= 2:
+            scores["china-macro"] = s
+    if not scores:
+        return [], None
+    primary = max(scores, key=lambda c: (scores[c], -SPECIFICITY.index(c)))
+    return list(scores), primary
+
+
+def is_breaking(ntitle: str, nfull: str) -> bool:
+    if any(b in ntitle for b in BREAKING_KEYWORDS):
+        return True
+    for ent, ctx in PRIORITY_PAIRS:
+        if ent in nfull and (ctx is None or any(c in nfull for c in ctx)):
+            return True
+    return False
+
+
+# ---------------------------------------------------------------------------
+# 3. 抓取 + 规范化(线程池并发,每源独立超时,不因单源挂起阻塞整体)
+# ---------------------------------------------------------------------------
+
+_FALLBACK_DATE_FORMATS = ["%b %d, %Y", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d"]
+
+
+def _entry_time(entry) -> datetime | None:
+    for attr in ("published_parsed", "updated_parsed"):
+        t = getattr(entry, attr, None)
+        if t:
+            return datetime(*t[:6], tzinfo=timezone.utc)
+    for attr in ("published", "updated"):  # 非标日期格式兜底(如 Sixth Tone "Jul 03, 2026")
+        raw = getattr(entry, attr, None)
+        if raw:
+            for fmt in _FALLBACK_DATE_FORMATS:
+                try:
+                    dt = datetime.strptime(raw.strip(), fmt)
+                    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+                except ValueError:
+                    continue
+    return None
+
+
+def gnews_url(query: str, hours: int) -> str:
+    """时间窗大于查询自带的 when: 时放宽之(只放宽不收窄)。"""
+    m = re.search(r"when:(\d+)([dh])", query)
+    if m:
+        cur_hours = int(m.group(1)) * (24 if m.group(2) == "d" else 1)
+        if hours > cur_hours:
+            query = re.sub(r"when:\d+[dh]", f"when:{math.ceil(hours / 24)}d", query)
+    return GNEWS_BASE.format(q=quote_plus(query))
+
+
+def _source_url(src: dict, hours: int) -> str:
+    return gnews_url(src["value"], hours) if src["type"] == "gnews" else src["value"]
+
+
+def _clean_gnews_title(title: str) -> tuple[str, str | None]:
+    """Google News 标题带 " - Outlet" 后缀:剥出媒体名。"""
+    m = re.match(r"^(.*)\s+-\s+([^-]+)$", title)
+    if m:
+        return m.group(1).strip(), m.group(2).strip()
+    return title.strip(), None
+
+
+def _tokens(title: str) -> frozenset[str]:
+    t = re.sub(r"[^\w\s]", " ", title.lower())
+    return frozenset(w for w in t.split() if len(w) >= 3 and w not in _TOKEN_STOP)
+
+
+def test_feed(src_type: str, value: str) -> tuple[bool, str]:
+    """添加源时的连通性测试。"""
+    url = GNEWS_BASE.format(q=quote_plus(value)) if src_type == "gnews" else value
+    try:
+        r = requests.get(url, headers=UA, timeout=FETCH_TIMEOUT)
+        r.raise_for_status()
+        parsed = feedparser.parse(r.content)
+    except Exception as exc:  # noqa: BLE001
+        return False, f"抓取失败: {exc}"
+    if parsed.bozo and not parsed.entries:
+        return False, "无法解析为有效的 RSS/Atom feed"
+    if not parsed.entries:
+        return False, "feed 可解析但当前没有条目"
+    dated = sum(1 for e in parsed.entries if _entry_time(e))
+    msg = f"OK — {len(parsed.entries)} 条,最新: {parsed.entries[0].get('title', '')[:60]}"
+    if dated == 0:
+        return False, "条目均无可解析时间戳,监测会将其全部丢弃 — 建议改用 Google News 查询"
+    return True, msg
+
+
+def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
+    """抓取单个源。在工作线程内完成解析、闸门过滤、归类与突发标记。"""
+    t0 = time.time()
+    health = {"name": src["name"], "lane": src.get("lane", "custom"), "ok": False,
+              "kept": 0, "total": 0, "error": "", "secs": 0.0}
+    url = _source_url(src, hours)
+    try:
+        resp = requests.get(url, headers=UA, timeout=FETCH_TIMEOUT)
+        resp.raise_for_status()
+        parsed = feedparser.parse(resp.content)
+    except Exception as exc:  # noqa: BLE001
+        health["error"] = f"{type(exc).__name__}: {str(exc)[:160]}"
+        health["secs"] = round(time.time() - t0, 1)
+        return [], health
+    if parsed.bozo and not parsed.entries:
+        health["error"] = "无法解析为 RSS/Atom"
+        health["secs"] = round(time.time() - t0, 1)
+        return [], health
+
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    gate = {"china": CHINA_GATE, "europe": EUROPE_GATE}.get(src.get("filter", "none"))
+    is_gnews = src["type"] == "gnews"
+    items: list[dict] = []
+    health["total"] = len(parsed.entries)
+
+    for e in parsed.entries:
+        try:
+            ts = _entry_time(e)
+            if ts is None or ts < cutoff:
+                continue
+            raw_title = (getattr(e, "title", "") or "").strip()
+            link = (getattr(e, "link", "") or "").strip()
+            if not raw_title or not link:
+                continue
+            outlet = None
+            if is_gnews:
+                title, outlet = _clean_gnews_title(raw_title)
+                if len(title) < 12:  # "News"、"Live" 之类无信息栏目标题
+                    continue
+                summary = ""  # gnews 摘要只是标题+媒体名的 HTML,无信息量,且会污染实体匹配
+            else:
+                title = raw_title
+                summary = re.sub(r"<[^>]+>", " ", getattr(e, "summary", "") or "")
+                summary = " ".join(summary.split())[:400]
+            outlet = outlet or src["name"].split("·")[0].strip()
+
+            ntitle = _norm(title)
+            if any(b in ntitle for b in TITLE_BLOCKLIST):
+                continue
+            nsummary = _norm(summary) if summary else " "
+            nfull = ntitle + nsummary
+            if gate and not any(g in nfull for g in gate):
+                continue
+            cats, primary = categorize(ntitle, nsummary)
+            items.append({
+                "source": src["name"], "lane": src.get("lane", "custom"),
+                "lang": src.get("lang", "en"), "outlet": outlet,
+                "title": title, "summary": summary, "link": link, "time": ts,
+                "cats": cats, "primary": primary,
+                "breaking": is_breaking(ntitle, nfull),
+                "tokens": _tokens(title),
+            })
+        except Exception:  # noqa: BLE001 — 单条畸形数据(如 year>9999 的日期)不拖垮整源/整体抓取
+            continue
+
+    # 排序后再截断:不能假设 feed 是新→旧排序(旧→新的 feed 会被提前 break 丢掉最新条目)
+    items.sort(key=lambda x: x["time"], reverse=True)
+    items = items[:PER_SOURCE_CAP]
+    health.update(ok=True, kept=len(items), secs=round(time.time() - t0, 1))
+    return items, health
+
+
+def cluster_items(items: list[dict]) -> list[dict]:
+    """跨源同题聚类:标题词集 Jaccard≥0.5 或包含关系即合并。
+    (0.5 实测恰好合并同一事件的措辞变体,如 summoned/summons 各家改写)"""
+    clusters: list[dict] = []
+    for it in sorted(items, key=lambda x: x["time"], reverse=True):
+        tk = it["tokens"]
+        target = None
+        for cl in clusters:
+            ref = cl["tokens"]
+            if not tk or not ref:
+                continue
+            inter = len(tk & ref)
+            union = len(tk | ref)
+            contained = min(len(tk), len(ref)) >= 4 and (tk <= ref or ref <= tk)
+            if (union and inter / union >= 0.5) or contained:
+                target = cl
+                break
+        if target is None:
+            clusters.append({"tokens": tk, "items": [it]})
+        else:
+            target["items"].append(it)
+
+    out = []
+    for cl in clusters:
+        its = sorted(cl["items"], key=lambda x: x["time"])  # 最早在前 = 首发
+        outlets = {i["outlet"].lower() for i in its}
+        cats = sorted({c for i in its for c in i["cats"]})
+        # 独立报道数:通稿被聚合站原文转载(标题几乎一致)只算一家,
+        # 各家自拟标题才是独立编辑判断 → 取「不同媒体数」与「标题变体数」的较小值
+        variants = {" ".join(sorted(i["tokens"])) for i in its}
+        out.append({
+            "rep": its[0], "items": its, "n": len(its),
+            "diversity": min(len(outlets), len(variants)),
+            "langs": {i["lang"] for i in its},
+            "cats": cats,
+            "breaking": any(i["breaking"] for i in its),
+            "newest": its[-1]["time"],
+        })
+    out.sort(key=lambda c: c["newest"], reverse=True)
+    return out
+
+
+@st.cache_data(ttl=600, show_spinner="正在抓取各源最新报道 …")
+def fetch_all(sources_json: str, hours: int) -> tuple[list[dict], list[dict], int]:
+    """并发抓取全部启用源 → (聚类列表, 各源健康状态, 原始条目数)。缓存 10 分钟。"""
+    sources = [s for s in json.loads(sources_json) if s.get("enabled", True)]
+    all_items: list[dict] = []
+    health: list[dict] = []
+    with cf.ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
+        for items, h in ex.map(lambda s: fetch_one(s, hours), sources):
+            all_items.extend(items)
+            health.append(h)
+    # 完全相同链接去重(同一文章经由多个查询进入)
+    seen_links: set[str] = set()
+    unique = []
+    for it in sorted(all_items, key=lambda x: x["time"], reverse=True):
+        if it["link"] in seen_links:
+            continue
+        seen_links.add(it["link"])
+        unique.append(it)
+    clusters = cluster_items(unique)
+    health.sort(key=lambda h: (h["ok"], h["name"]))
+    return clusters, health, len(unique)
+
+
+# ---------------------------------------------------------------------------
+# 4. 摘要导出
+# ---------------------------------------------------------------------------
+
+def build_digest(clusters: list[dict], hours: int) -> str:
+    now = datetime.now(BERLIN)
+    lines = [f"# 中欧监测早报 · {now:%Y-%m-%d %H:%M} (Berlin)",
+             f"_时间窗 {hours}h · 由 China-Europe Monitor 生成_", ""]
+
+    def fmt(cl):
+        it = cl["rep"]
+        t = it["time"].astimezone(BERLIN)
+        extra = f"(+{cl['n'] - 1}家)" if cl["n"] > 1 else ""
+        return f"- **{t:%d日%H:%M}** [{it['title']}]({it['link']}) — {it['outlet']} {extra}"
+
+    hot = [c for c in clusters if c["breaking"] or c["diversity"] >= 2]
+    if hot:
+        lines.append("## ⚡ 重点")
+        lines += [fmt(c) for c in hot[:15]]
+        lines.append("")
+    hot_ids = {id(c) for c in hot[:15]}
+    for cat in CATEGORIES:
+        rows = [c for c in clusters
+                if id(c) not in hot_ids and c["rep"]["primary"] == cat["id"]]
+        if not rows:
+            continue
+        lines.append(f"## {cat['emoji']} {cat['zh']}")
+        lines += [fmt(c) for c in rows[:8]]
+        lines.append("")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# 5. UI
+# ---------------------------------------------------------------------------
+
+st.set_page_config(page_title="中欧新闻监测", page_icon="📰", layout="wide")
+
+if "sources" not in st.session_state:
+    st.session_state.sources = load_sources()
+
+# 上次访问基线:之后发布的条目标 🆕(基线在会话内固定,不随交互刷新跳变)。
+# 30 分钟宽限:短时间内刷新页面/重连不推进基线,🆕 标记不会因手滑刷新而消失。
+if "baseline" not in st.session_state:
+    baseline = None
+    try:
+        baseline = datetime.fromisoformat(json.loads(STATE_PATH.read_text())["last_visit"])
+    except Exception:
+        pass
+    st.session_state.baseline = baseline
+    now_utc = datetime.now(timezone.utc)
+    if baseline is None or (now_utc - baseline) > timedelta(minutes=30):
+        try:
+            STATE_PATH.write_text(json.dumps({"last_visit": now_utc.isoformat()}))
+        except Exception:
+            pass
+
+with st.sidebar:
+    st.header("设置")
+    hours = st.slider("时间窗(小时)", 6, 72, 24, step=6)
+    lanes_selected = st.multiselect(
+        "来源类型", options=list(LANE_LABELS), default=list(LANE_LABELS),
+        format_func=lambda k: LANE_LABELS[k],
+    )
+    search = st.text_input("🔍 搜索(标题/摘要)", placeholder="如 BYD、Nexperia、seltene Erden …")
+    c1, c2 = st.columns(2)
+    with c1:
+        if st.button("🔄 刷新", use_container_width=True):
+            st.cache_data.clear()
+            st.rerun()
+    with c2:
+        digest_clicked = st.button("📋 早报摘要", use_container_width=True)
+    if digest_clicked:
+        st.session_state.show_digest = True
+
+    st.divider()
+    st.subheader("监控源")
+
+    # --- 按 lane 分组的启停/删除管理 ---
+    to_delete = None
+    by_lane: dict[str, list[int]] = {}
+    for i, src in enumerate(st.session_state.sources):
+        by_lane.setdefault(src.get("lane", "custom"), []).append(i)
+    for lane in LANE_LABELS:
+        idxs = by_lane.get(lane)
+        if not idxs:
+            continue
+        n_on = sum(1 for i in idxs if st.session_state.sources[i].get("enabled", True))
+        with st.expander(f"{LANE_LABELS[lane]} ({n_on}/{len(idxs)})"):
+            for i in idxs:
+                src = st.session_state.sources[i]
+                # widget key 用源地址而非列表下标:删除源后下标位移会让 Streamlit
+                # 把旧的勾选状态套到错误的源上并写盘
+                skey = src["value"]
+                c1, c2 = st.columns([6, 1])
+                with c1:
+                    new_state = st.checkbox(src["name"], value=src.get("enabled", True),
+                                            key=f"en_{skey}")
+                    if new_state != src.get("enabled", True):
+                        src["enabled"] = new_state
+                        save_sources(st.session_state.sources)
+                        st.cache_data.clear()
+                        st.rerun()
+                with c2:
+                    if st.button("✕", key=f"del_{skey}", help="删除该源"):
+                        to_delete = i
+    if to_delete is not None:
+        st.session_state.sources.pop(to_delete)
+        save_sources(st.session_state.sources)
+        st.cache_data.clear()
+        st.rerun()
+
+    # --- 添加新源 ---
+    with st.expander("➕ 添加监控源"):
+        new_name = st.text_input("名称", placeholder="例如 Kiel Institute")
+        new_type = st.radio("类型", ["rss", "gnews"], horizontal=True,
+                            help="rss = 原生 feed 地址;gnews = Google News 查询语句(适合无 RSS 或被 Cloudflare 挡的网站)")
+        if new_type == "rss":
+            new_value = st.text_input("Feed URL", placeholder="https://…/feed")
+        else:
+            new_value = st.text_input("查询语句", placeholder="site:example.com China when:1d")
+        new_lane = st.selectbox("分组", options=list(LANE_LABELS), index=len(LANE_LABELS) - 1,
+                                format_func=lambda k: LANE_LABELS[k])
+        new_filter = st.selectbox(
+            "相关性过滤", options=["china", "europe", "none"], index=0,
+            format_func=lambda v: {"china": "china — 综合流,须提到中国",
+                                   "europe": "europe — 中方源,须提到欧洲",
+                                   "none": "none — 已自带限定,不过滤"}[v])
+        new_lang = st.selectbox("语言", ["en", "de", "zh"], index=0)
+        if st.session_state.pop("add_ok_msg", None):
+            st.success(st.session_state.pop("add_ok_msg_text", "已添加"))
+        if st.button("测试并添加"):
+            if not new_name or not new_value:
+                st.warning("名称和地址/查询语句都要填")
+            elif any(s["value"] == new_value for s in st.session_state.sources):
+                st.warning("该地址/查询已在监控列表中")
+            else:
+                ok, msg = test_feed(new_type, new_value)
+                if ok:
+                    st.session_state.sources.append({
+                        "name": new_name, "type": new_type, "value": new_value,
+                        "lane": new_lane, "lang": new_lang, "filter": new_filter,
+                        "enabled": True,
+                    })
+                    save_sources(st.session_state.sources)
+                    st.cache_data.clear()
+                    # st.rerun() 会吞掉本次的 st.success → 用 flag 留到下一轮显示
+                    st.session_state["add_ok_msg"] = True
+                    st.session_state["add_ok_msg_text"] = f"已添加: {msg}"
+                    st.rerun()
+                else:
+                    st.error(msg)
+
+# --- 抓取 ---
+clusters, health, n_items = fetch_all(json.dumps(st.session_state.sources), hours)
+
+# --- 源健康状态(放在抓取之后,侧边栏尾部) ---
+with st.sidebar:
+    n_bad = sum(1 for h in health if not h["ok"])
+    with st.expander(f"📡 抓取状态 {'🔴 ' + str(n_bad) + ' 个源失败' if n_bad else '🟢 全部正常'}"):
+        for h in health:
+            dot = "🟢" if h["ok"] else "🔴"
+            line = f"{dot} {h['name']} — {h['kept']}/{h['total']}条 · {h['secs']}s"
+            st.caption(line if h["ok"] else f"{line}\n{h['error']}")
+
+# --- 过滤(来源类型 + 搜索) ---
+lanes_set = set(lanes_selected)
+
+
+def _visible(cl: dict) -> bool:
+    its = [i for i in cl["items"] if i["lane"] in lanes_set]
+    if not its:
+        return False
+    if search:
+        q = search.lower()
+        return any(q in i["title"].lower() or q in i["summary"].lower() for i in its)
+    return True
+
+
+visible = [c for c in clusters if _visible(c)]
+
+st.title("📰 中欧新闻监测")
+st.caption(
+    f"{len(visible)} 组报道({n_items} 条)· 过去 {hours}h · "
+    f"更新于 {datetime.now(BERLIN):%Y-%m-%d %H:%M} Berlin · 缓存 10 分钟"
+)
+
+# --- 早报摘要 ---
+if st.session_state.get("show_digest"):
+    digest_md = build_digest(visible, hours)
+    with st.expander("📋 早报摘要(Markdown,可直接粘贴)", expanded=True):
+        st.download_button("⬇️ 下载 .md", digest_md,
+                           file_name=f"digest_{datetime.now(BERLIN):%Y%m%d_%H%M}.md")
+        st.code(digest_md, language="markdown")
+        if st.button("收起摘要"):
+            st.session_state.show_digest = False
+            st.rerun()
+
+# --- 标签页 ---
+BREAKING_WINDOW_H = min(hours, 12)
+_bw_cutoff = datetime.now(timezone.utc) - timedelta(hours=BREAKING_WINDOW_H)
+hot = [c for c in visible if (c["breaking"] or c["diversity"] >= 2) and c["newest"] >= _bw_cutoff]
+
+tab_defs: list[tuple[str, list[dict]]] = [(f"⚡ 重点 {len(hot)}", hot)]
+for cat in CATEGORIES:
+    rows = [c for c in visible if cat["id"] in c["cats"]]
+    tab_defs.append((f"{cat['emoji']} {cat['zh']} {len(rows)}", rows))
+tab_defs.append((f"📋 全部 {len(visible)}", visible))
+
+MAX_CARDS = 60
+
+
+def render_cluster(cl: dict) -> None:
+    rep = cl["rep"]
+    local = rep["time"].astimezone(BERLIN)
+    badges = ""
+    if cl["breaking"]:
+        badges += "🔴 "
+    if st.session_state.baseline and cl["newest"] > st.session_state.baseline:
+        badges += "🆕 "
+    with st.container(border=True):
+        st.markdown(f"{badges}**[{rep['title']}]({rep['link']})**")
+        meta = f"{rep['outlet']} · {local:%a %d %b %H:%M}"
+        if cl["diversity"] >= 2:
+            meta += f" · 🌐 {cl['diversity']} 家独立报道"
+        if len(cl["langs"]) >= 2:
+            meta += " · 跨语言"
+        cat_chips = " ".join(f"`{CAT_BY_ID[c]['zh']}`" for c in cl["cats"] if c in CAT_BY_ID)
+        if cat_chips:
+            meta += " · " + cat_chips
+        st.caption(meta)
+        if rep["summary"]:
+            st.write(rep["summary"][:300])
+        if cl["n"] > 1:
+            with st.expander(f"相关报道 ({cl['n'] - 1}) — 首发: {rep['outlet']} {local:%H:%M}"):
+                for it in cl["items"][1:]:
+                    t = it["time"].astimezone(BERLIN)
+                    st.markdown(f"- [{it['title']}]({it['link']}) — {it['outlet']} · {t:%a %H:%M}")
+
+
+tabs = st.tabs([label for label, _ in tab_defs])
+for tab, (label, rows) in zip(tabs, tab_defs):
+    with tab:
+        if not rows:
+            if label.startswith("⚡"):
+                st.info(f"过去 {BREAKING_WINDOW_H}h 内没有触发突发信号或多源交叉的报道。")
+            else:
+                st.info("该类别暂无报道。可放宽时间窗或检查来源类型筛选。")
+            continue
+        if label.startswith("⚡"):
+            st.caption(f"突发信号词或 ≥2 家独立媒体同题报道 · 最近 {BREAKING_WINDOW_H}h")
+            rows = sorted(rows, key=lambda c: (c["breaking"], c["diversity"], c["newest"]), reverse=True)
+        for cl in rows[:MAX_CARDS]:
+            render_cluster(cl)
+        if len(rows) > MAX_CARDS:
+            st.caption(f"… 另有 {len(rows) - MAX_CARDS} 组未显示(收窄时间窗或用搜索定位)")
