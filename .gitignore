@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 .DS_Store
 monitor_state.json
+events_state.json
+events.json.bak
 digests/
 sources.json.bak
 nohup.out

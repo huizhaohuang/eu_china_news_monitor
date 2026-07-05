@@ -35,6 +35,8 @@ import feedparser
 import requests
 import streamlit as st
 
+import events_monitor  # 📅 活动 tab(独立模块,不与新闻逻辑耦合)
+
 BERLIN = ZoneInfo("Europe/Berlin")
 CONFIG_PATH = Path(__file__).with_name("sources.json")
 STATE_PATH = Path(__file__).with_name("monitor_state.json")
@@ -934,7 +936,9 @@ def render_cluster(cl: dict) -> None:
                     st.markdown(f"- [{it['title']}]({it['link']}) — {it['outlet']} · {t:%a %H:%M}")
 
 
-tabs = st.tabs([label for label, _ in tab_defs])
+tabs = st.tabs([label for label, _ in tab_defs] + [events_monitor.tab_label()])
+with tabs[-1]:
+    events_monitor.render_events_tab()
 for tab, (label, rows) in zip(tabs, tab_defs):
     with tab:
         if not rows:

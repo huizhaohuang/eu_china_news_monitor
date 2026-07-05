@@ -49,6 +49,25 @@ streamlit run china_europe_monitor.py
 - gnews 按**正文**匹配查询词,标题可能与中国无关,所以通讯社 gnews 源配 `filter: "china"`。
 - 时间窗放宽到 >24h 时,gnews 查询里的 `when:1d` 会自动放宽(只放宽不收窄)。
 
+## 📅 活动 tab(会议/展会跟踪)
+
+与新闻流逻辑相反的实体模型:主键 = 活动名+届次年份,种子数据+人工核定,v1 零爬虫。
+代码独立在 `events_monitor.py`,数据在 `events.json`(首次运行自动生成种子,纳入 git);
+`events_state.json`(v2 抓取时间戳)与 `monitor_state.json` 一样不入库。
+
+| 概念 | 说明 |
+|---|---|
+| 行动日 | `press_deadline`(媒体注册截止)优先,否则 `start_date`;倒计时与提醒都基于它 |
+| 提醒档位 | 默认 T-60(申请 press accreditation)/ T-30(向参展企业发采访请求)/ T-14(最后窗口);每活动可覆盖 `reminder_offsets`(如智库活动 `[21,7]`) |
+| `needs_verification` | 日期/链接未核实的条目:年历中显示 ⚠️「日期待核实」,**不参与提醒**(避免按错误日期提醒);在「⚙️ 管理」视图核实(建议 [AUMA 数据库](https://www.auma.de/messen-finden/))后取消勾选转正 |
+| `action_status` | `todo` / `registered` / `interview_requested` / `skipped` / `done`;倒计时视图只显示前三种 |
+| 三个子视图 | ⏰ 行动倒计时(90 天内或已触发提醒,🔴≤14 天/🟡≤30 天)· 🗓️ 年历(未来 18 个月按月分组,可按板块筛选)· ⚙️ 管理(全字段表格编辑+校验保存+Markdown 导出) |
+
+约束:代码**严禁构造/猜测任何 URL**,`source_url` 只允许人工填入;
+无 `start_date` 的条目保存时自动标记待核实。
+v2 计划(未实现,见 `check_date_drift()` 桩):7 天节流的日期漂移检测——仅检测
+已知日期是否从官网页面消失并打回待核实,不自动解析新日期。
+
 ## 归类与优先级调校
 
 关键词表在 `china_europe_monitor.py` 的 `CATEGORIES` / `BREAKING_KEYWORDS` /

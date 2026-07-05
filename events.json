@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "id": "the-smarter-e-europe-2027",
+      "name": "The Smarter E Europe (Intersolar / ees / Power2Drive / EM-Power)",
+      "edition_year": 2027,
+      "sector": "energy",
+      "city": "München",
+      "venue": "Messe München",
+      "start_date": "2027-06-08",
+      "end_date": "2027-06-10",
+      "conference_start": "2027-06-07",
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": "https://www.thesmartere.de/upcoming-exhibition-dates",
+      "notes": "每年6月,慕尼黑,四展同期。2026届为6月23-25日。会议在 ICM,2027年6月7-8日。备用参考: https://www.intersolar.de/exhibition-quick-facts",
+      "needs_verification": false,
+      "last_checked": null
+    },
+    {
+      "id": "iaa-mobility-2027",
+      "name": "IAA Mobility 2027",
+      "edition_year": 2027,
+      "sector": "auto",
+      "city": "München",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": null,
+      "notes": "两年一届(奇数年),往届在9月初。",
+      "needs_verification": true,
+      "last_checked": null
+    },
+    {
+      "id": "hannover-messe-2027",
+      "name": "Hannover Messe 2027",
+      "edition_year": 2027,
+      "sector": "energy",
+      "city": "Hannover",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": null,
+      "notes": "每年4月前后(工业技术/能源)。",
+      "needs_verification": true,
+      "last_checked": null
+    },
+    {
+      "id": "e-world-2027",
+      "name": "E-world energy & water 2027",
+      "edition_year": 2027,
+      "sector": "energy",
+      "city": "Essen",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": null,
+      "notes": "每年2月。",
+      "needs_verification": true,
+      "last_checked": null
+    },
+    {
+      "id": "k-2028",
+      "name": "K 2028",
+      "edition_year": 2028,
+      "sector": "chemicals",
+      "city": "Düsseldorf",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": null,
+      "notes": "三年一届(化工/塑料)。",
+      "needs_verification": true,
+      "last_checked": null
+    },
+    {
+      "id": "automechanika-2028",
+      "name": "Automechanika 2028",
+      "edition_year": 2028,
+      "sector": "auto",
+      "city": "Frankfurt",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": null,
+      "notes": "两年一届(汽车后市场)。",
+      "needs_verification": true,
+      "last_checked": null
+    },
+    {
+      "id": "izb-2028",
+      "name": "IZB 2028",
+      "edition_year": 2028,
+      "sector": "auto",
+      "city": "Wolfsburg",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        60,
+        30,
+        14
+      ],
+      "source_url": null,
+      "notes": "两年一届(汽车供应商展)。",
+      "needs_verification": true,
+      "last_checked": null
+    },
+    {
+      "id": "merics-china-forecast-2027",
+      "name": "MERICS China Forecast 2027",
+      "edition_year": 2027,
+      "sector": "thinktank",
+      "city": "Berlin",
+      "venue": null,
+      "start_date": null,
+      "end_date": null,
+      "conference_start": null,
+      "press_deadline": null,
+      "action_status": "todo",
+      "reminder_offsets": [
+        21,
+        7
+      ],
+      "source_url": null,
+      "notes": "往届在1月中旬(2024届1月17日、2025届1月15日)。活动页: https://merics.org/en/events",
+      "needs_verification": true,
+      "last_checked": null
+    }
+  ]
+}
