@@ -1132,9 +1132,13 @@ def render_cluster(cl: dict) -> None:
                     st.markdown(f"- [{it['title']}]({it['link']}) — {it['outlet']} · {t:%a %H:%M}")
 
 
-tabs = st.tabs([label for label, _ in tab_defs] + [events_monitor.tab_label(), "💬 定制"])
-with tabs[-2]:
-    events_monitor.render_events_tab()
+SHOW_EVENTS_TAB = False  # 📅 活动板块暂时隐藏;改 True 即恢复(数据与代码都还在)
+
+_extra_tabs = ([events_monitor.tab_label()] if SHOW_EVENTS_TAB else []) + ["💬 定制"]
+tabs = st.tabs([label for label, _ in tab_defs] + _extra_tabs)
+if SHOW_EVENTS_TAB:
+    with tabs[-2]:
+        events_monitor.render_events_tab()
 with tabs[-1]:
     beat_interview.render_interview_tab(profile=PROFILE)
 for tab, (label, rows) in zip(tabs, tab_defs):
