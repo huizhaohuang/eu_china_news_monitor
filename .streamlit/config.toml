@@ -1,5 +1,10 @@
 [browser]
 gatherUsageStats = false
 
+[client]
+# 隐藏右上角开发者工具条与 C/R 等快捷键(划词复制不再误触 Clear caches);
+# "viewer" = 面向读者的成品界面。要调试时临时改回 "auto"。
+toolbarMode = "viewer"
+
 [theme]
 base = "light"
