@@ -44,6 +44,7 @@ _GNEWS = {
     "en": "https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en",
     "de": "https://news.google.com/rss/search?q={q}&hl=de&gl=DE&ceid=DE:de",
     "fr": "https://news.google.com/rss/search?q={q}&hl=fr&gl=FR&ceid=FR:fr",
+    "zh": "https://news.google.com/rss/search?q={q}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
 }
 _UA = {"User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36")}
@@ -64,7 +65,7 @@ PROFILE_SCHEMA = {
                 "lane": {"type": "string"},
                 "lang": {"type": "string", "enum": ["en", "de", "fr", "zh"]},
                 "filter": {"type": "string", "enum": ["china", "europe", "none"]},
-                "gnews_locale": {"type": "string", "enum": ["en", "de", "fr"]},
+                "gnews_locale": {"type": "string", "enum": ["en", "de", "fr", "zh"]},
                 "enabled": {"type": "boolean"},
             },
             "required": ["name", "type", "value", "lane", "lang", "filter", "enabled"],
@@ -117,6 +118,12 @@ def _secret(name: str) -> str | None:
     return os.environ.get(name)
 
 
+def _compact(srcs: list[dict]) -> str:
+    keep = ("name", "type", "value", "lang", "filter", "gnews_locale", "tier")
+    return json.dumps([{k: s[k] for k in keep if s.get(k)} for s in srcs],
+                      ensure_ascii=False, separators=(",", ":"))
+
+
 def _catalog_json() -> str:
     """已验证信源目录 = 根目录 sources.json(默认档案),压缩后注入系统提示词。"""
     try:
@@ -127,6 +134,18 @@ def _catalog_json() -> str:
                 if k in s} | ({"gnews_locale": s["gnews_locale"]} if s.get("gnews_locale") else {})
                for s in srcs]
     return json.dumps(compact, ensure_ascii=False, separators=(",", ":"))
+
+
+def _library_md() -> str:
+    """领域扩展库(source_library.json)→ 按领域包分组的紧凑文本,注入系统提示词。"""
+    try:
+        lib = json.loads((REPO_DIR / "source_library.json").read_text(encoding="utf-8"))
+    except Exception:
+        return "(领域扩展库缺失,仅可使用上方核心目录与 gnews 查询)"
+    parts = []
+    for pid, pack in lib.get("packs", {}).items():
+        parts.append(f"### {pack.get('zh', pid)} [{pid}]\n{_compact(pack.get('sources', []))}")
+    return "\n".join(parts)
 
 
 def _profile_context(profile: str | None) -> str:
@@ -166,13 +185,18 @@ def _build_system(profile: str | None) -> str:
 2. 组装 Google News 查询:`site:域名 (关键词) when:Nd` 或全网关键词查询,非英语站配 locale。
 目录外的原生 RSS 一律不写——猜测的 feed 路径大概率是死链(本平台实测过)。用户想监控目录外的网站时,用 site: 查询替代,并在 name 里注明 (via GNews)。
 
-## 已验证信源目录(可直接选用)
+## 已验证信源目录 A:中欧核心(可直接选用)
 {_catalog_json()}
 
+## 已验证信源目录 B:领域扩展库(按领域包分组,均经实测;按记者条线从相关包挑选)
+{_library_md()}
+
 ## 渠道经验(组装查询时参考)
-- Politico.eu/Euractiv/consilium 原生 RSS 被 Cloudflare 挡,必须 gnews;FT/Reuters/Bloomberg/WSJ 无公开 RSS,必须 gnews site: 查询;Global Times/新华原生 RSS 已死,必须 gnews。
-- 法语查询必须 gnews_locale=fr,德语类似;低频官方源(部委公告)用 when:7d,高频媒体 when:1d~2d。
-- 全网兜底查询(不限站点)是防漏的安全网,给每个档案配 1-2 条。
+- Politico.eu/Euractiv/consilium 原生 RSS 被 Cloudflare 挡,必须 gnews;Reuters/AP/Bloomberg/WSJ 无公开 RSS,必须 gnews site: 查询;FT 例外:分版面 `ft.com/<版面>?format=rss` 可用。
+- **中文查询必须 gnews_locale=zh**(英文区返回 0 条,实测),法语=fr、德语=de 同理;低频官方源(部委公告)用 when:7d~14d,高频媒体 when:1d~2d。
+- 大陆媒体原生 RSS 大多已死或冻结(人民网/中国日报/环球),活的例外:中新社 chinanews.com.cn/rss/<版面>.xml、CGTN cgtn.com/subscribe/rss/section/<版面>.xml、界面快报;其余大陆站一律走 zh 区 gnews site: 查询。南方周末无法监测(无 RSS 且 Google 不收录)。
+- 国际主流分版面 RSS 模式(均已验证):BBC feeds.bbci.co.uk/news/<版面>/rss.xml;Guardian 任意版面/标签页 URL 加 /rss;NYT rss.nytimes.com/services/xml/rss/nyt/<版面驼峰>.xml;Economist economist.com/<版面>/rss.xml;NPR feeds.npr.org/<数字ID>/rss.xml;CNBC search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=<版面ID>。
+- 全网兜底查询(不限站点)是防漏的安全网,给每个档案配 1-2 条(中英条线各一条,注意 locale)。
 - 会议/展会雷达(📅 活动 tab)是全组共享的,不进个人档案,不用生成。
 {_profile_context(profile)}"""
 

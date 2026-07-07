@@ -1,0 +1,1369 @@
+{
+ "schema_version": 1,
+ "updated": "2026-07-07",
+ "note": "领域扩展库:仅经本机实测(条目有时间戳且≤21天新)的源;访谈配置生成时注入系统提示词",
+ "packs": {
+  "cnmedia": {
+   "zh": "cnmedia",
+   "sources": [
+    {
+     "name": "界面新闻 · 快报",
+     "type": "rss",
+     "value": "https://a.jiemian.com/index.php?m=article&a=rss",
+     "lang": "zh",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media",
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 30 entries, all within ~6h (flash newswire 界面快报, ~120 items/day, heavy on markets/companies/world). Free, full pubDates. URL not discoverab"
+    },
+    {
+     "name": "中新社 · 要闻",
+     "type": "rss",
+     "value": "https://www.chinanews.com.cn/rss/importnews.xml",
+     "lang": "zh",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 30 entries spanning ~1 day (curated top-news, ~30/day). Free. 30-item rolling window — poll at least a few times daily. China Newsservice i"
+    },
+    {
+     "name": "中新社 · 国际",
+     "type": "rss",
+     "value": "https://www.chinanews.com.cn/rss/world.xml",
+     "lang": "zh",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 30 entries, newest same-day. International-news section (still global, not Europe-only — keep europe gate). Free, dated. Same 30-item rolli"
+    },
+    {
+     "name": "CGTN · World",
+     "type": "rss",
+     "value": "https://www.cgtn.com/subscribe/rss/section/world.xml",
+     "lang": "en",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 48 entries over 4 days (~12/day), fresh same-day. Free, EN state-media framing. No dedicated Europe section (europe.xml 404, newseu.cgtn.co"
+    },
+    {
+     "name": "澎湃新闻 · 欧洲",
+     "type": "gnews",
+     "value": "site:thepaper.cn (欧盟 OR 欧洲 OR 德国 OR 法国 OR 英国 OR 中欧) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "core",
+     "notes": "No native RSS (rss.jsp/feed 404; site itself times out python-requests). MUST use zh locale hl=zh-CN&gl=CN&ceid=CN:zh-Hans — verified 2026-07-07: scoped query n"
+    },
+    {
+     "name": "财新 · 欧洲",
+     "type": "gnews",
+     "value": "site:caixin.com (欧盟 OR 欧洲 OR 德国 OR 法国 OR 英国) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "cn-media",
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "Native RSS dead (caixin.com/rss/* redirects to other.caixin.com 404 page; caixinglobal.com/rss 403). MUST use zh locale (bare query: en n=18 vs zh n=100). Verif"
+    },
+    {
+     "name": "环球时报中文 · 欧洲",
+     "type": "gnews",
+     "value": "site:huanqiu.com (欧盟 OR 欧洲 OR 德国 OR 法国 OR 英国 OR 北约) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "core",
+     "notes": "huanqiu.com has no RSS (old rss.huanqiu.com redirects to sitemap). MUST use zh locale (bare query: en n=2 vs zh n=100). Verified 2026-07-07: scoped query n=100,"
+    },
+    {
+     "name": "中新社 · 财经",
+     "type": "rss",
+     "value": "https://www.chinanews.com.cn/rss/finance.xml",
+     "lang": "zh",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media",
+      "finance"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 30 entries, newest same-day. Finance/econ section, free, dated. 30-item rolling window."
+    },
+    {
+     "name": "中新社 · 即时新闻",
+     "type": "rss",
+     "value": "https://www.chinanews.com.cn/rss/scroll-news.xml",
+     "lang": "zh",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 30 entries all same-day — true firehose (scroll wire, hundreds/day). CAVEAT: 30-item window turns over in ~1-2h, so infrequent polling miss"
+    },
+    {
+     "name": "CGTN · Business",
+     "type": "rss",
+     "value": "https://www.cgtn.com/subscribe/rss/section/business.xml",
+     "lang": "en",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media",
+      "finance"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 50 entries over ~2 weeks (~4/day), fresh same-day. Free EN. Slower cadence than World section."
+    },
+    {
+     "name": "CGTN · China",
+     "type": "rss",
+     "value": "https://www.cgtn.com/subscribe/rss/section/china.xml",
+     "lang": "en",
+     "filter": "europe",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 50 entries over 4 days, fresh same-day. Domestic-China section in EN — useful for official policy announcements; europe gate keeps only EU-"
+    },
+    {
+     "name": "人民网 · 欧洲",
+     "type": "gnews",
+     "value": "site:people.com.cn (欧盟 OR 欧洲 OR 德国 OR 法国) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "optional",
+     "notes": "Native RSS returns 200 but FROZEN at 2025-06-05 (politics/world/finance.xml all stopped) — do not use. MUST use zh locale (bare: en n=12 vs zh n=100). Verified "
+    },
+    {
+     "name": "新华网中文 · 欧洲",
+     "type": "gnews",
+     "value": "site:news.cn (欧盟 OR 欧洲 OR 德国 OR 法国) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "optional",
+     "notes": "Native zh RSS dead: xinhuanet.com/politics/news_politics.xml frozen 2022-12 with malformed undated items; news.cn/rss/ is 403. Verified 2026-07-07: scoped zh-lo"
+    },
+    {
+     "name": "中国日报 EN · Europe",
+     "type": "gnews",
+     "value": "site:chinadaily.com.cn (Europe OR EU OR Germany OR Brussels) when:2d",
+     "lang": "en",
+     "filter": "none",
+     "region": "cn",
+     "domains": [
+      "cn-media"
+     ],
+     "tier": "optional",
+     "notes": "Native RSS (chinadaily.com.cn/rss/*_rss.xml) returns 200 but FROZEN at 2017-12; europe_rss.xml 404. Verified 2026-07-07: en-locale scoped query n=100 fresh (ind"
+    }
+   ]
+  },
+  "education": {
+   "zh": "教育",
+   "sources": [
+    {
+     "name": "Inside Higher Ed",
+     "type": "rss",
+     "value": "https://www.insidehighered.com/rss.xml",
+     "lang": "en",
+     "filter": "none",
+     "region": "us",
+     "domains": [
+      "education"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 10 entries, newest same-day. Free access (registration nags on-site; RSS gives summaries). Daily weekday cadence. Authoritative US higher-e"
+    },
+    {
+     "name": "Times Higher Education (via GNews)",
+     "type": "gnews",
+     "value": "site:timeshighereducation.com when:7d",
+     "lang": "en",
+     "filter": "none",
+     "region": "uk",
+     "domains": [
+      "education"
+     ],
+     "tier": "core",
+     "notes": "Native /rss.xml returns 403 'Sorry' page for every UA (path-level bot block); gnews query verified 2026-07-07 with 100 dated entries, newest same-day. Metered p"
+    },
+    {
+     "name": "The PIE News",
+     "type": "rss",
+     "value": "https://thepienews.com/feed/",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "education"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 10 entries, newest same-day. Free. WordPress feed. International-education trade press (student mobility, visas, recruitment agents) — high"
+    },
+    {
+     "name": "University World News (via GNews)",
+     "type": "gnews",
+     "value": "site:universityworldnews.com when:7d",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "education"
+     ],
+     "tier": "core",
+     "notes": "No native RSS (page.php?page=rss returns empty body; rss.php 404). gnews verified 2026-07-07: 26 dated entries in 7d, newest 1d. Free (donor-funded). Weekly pub"
+    },
+    {
+     "name": "中国教育报/中国教育新闻网 (via GNews)",
+     "type": "gnews",
+     "value": "site:jyb.cn when:7d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "education",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "MOE-affiliated official education outlet. jyb.cn/rss/ is a dead HTML page. REQUIRES zh gnews locale hl=zh-CN&gl=CN&ceid=CN:zh-Hans — same query returns 0 entrie"
+    },
+    {
+     "name": "教育部 moe.gov.cn (via GNews)",
+     "type": "gnews",
+     "value": "site:moe.gov.cn when:7d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "education",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "Ministry site has no RSS. REQUIRES zh gnews locale hl=zh-CN&gl=CN&ceid=CN:zh-Hans (0 entries under en-US). Verified 2026-07-07 (zh locale): 93 dated entries in "
+    },
+    {
+     "name": "兜底 · 中国教育 ZH (全网)",
+     "type": "gnews",
+     "value": "(教育部 OR 高校 OR 留学生 OR 双减) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "education",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "ZH catch-all across mainland outlets (科学网/澎湃/央媒 etc). REQUIRES zh gnews locale hl=zh-CN&gl=CN&ceid=CN:zh-Hans; same query under en-US returns ~2 junk entries. V"
+    },
+    {
+     "name": "兜底 · China education EN (全网)",
+     "type": "gnews",
+     "value": "intitle:China (education OR universities OR students) when:2d",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "education",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "EN catch-all for international coverage of Chinese education/students. Verified 2026-07-07: 52 dated entries in 2d, newest same-hour. intitle:China keeps precis"
+    },
+    {
+     "name": "Guardian · Education",
+     "type": "rss",
+     "value": "https://www.theguardian.com/education/rss",
+     "lang": "en",
+     "filter": "none",
+     "region": "uk",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 16 entries, newest same-day. Free. Multiple posts/day; UK schools + HE heavy, periodic Chinese-students coverage. Section-feed pattern theg"
+    },
+    {
+     "name": "BBC News · Education",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/education/rss.xml",
+     "lang": "en",
+     "filter": "none",
+     "region": "uk",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 18 entries, newest same-day. Free, daily. UK-domestic slant (schools, Ofsted, tuition) — lower China density than Guardian; overlaps Guardi"
+    },
+    {
+     "name": "ICEF Monitor",
+     "type": "rss",
+     "value": "https://monitor.icef.com/feed/",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Verified 2026-07-07: 8 entries, newest 5d old — slow cadence (~2-3 posts/week) is normal for this outlet, not staleness. Free. Market intelligence on internatio"
+    },
+    {
+     "name": "Chronicle of Higher Education (via GNews)",
+     "type": "gnews",
+     "value": "site:chronicle.com when:7d",
+     "lang": "en",
+     "filter": "none",
+     "region": "us",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Site is Cloudflare-challenged and hard-paywalled — direct RSS endpoints 404. gnews verified 2026-07-07: 100 dated entries in 7d, newest same-day. Headline-only "
+    },
+    {
+     "name": "芥末堆 (via GNews)",
+     "type": "gnews",
+     "value": "site:jiemodui.com when:7d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "education",
+      "china"
+     ],
+     "tier": "optional",
+     "notes": "Edtech/教育产业 trade press. Native feed https://www.jiemodui.com/rss.xml IS live (50 items, same-day) but pubDate is Chinese-localized RFC822 ('星期二, 07 七月 2026 18:"
+    },
+    {
+     "name": "澎湃新闻 · 教育 (via GNews)",
+     "type": "gnews",
+     "value": "site:thepaper.cn (教育 OR 高校 OR 双减) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "education",
+      "china"
+     ],
+     "tier": "optional",
+     "notes": "thepaper.cn has no official RSS (rss_jiaoyu.xml 404); query scopes to education keywords. REQUIRES zh gnews locale. Verified 2026-07-07 (zh locale): 100 dated e"
+    }
+   ]
+  },
+  "finance": {
+   "zh": "金融与市场",
+   "sources": [
+    {
+     "name": "Financial Times · Markets",
+     "type": "rss",
+     "value": "https://www.ft.com/markets?format=rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "Legacy ?format=rss still works on FT stream pages (no gnews needed). ~25 items, multiple/day, verified fresh same-day. Hard paywall on articles but feed carries"
+    },
+    {
+     "name": "CNBC · Finance",
+     "type": "rss",
+     "value": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "Section feed (id 10000664), 30 items, multiple/day, verified same-day. Free. Sibling feeds verified: Economy id 20910258 (slower, ~4d), Investing id 15839069 (s"
+    },
+    {
+     "name": "Caixin Global · Finance",
+     "type": "gnews",
+     "value": "site:caixinglobal.com (finance OR markets OR bond OR banking OR stocks) when:7d",
+     "lang": "en",
+     "filter": "none",
+     "region": "cn",
+     "domains": [
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "87 dated entries/7d, newest same-day. Scopes the existing general Caixin coverage down to finance/markets. Caixin Global is metered-paywall; gnews headlines suf"
+    },
+    {
+     "name": "证券时报 Securities Times",
+     "type": "gnews",
+     "value": "site:stcn.com when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "No native RSS (/rss /feed 404). Verified via zh locale hl=zh-CN&gl=CN&ceid=CN:zh-Hans: 100 entries/2d (capped), newest same-day. Official securities daily (证监会指"
+    },
+    {
+     "name": "21财经 21jingji",
+     "type": "gnews",
+     "value": "site:21jingji.com when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "No native RSS. Verified via zh locale (hl=zh-CN&gl=CN&ceid=CN:zh-Hans): 100 entries/2d, newest same-day. 21世纪经济报道 online — strong markets/banking/broker beat; s"
+    },
+    {
+     "name": "央行/证监会官网公告 PBoC+CSRC announcements",
+     "type": "gnews",
+     "value": "(site:pbc.gov.cn OR site:csrc.gov.cn) when:7d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "finance",
+      "macro"
+     ],
+     "tier": "core",
+     "notes": "Primary-source announcements. Verified via zh locale: 95 entries/7d, newest same-day. Caveat: Google indexes csrc.gov.cn richly but pbc.gov.cn thinly (~7 items/"
+    },
+    {
+     "name": "ECB · Press",
+     "type": "rss",
+     "value": "https://www.ecb.europa.eu/rss/press.html",
+     "lang": "en",
+     "filter": "none",
+     "region": "eu",
+     "domains": [
+      "macro",
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "Official ECB press feed, 15 items, verified 1d-fresh. Press releases + statements; low volume, high signal. Already institution-scoped → no gate."
+    },
+    {
+     "name": "China markets & PBoC policy (EN catch-all)",
+     "type": "gnews",
+     "value": "(China (\"financial markets\" OR PBOC OR \"bond market\" OR yuan OR renminbi OR \"stock market\")) when:1d",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "finance",
+      "macro"
+     ],
+     "tier": "core",
+     "notes": "Catch-all across international outlets: 34 entries/1d, newest same-day. Already China-scoped by query → no gate. Catches Reuters/Bloomberg/WSJ coverage that has"
+    },
+    {
+     "name": "Federal Reserve · Press releases",
+     "type": "rss",
+     "value": "https://www.federalreserve.gov/feeds/press_all.xml",
+     "lang": "en",
+     "filter": "none",
+     "region": "us",
+     "domains": [
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "Official, 20 items, verified same-day. Includes enforcement actions/bank applications noise alongside FOMC material. Monetary-only variant press_monetary.xml is"
+    },
+    {
+     "name": "BIS · Press releases",
+     "type": "rss",
+     "value": "https://www.bis.org/doclist/all_pressrels.rss",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "25 items, newest 9d at verification — low cadence is normal for BIS press. Found via RSS directory bis.org/rss/index.htm (guessed doclist names 404). Official, "
+    },
+    {
+     "name": "BIS · Central bankers' speeches",
+     "type": "rss",
+     "value": "https://www.bis.org/doclist/cbspeeches.rss",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "25 items, newest 6d. Aggregates speeches from central banks worldwide incl. PBoC and ECB officials in English — unique primary-source signal for central-bank wa"
+    },
+    {
+     "name": "IMF (via Google News)",
+     "type": "gnews",
+     "value": "site:imf.org when:7d",
+     "lang": "en",
+     "filter": "china",
+     "region": "intl",
+     "domains": [
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "imf.org WAF hard-403s all direct RSS endpoints even with full browser headers — gnews is the only route. 82 entries/7d, newest same-day. Covers all member count"
+    },
+    {
+     "name": "上海证券报 Shanghai Securities News",
+     "type": "gnews",
+     "value": "site:cnstock.com when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "finance"
+     ],
+     "tier": "optional",
+     "notes": "No native RSS. Verified via zh locale: 100 entries/2d, newest same-day. Official 证监会 disclosure paper (新华社系); substantial overlap with 证券时报 hence optional. Free"
+    },
+    {
+     "name": "监管政策动态 China regulator watch (zh media)",
+     "type": "gnews",
+     "value": "(央行 OR 中国人民银行 OR 证监会 OR 金融监管总局) (政策 OR 公告 OR 通知 OR 发布 OR 表态) when:2d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "finance",
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "72 entries/2d, newest same-day, verified via zh locale. Media coverage of PBoC/CSRC/NFRA policy moves — compensates for Google's thin indexing of pbc.gov.cn in "
+    }
+   ]
+  },
+  "health": {
+   "zh": "医疗健康与生物医药",
+   "sources": [
+    {
+     "name": "Endpoints News",
+     "type": "rss",
+     "value": "https://endpts.com/feed/",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "core",
+     "notes": "Verified 2026-07-07: 24 entries, newest same-day, several posts/day. Some articles Endpoints-Premium paywalled but headlines+excerpts in feed. Google News does "
+    },
+    {
+     "name": "Fierce Pharma",
+     "type": "gnews",
+     "value": "site:fiercepharma.com when:2d",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "core",
+     "notes": "Verified 15 dated entries/2d, newest same-day. Direct RSS (fiercepharma.com/rss/xml) exists but pubDate format 'Jul 7, 2026 8:15am' is unparseable by feedparser"
+    },
+    {
+     "name": "Fierce Biotech",
+     "type": "gnews",
+     "value": "site:fiercebiotech.com when:2d",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "core",
+     "notes": "Verified 20 dated entries/2d, newest same-day. Same broken-pubDate direct RSS as Fierce Pharma (Questex CMS) — must use gnews. Strong on biotech deals/layoffs/R"
+    },
+    {
+     "name": "BioPharma Dive",
+     "type": "rss",
+     "value": "https://www.biopharmadive.com/feeds/news/",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "core",
+     "notes": "Verified: 10 entries, newest same-day, several/day. Free, full-text summaries. Industry Dive /feeds/news/ pattern. Covers China biotech (e.g. Hengrui/Kailera GL"
+    },
+    {
+     "name": "STAT News",
+     "type": "rss",
+     "value": "https://www.statnews.com/feed/",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "core",
+     "notes": "Verified: 20 entries, newest same-day, high cadence. Many items STAT+ subscriber-paywalled but feed carries all headlines + excerpts (still useful for monitorin"
+    },
+    {
+     "name": "Reuters · Pharma & Health",
+     "type": "gnews",
+     "value": "site:reuters.com (pharma OR pharmaceutical OR biotech OR drugmaker OR FDA) when:2d",
+     "lang": "en",
+     "filter": "china",
+     "region": "intl",
+     "domains": [
+      "health"
+     ],
+     "tier": "core",
+     "notes": "Verified 57 dated entries/2d, newest same-day. Reuters has no public RSS. Narrower alternative site:reuters.com/business/healthcare-pharmaceuticals gives ~8/2d "
+    },
+    {
+     "name": "Google News · China Pharma/Biotech (EN)",
+     "type": "gnews",
+     "value": "(China OR Chinese) (pharma OR biotech OR drugmaker OR \"drug approval\" OR NMPA) when:2d",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "health",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "Catch-all, verified 42 dated entries/2d, newest same-day. Surfaces China angles from BioPharma Dive, Endpoints, Reuters, STAT etc. in one stream — the backbone "
+    },
+    {
+     "name": "NMPA 国家药监局 · 官方公告",
+     "type": "gnews",
+     "value": "site:nmpa.gov.cn when:14d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "health",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "Full zh-CN Google News search-RSS URL used as direct rss-type source because the app's GNEWS_LOCALES lacks zh (zh queries return 0 under en-US edition). Verifie"
+    },
+    {
+     "name": "国家卫健委 · 政策与报道",
+     "type": "gnews",
+     "value": "国家卫健委 when:7d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "health",
+      "china"
+     ],
+     "tier": "core",
+     "notes": "Media-coverage keyword query (国家卫健委) as full zh-CN gnews URL in rss type. Verified 23 dated entries/7d (18/2d), newest same-day. Chosen over site:nhc.gov.cn whi"
+    },
+    {
+     "name": "创新药出海/授权 (中文业界脉搏)",
+     "type": "gnews",
+     "value": "创新药 (出海 OR 授权 OR BD交易) when:7d",
+     "lang": "zh",
+     "filter": "none",
+     "gnews_locale": "zh",
+     "region": "cn",
+     "domains": [
+      "health",
+      "china"
+     ],
+     "tier": "optional",
+     "notes": "China innovative-drug licensing/out-bound BD tracker (创新药 出海/授权/BD交易), full zh-CN gnews URL in rss type. Verified 55 dated entries/7d, newest same-day. Heavy on"
+    },
+    {
+     "name": "WHO · News",
+     "type": "rss",
+     "value": "https://www.who.int/rss-feeds/news-english.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "intl",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Verified: 25 entries, newest 5d old — slow cadence (a few items/week: outbreak news, guidelines, statements). Free. General global-health stream, needs China ga"
+    },
+    {
+     "name": "Pharmaphorum",
+     "type": "rss",
+     "value": "https://pharmaphorum.com/rssfeed/news-and-features",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Verified: 5 entries, newest same-day. NB: the conventional /feed URL redirects to an HTML page — the real feed lives at /rssfeed/news-and-features. Free; low vo"
+    },
+    {
+     "name": "The Lancet · Current Issue",
+     "type": "rss",
+     "value": "https://www.thelancet.com/rssfeed/lancet_current.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Verified: 32 entries, newest 3d — weekly issue table-of-contents. Research articles paywalled; headlines/abstract links still useful (Lancet regularly publishes"
+    },
+    {
+     "name": "BMJ · Latest",
+     "type": "rss",
+     "value": "https://www.bmj.com/rss/recent.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Verified: 6 entries, newest same-day. Small rolling window (~6 items), mix of free news/analysis and paywalled research; headline-only monitoring works. Needs C"
+    }
+   ]
+  },
+  "mainstream": {
+   "zh": "国际主流分版面",
+   "sources": [
+    {
+     "name": "BBC · China",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/world/asia/china/rss.xml",
+     "lang": "en",
+     "filter": "none",
+     "region": "uk",
+     "domains": [
+      "china",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Free, full access. China-scoped regional feed, ~12 entries, several items/day. Verified 2026-07-07, newest entry same-day."
+    },
+    {
+     "name": "Guardian · China",
+     "type": "rss",
+     "value": "https://www.theguardian.com/world/china/rss",
+     "lang": "en",
+     "filter": "none",
+     "region": "uk",
+     "domains": [
+      "china",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Free. China tag page feed, 20 entries, daily updates. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Economist · China",
+     "type": "rss",
+     "value": "https://www.economist.com/china/rss.xml",
+     "lang": "en",
+     "filter": "none",
+     "region": "uk",
+     "domains": [
+      "china",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Hard paywall — feed gives headline + standfirst only (still useful for monitoring). 300-entry deep archive, weekly print cadence plus online dailies. Verified 2"
+    },
+    {
+     "name": "AP · China (Google News)",
+     "type": "gnews",
+     "value": "site:apnews.com (China OR Chinese) when:2d",
+     "lang": "en",
+     "filter": "none",
+     "region": "us",
+     "domains": [
+      "china",
+      "world"
+     ],
+     "tier": "core",
+     "notes": "AP has no public RSS; this Google News site: query returned 100 dated entries, newest same-day. AP content is free. Verified 2026-07-07 via news.google.com/rss/"
+    },
+    {
+     "name": "Reuters · China (Google News)",
+     "type": "gnews",
+     "value": "site:reuters.com (China OR Chinese) when:2d",
+     "lang": "en",
+     "filter": "none",
+     "region": "intl",
+     "domains": [
+      "china",
+      "world"
+     ],
+     "tier": "core",
+     "notes": "Reuters killed public RSS (legacy endpoints return 401/404). Google News query returned 100 dated entries, newest same-day. Reuters.com metered paywall — headli"
+    },
+    {
+     "name": "BBC · Europe",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "europe",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Free. Europe regional feed, 22 entries, updates hourly. China-gated it yields China-in-Europe stories. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · Europe",
+     "type": "rss",
+     "value": "https://www.theguardian.com/world/europe-news/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "europe",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Free. Europe tag feed, 20 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Europe",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Europe.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "europe",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Paywalled site; feed gives headline + summary (usable for monitoring). 20 entries, updates daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Economist · Europe",
+     "type": "rss",
+     "value": "https://www.economist.com/europe/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "europe",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Hard paywall, headline + standfirst. 300-entry archive, weekly cadence + dailies. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "BBC · World",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/world/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "world",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Free. General world stream, 28 entries, hourly updates — needs China gate. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · World",
+     "type": "rss",
+     "value": "https://www.theguardian.com/world/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "world",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Free. General world stream, 45 entries, hourly — needs China gate. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · World",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "world",
+      "geopolitics"
+     ],
+     "tier": "core",
+     "notes": "Paywalled site, headline + summary in feed. 55 entries, hourly — needs China gate. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Economist · Finance & economics",
+     "type": "rss",
+     "value": "https://www.economist.com/finance-and-economics/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "finance",
+      "macro"
+     ],
+     "tier": "core",
+     "notes": "Hard paywall, headline + standfirst. 300-entry archive, weekly + dailies. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Business",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "business",
+      "finance"
+     ],
+     "tier": "core",
+     "notes": "Paywalled site, headline + summary. 50 entries, hourly. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "BBC · Business",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/business/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "business",
+      "finance"
+     ],
+     "tier": "optional",
+     "notes": "Free. 46 entries, hourly. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · Business",
+     "type": "rss",
+     "value": "https://www.theguardian.com/business/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "business",
+      "finance"
+     ],
+     "tier": "optional",
+     "notes": "Free. 40 entries, hourly. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Economist · Business",
+     "type": "rss",
+     "value": "https://www.economist.com/business/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "business"
+     ],
+     "tier": "optional",
+     "notes": "Hard paywall, headline + standfirst. 300-entry archive, weekly + dailies. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Economy",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "economy",
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. 20 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "CNBC · Economy",
+     "type": "rss",
+     "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "economy",
+      "macro"
+     ],
+     "tier": "optional",
+     "notes": "Mostly free (occasional PRO items). 30 entries; slower cadence — newest was 4d old at verification 2026-07-07."
+    },
+    {
+     "name": "CNBC · Asia",
+     "type": "rss",
+     "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "asia",
+      "business"
+     ],
+     "tier": "optional",
+     "notes": "Mostly free. Asia News section, 30 entries, same-day updates — heavy China/HK markets coverage. Verified 2026-07-07."
+    },
+    {
+     "name": "CNBC · International",
+     "type": "rss",
+     "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100727362",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "world",
+      "business"
+     ],
+     "tier": "optional",
+     "notes": "Mostly free. 'International: Top News And Analysis', 30 entries, hourly. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "CNBC · Tech",
+     "type": "rss",
+     "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "tech"
+     ],
+     "tier": "optional",
+     "notes": "Mostly free. 30 entries, same-day updates. Verified 2026-07-07."
+    },
+    {
+     "name": "BBC · Technology",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "tech"
+     ],
+     "tier": "optional",
+     "notes": "Free. 21 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · Technology",
+     "type": "rss",
+     "value": "https://www.theguardian.com/technology/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "tech"
+     ],
+     "tier": "optional",
+     "notes": "Free. 28 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Technology",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "tech"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. 20 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Economist · Science & technology",
+     "type": "rss",
+     "value": "https://www.economist.com/science-and-technology/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "science",
+      "tech"
+     ],
+     "tier": "optional",
+     "notes": "Hard paywall, headline + standfirst. 300-entry archive; weekly cadence — newest 4d old at verification 2026-07-07 (normal for weekly)."
+    },
+    {
+     "name": "BBC · Science & Environment",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "science",
+      "environment"
+     ],
+     "tier": "optional",
+     "notes": "Free. 42 entries, daily. Note underscore slug 'science_and_environment'. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · Environment",
+     "type": "rss",
+     "value": "https://www.theguardian.com/environment/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "environment",
+      "climate"
+     ],
+     "tier": "optional",
+     "notes": "Free. 25 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Climate",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "climate",
+      "environment"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. 55 entries (deep for NYT), daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · Science",
+     "type": "rss",
+     "value": "https://www.theguardian.com/science/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "science"
+     ],
+     "tier": "optional",
+     "notes": "Free. 27 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Science",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Science.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "science"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. 25 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NPR · Science",
+     "type": "rss",
+     "value": "https://feeds.npr.org/1007/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "science"
+     ],
+     "tier": "optional",
+     "notes": "Free. Shallow feed (10 entries), daily, US-centric. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "BBC · Health",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/health/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Free. 51 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Health",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Health.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. 20 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NPR · Health",
+     "type": "rss",
+     "value": "https://feeds.npr.org/1128/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "health"
+     ],
+     "tier": "optional",
+     "notes": "Free. Shallow (10 entries), daily, US-centric. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "BBC · Education",
+     "type": "rss",
+     "value": "https://feeds.bbci.co.uk/news/education/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Free. 18 entries, daily, UK-centric education news. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Guardian · Education",
+     "type": "rss",
+     "value": "https://www.theguardian.com/education/rss",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Free. 16 entries, daily. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "NYT · Education",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/Education.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. Education feed exists and is live: 20 entries, updated same-day at verification 2026-07-07."
+    },
+    {
+     "name": "NPR · Education",
+     "type": "rss",
+     "value": "https://feeds.npr.org/1013/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "education"
+     ],
+     "tier": "optional",
+     "notes": "Free. Shallow (10 entries), newest 1d old at verification 2026-07-07. US-centric."
+    },
+    {
+     "name": "NYT · Asia Pacific",
+     "type": "rss",
+     "value": "https://rss.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "us",
+     "domains": [
+      "asia",
+      "geopolitics"
+     ],
+     "tier": "optional",
+     "notes": "Paywalled site, headline + summary. 20 entries, daily; heavy China coverage but Asia-wide, so keep China gate. Verified 2026-07-07 same-day."
+    },
+    {
+     "name": "Economist · International",
+     "type": "rss",
+     "value": "https://www.economist.com/international/rss.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "uk",
+     "domains": [
+      "world",
+      "geopolitics"
+     ],
+     "tier": "optional",
+     "notes": "Hard paywall, headline + standfirst. 300-entry archive, weekly cadence (newest 1d old at verification 2026-07-07)."
+    },
+    {
+     "name": "Al Jazeera English · All news",
+     "type": "rss",
+     "value": "https://www.aljazeera.com/xml/rss/all.xml",
+     "lang": "en",
+     "filter": "china",
+     "region": "intl",
+     "domains": [
+      "world",
+      "geopolitics"
+     ],
+     "tier": "optional",
+     "notes": "Free, no paywall. Site-wide firehose (25 entries, hourly) — AJ has NO section feeds (guesses 404), so China gate is mandatory. Good Global South / Middle East a"
+    }
+   ]
+  }
+ }
+}

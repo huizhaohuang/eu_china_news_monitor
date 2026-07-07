@@ -42,11 +42,13 @@ BERLIN = ZoneInfo("Europe/Berlin")
 CONFIG_PATH = Path(__file__).with_name("sources.json")
 STATE_PATH = Path(__file__).with_name("monitor_state.json")
 GNEWS_BASE = "https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
-# 法语 site: 查询在英文区返回 0 条(实测),gnews 源可用 "gnews_locale" 字段选区
+# 非英语 site:/关键词查询在英文区返回 0 条(法语、中文均实测),
+# gnews 源用 "gnews_locale" 字段选区;zh 区是大陆媒体监测的唯一可靠通道
 GNEWS_LOCALES = {
     "en": "https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en",
     "de": "https://news.google.com/rss/search?q={q}&hl=de&gl=DE&ceid=DE:de",
     "fr": "https://news.google.com/rss/search?q={q}&hl=fr&gl=FR&ceid=FR:fr",
+    "zh": "https://news.google.com/rss/search?q={q}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
 }
 UA = {"User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36")}
@@ -1019,7 +1021,7 @@ with st.sidebar:
         if st.session_state.pop("add_ok_msg", None):
             st.success(st.session_state.pop("add_ok_msg_text", "已添加"))
         if st.button("测试并添加"):
-            new_locale = {"fr": "fr", "de": "de"}.get(new_lang, "en")
+            new_locale = {"fr": "fr", "de": "de", "zh": "zh"}.get(new_lang, "en")
             if not new_name or not new_value:
                 st.warning("名称和地址/查询语句都要填")
             elif any(s["value"] == new_value for s in st.session_state.sources):

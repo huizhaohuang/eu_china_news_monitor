@@ -96,9 +96,15 @@ v2 后续(未实现,见 `check_date_drift()` 桩):日期漂移检测——仅检
   整体替换,`china_gate_extra/europe_gate_extra/title_blocklist_extra` 追加;
   所有词经与内置词表相同的 `_nt` 规范化(空格词边界、连字符=空格语义一致)。
 - `beat_interview.py`(💬 定制 tab):Claude 访谈生成档案。硬规则:模型不发明
-  RSS URL,只能选用已验证目录(根 sources.json)或组装 gnews 查询;生成后逐源
-  实测 + 一轮自动修复;交付经 GitHub PR(代码硬性限定只写 `profiles/`、只开
-  PR),人工 Merge 后生效。所需 Secrets 见 USAGE 第 6½ 节。
+  RSS URL,只能选用已验证目录(根 sources.json + `source_library.json` 领域
+  扩展库)或组装 gnews 查询;生成后逐源实测 + 一轮自动修复;交付经 GitHub PR
+  (代码硬性限定只写 `profiles/`、只开 PR),人工 Merge 后生效。Secrets 见
+  USAGE 第 6½ 节。
+- `source_library.json`(领域扩展库):98 个实测源、5 个领域包——教育/国际主流
+  分版面(BBC·Guardian·NYT·Economist·NPR·CNBC 分版面 feed 模式均已验证)/
+  中国大陆媒体/金融与市场/医疗健康。**中文 gnews 必须 `"gnews_locale": "zh"`**
+  (英文区对大陆站点返回 0 条,实测);大陆原生 RSS 大多已死,活例外:中新社、
+  CGTN、界面快报。扩新领域包时按同法实测后合入本文件。
 
 ## 归类与优先级调校
 
