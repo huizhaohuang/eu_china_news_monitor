@@ -107,9 +107,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--hours", type=int, default=13)
     ap.add_argument("--no-open", action="store_true")
+    ap.add_argument("--profile", default=None, help="档案名(profiles/<名>/);缺省 = 默认档案")
     args = ap.parse_args()
 
     ns = load_monitor_logic()
+    if args.profile:
+        ok, msg = ns["apply_profile"](args.profile)
+        print(msg)
+        if not ok:
+            return 1
     sources = ns["load_sources"]()
 
     # Mac 刚唤醒时网络可能还没就绪:全部源失败则等 25 秒重试一次

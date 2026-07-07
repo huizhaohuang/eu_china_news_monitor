@@ -484,6 +484,80 @@ PRIORITY_PAIRS = [(_nt(e), _ntl(c) if c else None) for e, c in PRIORITY_PAIRS]
 TITLE_BLOCKLIST = ["market analysis", "market report", "market size", "market forecast",
                    "market research", "market outlook", "fifa world cup"]
 
+# ---------------------------------------------------------------------------
+# 档案(profile)机制:URL 带 ?profile=名字 时加载 profiles/<名字>/ 下的
+# 专属信源与词表——同一个部署,每人一套监控议程;不带参数 = 默认档案(现状,零变化)。
+# taxonomy.json 全部字段可选:categories/specificity/breaking_keywords/priority_pairs
+# 为整体替换,*_extra 为追加(闸门与黑名单只增不减,保守防漏)。
+# ---------------------------------------------------------------------------
+
+PROFILES_DIR = Path(__file__).with_name("profiles")
+PROFILE: str | None = None          # 当前档案名;None = 默认
+TAXONOMY_FP = "default"             # 进 fetch_all 缓存键,防跨档案词表串味
+
+
+def list_profiles() -> list[str]:
+    if not PROFILES_DIR.is_dir():
+        return []
+    return sorted(p.name for p in PROFILES_DIR.iterdir()
+                  if p.is_dir() and (p / "sources.json").exists())
+
+
+def apply_profile(name: str) -> tuple[bool, str]:
+    """切换到指定档案:重定向配置/状态路径,加载并规范化自定义词表。
+
+    必须在任何抓取/归类调用之前执行。返回 (ok, 消息)。
+    """
+    global PROFILE, CONFIG_PATH, STATE_PATH, TAXONOMY_FP
+    global CATEGORIES, SPECIFICITY, CAT_BY_ID, BREAKING_KEYWORDS, PRIORITY_PAIRS
+    global CHINA_GATE, EUROPE_GATE, TITLE_BLOCKLIST
+
+    # 档案名即路径片段,必须严格白名单(防 ?profile=../../ 路径穿越)
+    if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,39}", name or ""):
+        return False, f"档案名不合法: {name!r}(只允许小写字母/数字/连字符)"
+    pdir = PROFILES_DIR / name
+    if not (pdir / "sources.json").exists():
+        return False, f"档案不存在: {name}(可用: {', '.join(list_profiles()) or '无'})"
+
+    PROFILE = name
+    CONFIG_PATH = pdir / "sources.json"
+    STATE_PATH = pdir / "monitor_state.json"
+    TAXONOMY_FP = f"{name}:none"
+
+    tax_path = pdir / "taxonomy.json"
+    if not tax_path.exists():
+        return True, f"档案 {name}: 专属信源 + 默认词表"
+    try:
+        raw = tax_path.read_text(encoding="utf-8")
+        tax = json.loads(raw)
+        if cats := tax.get("categories"):
+            new_cats = []
+            for c in cats:
+                new_cats.append(dict(
+                    id=c["id"], emoji=c.get("emoji", "📌"),
+                    zh=c.get("zh", c["id"]), en=c.get("en", c["id"]),
+                    kw=_ntl(c.get("kw", [])), entities=_ntl(c.get("entities", [])),
+                ))
+            CATEGORIES = new_cats
+            CAT_BY_ID = {c["id"]: c for c in CATEGORIES}
+            spec = [s for s in tax.get("specificity", []) if s in CAT_BY_ID]
+            spec += [c["id"] for c in CATEGORIES if c["id"] not in spec]  # 兜底补全
+            SPECIFICITY = spec
+        if bk := tax.get("breaking_keywords"):
+            BREAKING_KEYWORDS = _ntl(bk)
+        if pp := tax.get("priority_pairs"):
+            PRIORITY_PAIRS = [(_nt(e), _ntl(c) if c else None) for e, c in pp]
+        CHINA_GATE = CHINA_GATE + _ntl(tax.get("china_gate_extra", []))
+        EUROPE_GATE = EUROPE_GATE + _ntl(tax.get("europe_gate_extra", []))
+        TITLE_BLOCKLIST = TITLE_BLOCKLIST + _ntl(tax.get("title_blocklist_extra", []))
+        import hashlib as _hl
+        TAXONOMY_FP = f"{name}:{_hl.sha1(raw.encode()).hexdigest()[:10]}"
+        return True, f"档案 {name}: 专属信源 + 专属词表({len(CATEGORIES)} 类)"
+    except Exception as exc:  # noqa: BLE001 — 坏词表不炸应用,回退默认词表
+        TAXONOMY_FP = f"{name}:taxerr"
+        return True, f"档案 {name}: taxonomy.json 解析失败({exc}),已回退默认词表"
+
+
 _TOKEN_STOP = {
     # 聚类分词停用词:本条线新闻里几乎每条都有的词,保留会虚增相似度
     "the", "and", "for", "with", "from", "this", "that", "after", "over", "into", "amid", "says",
@@ -525,8 +599,7 @@ def categorize(ntitle: str, nsummary: str) -> tuple[list[str], str | None]:
                 s += 3
         if s >= 2:
             scores[cat["id"]] = s
-    if not scores:  # 宏观是兜底类
-        macro = CAT_BY_ID["china-macro"]
+    if not scores and (macro := CAT_BY_ID.get("china-macro")):  # 宏观是兜底类(自定义词表可能没有)
         s = sum(2 if kw in ntitle else (1 if kw in nsummary else 0) for kw in macro["kw"]) \
             + sum(6 if e in ntitle else (3 if e in nsummary else 0) for e in macro["entities"])
         if s >= 2:
@@ -738,8 +811,11 @@ def cluster_items(items: list[dict]) -> list[dict]:
 
 
 @st.cache_data(ttl=600, show_spinner="正在抓取各源最新报道 …")
-def fetch_all(sources_json: str, hours: int) -> tuple[list[dict], list[dict], int]:
-    """并发抓取全部启用源 → (聚类列表, 各源健康状态, 原始条目数)。缓存 10 分钟。"""
+def fetch_all(sources_json: str, hours: int, taxo_fp: str = "default") -> tuple[list[dict], list[dict], int]:
+    """并发抓取全部启用源 → (聚类列表, 各源健康状态, 原始条目数)。缓存 10 分钟。
+
+    taxo_fp 只作缓存键:归类/突发标记在抓取时按当前词表计算,
+    不同档案的词表不同,必须各自成键,否则跨档案读到错误归类。"""
     sources = [s for s in json.loads(sources_json) if s.get("enabled", True)]
     all_items: list[dict] = []
     health: list[dict] = []
@@ -798,6 +874,19 @@ def build_digest(clusters: list[dict], hours: int) -> str:
 
 st.set_page_config(page_title="中欧新闻监测", page_icon="📰", layout="wide")
 
+# --- 档案解析(必须先于一切数据加载;不带 ?profile= 即默认档案 = 原平台,零变化) ---
+_profile_err = None
+if _qp := st.query_params.get("profile"):
+    _ok, _pmsg = apply_profile(_qp)
+    if not _ok:
+        _profile_err = _pmsg
+
+# 同一会话内切换档案 → 重载信源与 🆕 基线(否则沿用上一档案的内存数据)
+if st.session_state.get("_active_profile", "__unset__") != (PROFILE or ""):
+    st.session_state.sources = load_sources()
+    st.session_state.pop("baseline", None)
+    st.session_state["_active_profile"] = PROFILE or ""
+
 if "sources" not in st.session_state:
     st.session_state.sources = load_sources()
 
@@ -819,6 +908,21 @@ if "baseline" not in st.session_state:
 
 with st.sidebar:
     st.header("设置")
+    if _profile_err:
+        st.error(_profile_err)
+    _plist = list_profiles()
+    if _plist:  # 有档案才显示切换器,默认部署界面不变
+        _opts = ["默认(中欧监测)"] + _plist
+        _cur = _opts.index(PROFILE) if PROFILE in _plist else 0
+        _sel = st.selectbox("档案", _opts, index=_cur,
+                            help="每个档案 = 一套专属信源与分类词表;也可直接用 ?profile=名字 的链接")
+        _want = "" if _sel == _opts[0] else _sel
+        if _want != (PROFILE or ""):
+            if _want:
+                st.query_params["profile"] = _want
+            else:
+                st.query_params.pop("profile", None)
+            st.rerun()
     hours = st.slider("时间窗(小时)", 6, 72, 24, step=6)
     lanes_selected = st.multiselect(
         "来源类型", options=list(LANE_LABELS), default=list(LANE_LABELS),
@@ -919,7 +1023,7 @@ with st.sidebar:
                     st.error(msg)
 
 # --- 抓取 ---
-clusters, health, n_items = fetch_all(json.dumps(st.session_state.sources), hours)
+clusters, health, n_items = fetch_all(json.dumps(st.session_state.sources), hours, TAXONOMY_FP)
 
 # --- 源健康状态(放在抓取之后,侧边栏尾部) ---
 with st.sidebar:
@@ -946,10 +1050,11 @@ def _visible(cl: dict) -> bool:
 
 visible = [c for c in clusters if _visible(c)]
 
-st.title("📰 中欧新闻监测")
+st.title("📰 中欧新闻监测" + (f" · {PROFILE}" if PROFILE else ""))
 st.caption(
     f"{len(visible)} 组报道({n_items} 条)· 过去 {hours}h · "
     f"更新于 {datetime.now(BERLIN):%Y-%m-%d %H:%M} Berlin · 缓存 10 分钟"
+    + (f" · 档案 {PROFILE}" if PROFILE else "")
 )
 
 # --- 早报摘要 ---
