@@ -181,9 +181,14 @@ def _build_system(profile: str | None) -> str:
 # Claude 调用
 # ---------------------------------------------------------------------------
 
+def _resolve_api_key() -> str | None:
+    """服务端 Secrets 优先;否则用记者在页面里粘贴的会话级 key(不落盘,刷新即失)。"""
+    return _secret("ANTHROPIC_API_KEY") or st.session_state.get("iv_user_key")
+
+
 def _client():
     import anthropic  # 懒加载:缺包只影响本 tab,不影响主平台/推送
-    return anthropic.Anthropic(api_key=_secret("ANTHROPIC_API_KEY"))
+    return anthropic.Anthropic(api_key=_resolve_api_key())
 
 
 def _chat_turn(system: str, history: list[dict]) -> str:
@@ -321,9 +326,16 @@ def render_interview_tab(profile: str | None = None) -> None:
     st.caption("和 Claude 聊清楚你的条线,自动生成专属监测档案(信源+分类词表),"
                "实测验证后一键提交审核。" + (f" 当前为档案 **{profile}** 的增量模式。" if profile else ""))
 
-    if not _secret("ANTHROPIC_API_KEY"):
-        st.info("尚未配置 ANTHROPIC_API_KEY。部署方需在 Streamlit Cloud → App settings → "
-                "Secrets 中填入(本地则放 .streamlit/secrets.toml,勿提交 git)。")
+    if not _resolve_api_key():
+        st.info("**开始前需要一把 Anthropic API Key**(console.anthropic.com → API keys)。\n\n"
+                "- 方式一(即刻可用):在下方粘贴,仅保存在当前浏览器会话,刷新即失效;\n"
+                "- 方式二(团队推荐,一次配置):部署方在 Streamlit Cloud → App settings → "
+                "Secrets 填 `ANTHROPIC_API_KEY`,之后记者只需访问口令,无需接触 key。")
+        k = st.text_input("Anthropic API Key", type="password", key="iv_key_in",
+                          placeholder="sk-ant-…")
+        if k:
+            st.session_state["iv_user_key"] = k.strip()
+            st.rerun()
         return
     try:
         import anthropic  # noqa: F401
@@ -338,6 +350,11 @@ def render_interview_tab(profile: str | None = None) -> None:
     if hist_key not in st.session_state:
         st.session_state[hist_key] = []
     history = st.session_state[hist_key]
+
+    if history and st.button("🔄 重新定制(清空本次对话)", key=f"iv_reset_{profile or 'new'}"):
+        for sk in (hist_key, f"iv_bundle_{profile or 'new'}", f"iv_probes_{profile or 'new'}"):
+            st.session_state.pop(sk, None)
+        st.rerun()
 
     opening = (f"你的档案 **{profile}** 已加载。想新增或调整什么监控范围?直接说,"
                "比如「我最近开始盯匈牙利的电池产业政策」。" if profile else

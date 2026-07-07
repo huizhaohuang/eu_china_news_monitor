@@ -893,7 +893,7 @@ def build_digest(clusters: list[dict], hours: int) -> str:
 # 5. UI
 # ---------------------------------------------------------------------------
 
-st.set_page_config(page_title="中欧新闻监测", page_icon="📰", layout="wide")
+st.set_page_config(page_title="News Monitor!", page_icon="📰", layout="wide")
 
 # --- 档案解析(必须先于一切数据加载;不带 ?profile= 即默认档案 = 原平台,零变化) ---
 _profile_err = None
@@ -959,6 +959,7 @@ with st.sidebar:
         digest_clicked = st.button("📋 早报摘要", use_container_width=True)
     if digest_clicked:
         st.session_state.show_digest = True
+    st.caption("🎯 定制/重置自己的监控议程 → 最右侧「💬 定制」tab")
 
     st.divider()
     st.subheader("监控源")
@@ -1071,7 +1072,7 @@ def _visible(cl: dict) -> bool:
 
 visible = [c for c in clusters if _visible(c)]
 
-st.title("📰 中欧新闻监测" + (f" · {PROFILE}" if PROFILE else ""))
+st.title("📰 News Monitor!" + (f" · {PROFILE}" if PROFILE else ""))
 st.caption(
     f"{len(visible)} 组报道({n_items} 条)· 过去 {hours}h · "
     f"更新于 {datetime.now(BERLIN):%Y-%m-%d %H:%M} Berlin · 缓存 10 分钟"
