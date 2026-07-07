@@ -35,6 +35,7 @@ import feedparser
 import requests
 import streamlit as st
 
+import beat_interview  # 💬 定制 tab(访谈式档案生成,独立模块)
 import events_monitor  # 📅 活动 tab(独立模块,不与新闻逻辑耦合)
 
 BERLIN = ZoneInfo("Europe/Berlin")
@@ -179,10 +180,21 @@ def load_sources() -> list[dict]:
             except OSError:
                 pass
             sources = None
+    if PROFILE is not None:
+        # 档案配置绝不走 v2 迁移/默认种子:手写档案缺 lane 是常态,
+        # 迁移逻辑会把整份精选信源换成 71 个默认源(评审确认的 high bug)。
+        # 缺字段仅在内存补默认值,不回写文件。
+        sources = sources or []
+        for s in sources:
+            s.setdefault("lane", "custom")
+            s.setdefault("enabled", True)
+            s.setdefault("filter", "none")
+            s.setdefault("lang", "en")
+        return sources
     if sources is None:
         save_sources(DEFAULT_SOURCES)
         return json.loads(json.dumps(DEFAULT_SOURCES))
-    # v2 -> v3 迁移:老格式条目没有 lane 字段
+    # v2 -> v3 迁移:老格式条目没有 lane 字段(仅默认档案)
     if any("lane" not in s for s in sources):
         default_values = {s["value"] for s in DEFAULT_SOURCES}
         migrated = json.loads(json.dumps(DEFAULT_SOURCES))
@@ -527,35 +539,38 @@ def apply_profile(name: str) -> tuple[bool, str]:
     tax_path = pdir / "taxonomy.json"
     if not tax_path.exists():
         return True, f"档案 {name}: 专属信源 + 默认词表"
+    import hashlib as _hl
+    raw = ""
     try:
         raw = tax_path.read_text(encoding="utf-8")
         tax = json.loads(raw)
+        # 先全部解析进局部变量,完整成功后才提交到全局——
+        # 否则坏词表会"半套生效"却报告已回退(评审确认)
+        n_cats, n_cbi, n_spec = CATEGORIES, CAT_BY_ID, SPECIFICITY
         if cats := tax.get("categories"):
-            new_cats = []
-            for c in cats:
-                new_cats.append(dict(
-                    id=c["id"], emoji=c.get("emoji", "📌"),
-                    zh=c.get("zh", c["id"]), en=c.get("en", c["id"]),
-                    kw=_ntl(c.get("kw", [])), entities=_ntl(c.get("entities", [])),
-                ))
-            CATEGORIES = new_cats
-            CAT_BY_ID = {c["id"]: c for c in CATEGORIES}
-            spec = [s for s in tax.get("specificity", []) if s in CAT_BY_ID]
-            spec += [c["id"] for c in CATEGORIES if c["id"] not in spec]  # 兜底补全
-            SPECIFICITY = spec
-        if bk := tax.get("breaking_keywords"):
-            BREAKING_KEYWORDS = _ntl(bk)
+            n_cats = [dict(id=c["id"], emoji=c.get("emoji", "📌"),
+                           zh=c.get("zh", c["id"]), en=c.get("en", c["id"]),
+                           kw=_ntl(c.get("kw", [])), entities=_ntl(c.get("entities", [])))
+                      for c in cats]
+            n_cbi = {c["id"]: c for c in n_cats}
+            n_spec = [s for s in tax.get("specificity", []) if s in n_cbi]
+            n_spec += [c["id"] for c in n_cats if c["id"] not in n_spec]  # 兜底补全
+        n_break = _ntl(tax["breaking_keywords"]) if tax.get("breaking_keywords") else BREAKING_KEYWORDS
         if pp := tax.get("priority_pairs"):
-            PRIORITY_PAIRS = [(_nt(e), _ntl(c) if c else None) for e, c in pp]
-        CHINA_GATE = CHINA_GATE + _ntl(tax.get("china_gate_extra", []))
-        EUROPE_GATE = EUROPE_GATE + _ntl(tax.get("europe_gate_extra", []))
-        TITLE_BLOCKLIST = TITLE_BLOCKLIST + _ntl(tax.get("title_blocklist_extra", []))
-        import hashlib as _hl
-        TAXONOMY_FP = f"{name}:{_hl.sha1(raw.encode()).hexdigest()[:10]}"
-        return True, f"档案 {name}: 专属信源 + 专属词表({len(CATEGORIES)} 类)"
-    except Exception as exc:  # noqa: BLE001 — 坏词表不炸应用,回退默认词表
-        TAXONOMY_FP = f"{name}:taxerr"
+            n_pairs = [(_nt(e), _ntl(c) if c else None) for e, c in pp]
+        else:
+            n_pairs = PRIORITY_PAIRS
+        n_cg = CHINA_GATE + _ntl(tax.get("china_gate_extra", []))
+        n_eg = EUROPE_GATE + _ntl(tax.get("europe_gate_extra", []))
+        n_bl = TITLE_BLOCKLIST + _ntl(tax.get("title_blocklist_extra", []))
+    except Exception as exc:  # noqa: BLE001 — 坏词表不炸应用,回退默认词表(全局未动)
+        TAXONOMY_FP = f"{name}:taxerr-{_hl.sha1(raw.encode()).hexdigest()[:10]}"
         return True, f"档案 {name}: taxonomy.json 解析失败({exc}),已回退默认词表"
+    CATEGORIES, CAT_BY_ID, SPECIFICITY = n_cats, n_cbi, n_spec
+    BREAKING_KEYWORDS, PRIORITY_PAIRS = n_break, n_pairs
+    CHINA_GATE, EUROPE_GATE, TITLE_BLOCKLIST = n_cg, n_eg, n_bl
+    TAXONOMY_FP = f"{name}:{_hl.sha1(raw.encode()).hexdigest()[:10]}"
+    return True, f"档案 {name}: 专属信源 + 专属词表({len(CATEGORIES)} 类)"
 
 
 _TOKEN_STOP = {
@@ -681,6 +696,9 @@ def test_feed(src_type: str, value: str, locale: str = "en") -> tuple[bool, str]
         url = value
     try:
         r = requests.get(url, headers=UA, timeout=FETCH_TIMEOUT)
+        if r.status_code == 403:  # 与 fetch_one 一致的阅读器 UA 退避
+            r = requests.get(url, headers={"User-Agent": "ChinaEUMonitor/1.0 (RSS reader; private research use)"},
+                             timeout=FETCH_TIMEOUT)
         r.raise_for_status()
         parsed = feedparser.parse(r.content)
     except Exception as exc:  # noqa: BLE001
@@ -704,6 +722,9 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
     url = _source_url(src, hours)
     try:
         resp = requests.get(url, headers=UA, timeout=FETCH_TIMEOUT)
+        if resp.status_code == 403:  # 部分站点(实测 DIW)封浏览器 UA、放行阅读器 UA
+            resp = requests.get(url, headers={"User-Agent": "ChinaEUMonitor/1.0 (RSS reader; private research use)"},
+                                timeout=FETCH_TIMEOUT)
         resp.raise_for_status()
         parsed = feedparser.parse(resp.content)
     except Exception as exc:  # noqa: BLE001
@@ -955,9 +976,9 @@ with st.sidebar:
         with st.expander(f"{LANE_LABELS[lane]} ({n_on}/{len(idxs)})"):
             for i in idxs:
                 src = st.session_state.sources[i]
-                # widget key 用源地址而非列表下标:删除源后下标位移会让 Streamlit
-                # 把旧的勾选状态套到错误的源上并写盘
-                skey = src["value"]
+                # widget key 用「下标+源地址」:纯下标会在删除后错位套状态,
+                # 纯地址会在手写档案含重复 value 时撞 key 炸页面(评审确认)
+                skey = f"{i}_{src['value']}"
                 c1, c2 = st.columns([6, 1])
                 with c1:
                     new_state = st.checkbox(src["name"], value=src.get("enabled", True),
@@ -1110,9 +1131,11 @@ def render_cluster(cl: dict) -> None:
                     st.markdown(f"- [{it['title']}]({it['link']}) — {it['outlet']} · {t:%a %H:%M}")
 
 
-tabs = st.tabs([label for label, _ in tab_defs] + [events_monitor.tab_label()])
-with tabs[-1]:
+tabs = st.tabs([label for label, _ in tab_defs] + [events_monitor.tab_label(), "💬 定制"])
+with tabs[-2]:
     events_monitor.render_events_tab()
+with tabs[-1]:
+    beat_interview.render_interview_tab(profile=PROFILE)
 for tab, (label, rows) in zip(tabs, tab_defs):
     with tab:
         if not rows:

@@ -88,6 +88,18 @@ SWP/DGAP)均无活动 RSS;DIW 的 RSS 端点封浏览器 UA、放行阅读器 UA
 v2 后续(未实现,见 `check_date_drift()` 桩):日期漂移检测——仅检测
 已知日期是否从官网页面消失并打回待核实,不自动解析新日期。
 
+## 档案(profiles)与访谈式配置
+
+- `?profile=名字` → 加载 `profiles/<名>/sources.json`(+ 可选 `taxonomy.json`);
+  不带参数 = 默认档案(根目录文件,即原中欧监测,行为不变)。
+- `taxonomy.json`:`categories/specificity/breaking_keywords/priority_pairs`
+  整体替换,`china_gate_extra/europe_gate_extra/title_blocklist_extra` 追加;
+  所有词经与内置词表相同的 `_nt` 规范化(空格词边界、连字符=空格语义一致)。
+- `beat_interview.py`(💬 定制 tab):Claude 访谈生成档案。硬规则:模型不发明
+  RSS URL,只能选用已验证目录(根 sources.json)或组装 gnews 查询;生成后逐源
+  实测 + 一轮自动修复;交付经 GitHub PR(代码硬性限定只写 `profiles/`、只开
+  PR),人工 Merge 后生效。所需 Secrets 见 USAGE 第 6½ 节。
+
 ## 归类与优先级调校
 
 关键词表在 `china_europe_monitor.py` 的 `CATEGORIES` / `BREAKING_KEYWORDS` /

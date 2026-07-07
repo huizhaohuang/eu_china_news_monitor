@@ -166,6 +166,41 @@ China Forecast)需要你花 10 分钟核实一次:去 [AUMA 展会数据库](htt
 `brew install cloudflared && cloudflared tunnel --url http://localhost:8501`,
 会生成一个临时公网链接发给同事——缺点是链接每次变、无访问控制、你的 Mac 必须开着。
 
+## 6½、多人档案与 💬 定制(访谈式配置)
+
+**档案 = 一人一套监控议程,同一个部署。** 链接带 `?profile=名字` 即加载
+`profiles/<名字>/` 下的专属信源与分类词表;不带参数就是你的中欧监测(默认档案,
+永不受影响)。侧边栏有档案切换器(仅当存在档案时显示)。
+
+**新同事接入流程(零技术门槛)**:
+1. 打开平台 → 最右「💬 定制」tab → 输入访问口令
+2. 和 Claude 聊清楚自己的条线(主题/地域/语言/行业/绝不能漏什么)
+3. 点「⚙️ 生成配置」→ 应用自动逐源实测,失败的自动修一轮
+4. 预览满意 → 「🚀 提交审核」→ 自动在 GitHub 开 PR
+5. 你在 GitHub 看一眼 diff → Merge → 1-2 分钟后 TA 的专属链接生效:
+   `xxx.streamlit.app/?profile=名字`
+
+**后续自行扩充**:同事在自己的档案链接里再开「💬 定制」,就是增量模式——
+说"我最近开始盯 XX"即可,生成更新版配置再走一次 PR,你照旧只管 Merge。
+
+**部署方需配置的 Secrets**(Streamlit Cloud → App settings → Secrets):
+```toml
+ANTHROPIC_API_KEY = "sk-ant-…"        # 必需:console.anthropic.com → API keys
+INTERVIEW_ACCESS_CODE = "自定口令"      # 强烈建议:公开链接防蹭 API 额度
+GITHUB_TOKEN = "github_pat_…"          # 可选:启用一键 PR(见下)
+GITHUB_REPO = "huizhaohuang/eu_china_news_monitor"
+```
+GitHub token 生成:github.com → Settings → Developer settings →
+Fine-grained tokens → 只选本仓库 → Repository permissions 里 **Contents: Read
+and write** + **Pull requests: Read and write**,其余不给。没配 token 时
+PR 按钮会失败,同事可用下载按钮把两个 JSON 发给你人工提交(兜底)。
+本地开发放 `.streamlit/secrets.toml`(已在 .gitignore,**绝不能提交**)。
+
+**费用护栏**:访谈用 prompt caching,单次完整访谈约 $0.4-1;每会话 40 轮上限;
+建议在 Anthropic Console 给 workspace 设月度预算兜底。
+
+你的专属推送不变;同事想要自己的早报:`digest_push.py --profile 名字`。
+
 ## 七、常见问题
 
 | 问题 | 处理 |
