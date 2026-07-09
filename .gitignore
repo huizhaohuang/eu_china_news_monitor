@@ -6,6 +6,7 @@ __pycache__/
 .DS_Store
 monitor_state.json
 events_state.json
+interview_usage.json
 events.json.bak
 digests/
 sources.json.bak
