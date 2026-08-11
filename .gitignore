@@ -24,3 +24,6 @@ SOURCE_TREE.md
 WECHAT_SOURCES.md
 ASSESSMENT.md
 BEAT_SOURCES.md
+
+# 反馈本地兜底(仅开发;云端无持久磁盘)
+feedback.jsonl

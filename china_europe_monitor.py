@@ -37,6 +37,7 @@ import requests
 import streamlit as st
 
 import events_monitor  # 📅 活动 tab(独立模块,不与新闻逻辑耦合)
+import feedback  # 📮 首页反馈渠道(送外部 sink,密钥走 st.secrets)
 
 BERLIN = ZoneInfo("Europe/Berlin")
 CONFIG_PATH = Path(__file__).with_name("sources.json")
@@ -925,6 +926,18 @@ def fetch_all(sources_json: str, hours: int, taxo_fp: str = "default") -> tuple[
             continue
         seen_links.add(it["link"])
         unique.append(it)
+    # gnews 跳转链 → 真实出版商 URL(大陆用户可直达)。任何异常吃掉,绝不影响抓取;
+    # 未解出的保留原 google 链(境外用户无感)。已按时间倒序,最新条目优先解。
+    try:
+        import gnews_decoder
+        glinks = [it["link"] for it in unique if it["link"].startswith("https://news.google.com/")]
+        mapping = gnews_decoder.resolve_batch(glinks)
+        for it in unique:
+            real = mapping.get(it["link"])
+            if real:
+                it["link"] = real
+    except Exception:
+        pass
     clusters = cluster_items(unique)
     health.sort(key=lambda h: (h["ok"], h["name"]))
     return clusters, health, len(unique)
@@ -1159,6 +1172,13 @@ with st.sidebar:
             dot = "🟢" if h["ok"] else "🔴"
             line = f"{dot} {h['name']} — {h['kept']}/{h['total']}条 · {h['secs']}s"
             st.caption(line if h["ok"] else f"{line}\n{h['error']}")
+        try:
+            import gnews_decoder
+            _ds = gnews_decoder.stats()
+            _cd = f" · 熔断冷却 {_ds['cooldown_min']}min" if _ds["cooldown_min"] else ""
+            st.caption(f"🔗 链接解码缓存 {_ds['cached']} 条 · 熔断 {_ds['trips']} 次{_cd}")
+        except Exception:
+            pass
 
 # --- 过滤(来源类型 + 搜索) ---
 lanes_set = set(lanes_selected)
@@ -1182,6 +1202,7 @@ st.caption(
     f"更新于 {datetime.now(BERLIN):%Y-%m-%d %H:%M} Berlin · 缓存 10 分钟"
     + (f" · 档案 {PROFILE}" if PROFILE else "")
 )
+feedback.render(context=PROFILE or ("我的条线" if P3_CODE else "默认监测台"))
 
 # --- 早报摘要 ---
 if st.session_state.get("show_digest"):
