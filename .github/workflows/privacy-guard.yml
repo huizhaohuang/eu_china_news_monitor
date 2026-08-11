@@ -1,0 +1,24 @@
+# 零落盘防呆:个人配置(记者的勾选/关键词/实体/订阅邮箱)绝不允许进入 public 仓库。
+# 三层防线之二(一 = .gitignore,三 = 代码层无写入路径),见 DESIGN.md 公私边界。
+name: privacy-guard
+
+on: [push, pull_request]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 个人配置零落盘断言
+        run: |
+          set -e
+          bad=$(git ls-files | grep -E '^profiles/|(^|/)subscribers\.json$|\.profile\.json$' || true)
+          if [ -n "$bad" ]; then
+            echo "❌ 个人配置文件被提交进了仓库(这是公开仓库,不可撤销):"
+            echo "$bad"
+            exit 1
+          fi
+          for p in 'profiles/' 'subscribers.json' '*.profile.json'; do
+            grep -qxF "$p" .gitignore || { echo "❌ .gitignore 缺少防线: $p"; exit 1; }
+          done
+          echo "✅ 零落盘断言通过"

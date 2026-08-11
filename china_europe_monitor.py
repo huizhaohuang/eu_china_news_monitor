@@ -22,6 +22,7 @@ Deps: pip install -r requirements.txt   (streamlit, feedparser, requests)
 from __future__ import annotations
 
 import concurrent.futures as cf
+import email.utils
 import json
 import math
 import re
@@ -35,7 +36,6 @@ import feedparser
 import requests
 import streamlit as st
 
-import beat_interview  # 💬 定制 tab(访谈式档案生成,独立模块)
 import events_monitor  # 📅 活动 tab(独立模块,不与新闻逻辑耦合)
 
 BERLIN = ZoneInfo("Europe/Berlin")
@@ -61,6 +61,12 @@ PER_SOURCE_CAP = 80              # max items kept per source per fetch
 #    lane: de-media | eu-brussels | wires | cn-media | industry | gov | thinktank | custom
 #    filter: china(欧洲综合流,须提到中国) | europe(中方宽流,须提到欧洲) | none(已自带限定)
 # ---------------------------------------------------------------------------
+
+# 口径标签(p3 模式 tab 内二级筛选;顺序即显示顺序)
+STYPE_LABELS = {
+    "gov": "🏛️ 官方", "mainstream": "📰 主流媒体", "industry": "🏭 垂类媒体",
+    "wechat-mirror": "📱 公众号镜像", "wires": "🌐 通讯社", "thinktank": "🎓 智库",
+}
 
 LANE_LABELS = {
     "de-media": "🇩🇪 德国媒体",
@@ -215,6 +221,8 @@ def load_sources() -> list[dict]:
 
 
 def save_sources(sources: list[dict]) -> None:
+    if EPHEMERAL_CONFIG:
+        return  # p3 配置码模式:个人的源增删只活在会话里,绝不写共享文件
     CONFIG_PATH.write_text(
         json.dumps(sources, ensure_ascii=False, indent=2), encoding="utf-8"
     )
@@ -508,6 +516,7 @@ TITLE_BLOCKLIST = ["market analysis", "market report", "market size", "market fo
 PROFILES_DIR = Path(__file__).with_name("profiles")
 PROFILE: str | None = None          # 当前档案名;None = 默认
 TAXONOMY_FP = "default"             # 进 fetch_all 缓存键,防跨档案词表串味
+EPHEMERAL_CONFIG = False            # p3 配置码模式:个人配置只活在 URL,所有写盘旁路
 
 
 def list_profiles() -> list[str]:
@@ -573,6 +582,37 @@ def apply_profile(name: str) -> tuple[bool, str]:
     CHINA_GATE, EUROPE_GATE, TITLE_BLOCKLIST = n_cg, n_eg, n_bl
     TAXONOMY_FP = f"{name}:{_hl.sha1(raw.encode()).hexdigest()[:10]}"
     return True, f"档案 {name}: 专属信源 + 专属词表({len(CATEGORIES)} 类)"
+
+
+def apply_packs_config(cfg: dict) -> tuple[list[dict], str]:
+    """p3 配置码 → (会话源列表, 状态消息)。词表换成所选条线模块。
+
+    个人配置零落盘:源列表只进 st.session_state,词表只换内存全局;
+    EPHEMERAL_CONFIG 置位后 save_sources/基线写盘全部旁路。
+    已知限制(与 apply_profile 相同,S2' 统一修):改的是进程级全局,
+    多用户同进程会串词表 —— 本机单人预览期可接受,上云前必须去全局化。
+    """
+    global PROFILE, TAXONOMY_FP, EPHEMERAL_CONFIG
+    global CATEGORIES, SPECIFICITY, CAT_BY_ID, PRIORITY_PAIRS
+    import hashlib as _hl
+
+    import beat_packs
+    sources, cats_raw, stats = beat_packs.resolve(cfg)
+    n_cats = [dict(id=c["id"], emoji=c.get("emoji", "📌"), zh=c.get("zh", c["id"]),
+                   en=c.get("en", c["id"]), kw=_ntl(c.get("kw", [])),
+                   entities=_ntl(c.get("entities", [])))
+              for c in cats_raw]
+    CATEGORIES = n_cats
+    CAT_BY_ID = {c["id"]: c for c in n_cats}
+    SPECIFICITY = [c["id"] for c in n_cats]           # watch 在最前 = 最具体
+    if cfg.get("entities"):                           # 关注实体命中即进 ⚡重点
+        PRIORITY_PAIRS = PRIORITY_PAIRS + [(_nt(e), None) for e in cfg["entities"]]
+    fp = _hl.sha1(json.dumps(cfg, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:12]
+    TAXONOMY_FP = f"p3:{fp}"
+    EPHEMERAL_CONFIG = True
+    PROFILE = "我的条线"
+    return sources, (f"我的条线:{len(n_cats)} 个板块 · 专线 {stats['specialist']} 源 · "
+                     f"背景 {stats['background']} 源")
 
 
 _TOKEN_STOP = {
@@ -642,6 +682,18 @@ def is_breaking(ntitle: str, nfull: str) -> bool:
 
 _FALLBACK_DATE_FORMATS = ["%b %d, %Y", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d"]
 
+# 中文本地化 RFC822 日期(如芥末堆 "星期三, 05 八月 2026 19:18:00 GMT"):
+# feedparser 解析不了 → 条目全丢且 health 显示正常。译回英文再走标准解析。
+_CN_DATE_TOKENS = {
+    "星期一": "Mon", "星期二": "Tue", "星期三": "Wed", "星期四": "Thu",
+    "星期五": "Fri", "星期六": "Sat", "星期日": "Sun", "星期天": "Sun",
+    "周一": "Mon", "周二": "Tue", "周三": "Wed", "周四": "Thu",
+    "周五": "Fri", "周六": "Sat", "周日": "Sun",
+    "十一月": "Nov", "十二月": "Dec", "十月": "Oct",
+    "一月": "Jan", "二月": "Feb", "三月": "Mar", "四月": "Apr",
+    "五月": "May", "六月": "Jun", "七月": "Jul", "八月": "Aug", "九月": "Sep",
+}
+
 
 def _entry_time(entry) -> datetime | None:
     for attr in ("published_parsed", "updated_parsed"):
@@ -650,13 +702,24 @@ def _entry_time(entry) -> datetime | None:
             return datetime(*t[:6], tzinfo=timezone.utc)
     for attr in ("published", "updated"):  # 非标日期格式兜底(如 Sixth Tone "Jul 03, 2026")
         raw = getattr(entry, attr, None)
-        if raw:
-            for fmt in _FALLBACK_DATE_FORMATS:
-                try:
-                    dt = datetime.strptime(raw.strip(), fmt)
-                    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
-                except ValueError:
-                    continue
+        if not raw:
+            continue
+        raw = raw.strip()
+        for fmt in _FALLBACK_DATE_FORMATS:
+            try:
+                dt = datetime.strptime(raw, fmt)
+                return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+            except ValueError:
+                continue
+        if any(ch in raw for ch in ("星", "周", "月")):
+            en = raw
+            for cn, e in _CN_DATE_TOKENS.items():
+                en = en.replace(cn, e)
+            try:
+                dt = email.utils.parsedate_to_datetime(en)
+                return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+            except (ValueError, TypeError):
+                pass
     return None
 
 
@@ -743,11 +806,15 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
     is_gnews = src["type"] == "gnews"
     items: list[dict] = []
     health["total"] = len(parsed.entries)
+    n_nodate = 0
 
     for e in parsed.entries:
         try:
             ts = _entry_time(e)
-            if ts is None or ts < cutoff:
+            if ts is None:
+                n_nodate += 1
+                continue
+            if ts < cutoff:
                 continue
             raw_title = (getattr(e, "title", "") or "").strip()
             link = (getattr(e, "link", "") or "").strip()
@@ -775,6 +842,7 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
             cats, primary = categorize(ntitle, nsummary)
             items.append({
                 "source": src["name"], "lane": src.get("lane", "custom"),
+                "stype": src.get("stype", ""),  # 口径(p3 模式的注册表源携带;默认源为空)
                 "lang": src.get("lang", "en"), "outlet": outlet,
                 "title": title, "summary": summary, "link": link, "time": ts,
                 "cats": cats, "primary": primary,
@@ -788,6 +856,9 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
     items.sort(key=lambda x: x["time"], reverse=True)
     items = items[:PER_SOURCE_CAP]
     health.update(ok=True, kept=len(items), secs=round(time.time() - t0, 1))
+    # 有条目但日期全解析不了 = 看似健康实则零产出的静默死源(如无日期字段的 feed),必须可见
+    if health["total"] > 0 and n_nodate == health["total"]:
+        health["error"] = f"⚠️ 全部 {health['total']} 条日期无法解析,该源实际零产出"
     return items, health
 
 
@@ -899,16 +970,39 @@ st.set_page_config(page_title="News Monitor!", page_icon="📰", layout="wide")
 
 # --- 档案解析(必须先于一切数据加载;不带 ?profile= 即默认档案 = 原平台,零变化) ---
 _profile_err = None
+_p3_notices: list[str] = []
+_p3_sources: list[dict] | None = None
+P3_CODE: str | None = None
 if _qp := st.query_params.get("profile"):
-    _ok, _pmsg = apply_profile(_qp)
-    if not _ok:
-        _profile_err = _pmsg
+    if re.match(r"^p\d+\.", _qp):
+        # p3 配置码(三层筛选流生成,个人配置零落盘)
+        import profile_code as _pc
+        _p3_cfg, _p3_notices = _pc.decode(_qp)
+        if _p3_cfg is None:
+            _profile_err = _p3_notices[0] if _p3_notices else "配置码无效"
+            _p3_notices = []
+        else:
+            P3_CODE = _qp
+            _p3_sources, _p3_msg = apply_packs_config(_p3_cfg)
+    else:
+        _ok, _pmsg = apply_profile(_qp)
+        if not _ok:
+            _profile_err = _pmsg
+
+# --- 定制屏(?setup=1):三层筛选流,零抓取;带 profile 码进入则预填当前选择 ---
+if st.query_params.get("setup"):
+    import beat_packs as _bp
+    import profile_code as _pc
+    _pf = _pc.decode(P3_CODE)[0] if P3_CODE else None
+    _bp.render_setup(prefill=_pf, notices=_p3_notices)
+    st.stop()
 
 # 同一会话内切换档案 → 重载信源与 🆕 基线(否则沿用上一档案的内存数据)
-if st.session_state.get("_active_profile", "__unset__") != (PROFILE or ""):
-    st.session_state.sources = load_sources()
+_active_key = TAXONOMY_FP if P3_CODE else (PROFILE or "")
+if st.session_state.get("_active_profile", "__unset__") != _active_key:
+    st.session_state.sources = _p3_sources if _p3_sources is not None else load_sources()
     st.session_state.pop("baseline", None)
-    st.session_state["_active_profile"] = PROFILE or ""
+    st.session_state["_active_profile"] = _active_key
 
 if "sources" not in st.session_state:
     st.session_state.sources = load_sources()
@@ -923,7 +1017,8 @@ if "baseline" not in st.session_state:
         pass
     st.session_state.baseline = baseline
     now_utc = datetime.now(timezone.utc)
-    if baseline is None or (now_utc - baseline) > timedelta(minutes=30):
+    if (baseline is None or (now_utc - baseline) > timedelta(minutes=30)) \
+            and not EPHEMERAL_CONFIG:  # p3 模式不写共享的访问基线
         try:
             STATE_PATH.write_text(json.dumps({"last_visit": now_utc.isoformat()}))
         except Exception:
@@ -933,6 +1028,13 @@ with st.sidebar:
     st.header("设置")
     if _profile_err:
         st.error(_profile_err)
+    for _n in _p3_notices:
+        st.info(_n)
+    if P3_CODE:
+        st.success(_p3_msg)
+        st.markdown(f"[🎯 调整我的监控](?setup=1&profile={P3_CODE})")
+    else:
+        st.markdown("[🎯 定制我的监控](?setup=1) — 选条线,60 秒生成专属监控页")
     _plist = list_profiles()
     if _plist:  # 有档案才显示切换器,默认部署界面不变
         _opts = ["默认(中欧监测)"] + _plist
@@ -961,7 +1063,7 @@ with st.sidebar:
         digest_clicked = st.button("📋 早报摘要", use_container_width=True)
     if digest_clicked:
         st.session_state.show_digest = True
-    st.caption("🎯 定制/重置自己的监控议程 → 最右侧「💬 定制」tab")
+    st.caption("定制/调整自己的监控 → 上方 🎯 入口")
 
     st.divider()
     st.subheader("监控源")
@@ -1095,7 +1197,10 @@ if st.session_state.get("show_digest"):
 # --- 标签页 ---
 BREAKING_WINDOW_H = min(hours, 12)
 _bw_cutoff = datetime.now(timezone.utc) - timedelta(hours=BREAKING_WINDOW_H)
-hot = [c for c in visible if (c["breaking"] or c["diversity"] >= 2) and c["newest"] >= _bw_cutoff]
+# p3 模式:⚡重点 必须钉死在所选领域内(c["cats"] 非空 = 命中至少一个所选模块/关注实体)。
+# 否则背景快讯层里任何"两家同题"的稿(体育/社会案件)都会靠 diversity≥2 混进重点。
+hot = [c for c in visible if (c["breaking"] or c["diversity"] >= 2) and c["newest"] >= _bw_cutoff
+       and (not P3_CODE or c["cats"])]
 
 tab_defs: list[tuple[str, list[dict]]] = [(f"⚡ 重点 {len(hot)}", hot)]
 for cat in CATEGORIES:
@@ -1117,6 +1222,8 @@ def render_cluster(cl: dict) -> None:
     with st.container(border=True):
         st.markdown(f"{badges}**[{rep['title']}]({rep['link']})**")
         meta = f"{rep['outlet']} · {local:%a %d %b %H:%M}"
+        if rep.get("stype") in STYPE_LABELS:
+            meta += f" · {STYPE_LABELS[rep['stype']]}"
         if cl["diversity"] >= 2:
             meta += f" · 🌐 {cl['diversity']} 家独立报道"
         if len(cl["langs"]) >= 2:
@@ -1136,13 +1243,17 @@ def render_cluster(cl: dict) -> None:
 
 SHOW_EVENTS_TAB = False  # 📅 活动板块暂时隐藏;改 True 即恢复(数据与代码都还在)
 
-_extra_tabs = ([events_monitor.tab_label()] if SHOW_EVENTS_TAB else []) + ["💬 定制"]
+# 💬 AI 访谈定制 tab 已下线(2026-08-08 用户裁定):勾选式定制(?setup=1)取代之。
+# beat_interview.py 保留在仓库,后续按 DESIGN.md 改造为维护者的领域包作者工具。
+_extra_tabs = [events_monitor.tab_label()] if SHOW_EVENTS_TAB else []
 tabs = st.tabs([label for label, _ in tab_defs] + _extra_tabs)
 if SHOW_EVENTS_TAB:
-    with tabs[-2]:
+    with tabs[-1]:
         events_monitor.render_events_tab()
-with tabs[-1]:
-    beat_interview.render_interview_tab(profile=PROFILE)
+def _stype_of(cl: dict) -> set[str]:
+    return {i.get("stype") for i in cl["items"] if i.get("stype")}
+
+
 for tab, (label, rows) in zip(tabs, tab_defs):
     with tab:
         if not rows:
@@ -1154,6 +1265,19 @@ for tab, (label, rows) in zip(tabs, tab_defs):
         if label.startswith("⚡"):
             st.caption(f"突发信号词或 ≥2 家独立媒体同题报道 · 最近 {BREAKING_WINDOW_H}h")
             rows = sorted(rows, key=lambda c: (c["breaking"], c["diversity"], c["newest"]), reverse=True)
+        # p3 模式:领域 tab 内按口径二级筛选(先领域后口径;单一条线时全部混在一起的解法)
+        if P3_CODE:
+            _cnt = {t: sum(1 for c in rows if t in _stype_of(c)) for t in STYPE_LABELS}
+            _opts = [t for t, n in _cnt.items() if n]
+            if len(_opts) >= 2:
+                _pick = st.pills("口径", options=["all"] + _opts, selection_mode="single",
+                                 default="all", label_visibility="collapsed",
+                                 format_func=lambda t, _c=_cnt, _n=len(rows): (
+                                     f"全部 {_n}" if t == "all"
+                                     else f"{STYPE_LABELS[t]} {_c[t]}"),
+                                 key=f"stype_{re.sub(r'[0-9 ]+$', '', label)}")
+                if _pick and _pick != "all":
+                    rows = [c for c in rows if _pick in _stype_of(c)]
         for cl in rows[:MAX_CARDS]:
             render_cluster(cl)
         if len(rows) > MAX_CARDS:

@@ -1,0 +1,6812 @@
+{
+ "schema_version": 1,
+ "updated": "2026-08-08",
+ "note": "三层筛选流的源注册表;个人配置绝不入此文件(公私边界见 DESIGN.md)",
+ "sources": [
+  {
+   "name": "Handelsblatt · Schlagzeilen",
+   "type": "rss",
+   "value": "https://feeds.cms.handelsblatt.com/schlagzeilen",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Handelsblatt · Politik",
+   "type": "rss",
+   "value": "https://feeds.cms.handelsblatt.com/politik",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Handelsblatt · Unternehmen",
+   "type": "rss",
+   "value": "https://feeds.cms.handelsblatt.com/unternehmen",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "FAZ · Wirtschaft",
+   "type": "rss",
+   "value": "https://www.faz.net/rss/aktuell/wirtschaft/",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "FAZ · Politik",
+   "type": "rss",
+   "value": "https://www.faz.net/rss/aktuell/politik/",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Spiegel · International (EN)",
+   "type": "rss",
+   "value": "https://www.spiegel.de/international/index.rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Spiegel · Wirtschaft",
+   "type": "rss",
+   "value": "https://www.spiegel.de/wirtschaft/index.rss",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "SZ · Wirtschaft",
+   "type": "rss",
+   "value": "https://rss.sueddeutsche.de/rss/Wirtschaft",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Die Zeit · Wirtschaft",
+   "type": "rss",
+   "value": "https://newsfeed.zeit.de/wirtschaft/index",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "WiWo · Unternehmen",
+   "type": "rss",
+   "value": "https://www.wiwo.de/contentexport/feed/rss/unternehmen",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "Tagesschau · Wirtschaft",
+   "type": "rss",
+   "value": "https://www.tagesschau.de/wirtschaft/index~rss2.xml",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "n-tv · Wirtschaft",
+   "type": "rss",
+   "value": "https://www.n-tv.de/wirtschaft/rss",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "DW · Business (EN)",
+   "type": "rss",
+   "value": "https://rss.dw.com/xml/rss-en-bus",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "DW · Asia (EN)",
+   "type": "rss",
+   "value": "https://rss.dw.com/rdf/rss-en-asia",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "DW · 中文",
+   "type": "rss",
+   "value": "https://rss.dw.com/xml/rss-chi-all",
+   "lang": "zh",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "China.Table (Table.Briefings)",
+   "type": "gnews",
+   "value": "site:table.media (China OR Peking) when:2d",
+   "lang": "de",
+   "gnews_locale": "de",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Le Monde · International",
+   "type": "rss",
+   "value": "https://www.lemonde.fr/international/rss_full.xml",
+   "lang": "fr",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Le Monde · Économie",
+   "type": "rss",
+   "value": "https://www.lemonde.fr/economie/rss_full.xml",
+   "lang": "fr",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Le Figaro · Économie",
+   "type": "rss",
+   "value": "https://www.lefigaro.fr/rss/figaro_economie.xml",
+   "lang": "fr",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Le Figaro · International",
+   "type": "rss",
+   "value": "https://www.lefigaro.fr/rss/figaro_international.xml",
+   "lang": "fr",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "France 24 (EN)",
+   "type": "rss",
+   "value": "https://www.france24.com/en/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "France 24 (FR)",
+   "type": "rss",
+   "value": "https://www.france24.com/fr/rss",
+   "lang": "fr",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "RFI (EN)",
+   "type": "rss",
+   "value": "https://www.rfi.fr/en/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "RFI · 中文",
+   "type": "rss",
+   "value": "https://www.rfi.fr/cn/rss",
+   "lang": "zh",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Les Echos · Chine",
+   "type": "gnews",
+   "value": "site:lesechos.fr (Chine OR chinois OR Pékin) when:2d",
+   "lang": "fr",
+   "gnews_locale": "fr",
+   "filter": "none",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "La Tribune · Chine",
+   "type": "gnews",
+   "value": "site:latribune.fr (Chine OR chinois) when:2d",
+   "lang": "fr",
+   "gnews_locale": "fr",
+   "filter": "none",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "L'Usine Nouvelle · Chine",
+   "type": "gnews",
+   "value": "site:usinenouvelle.com (Chine OR chinois) when:7d",
+   "lang": "fr",
+   "gnews_locale": "fr",
+   "filter": "none",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "兜底 · China×France (全网)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (France OR Paris OR Macron) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-fr",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Politico Europe · China",
+   "type": "gnews",
+   "value": "site:politico.eu (China OR Chinese OR Beijing) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Euractiv · China",
+   "type": "gnews",
+   "value": "site:euractiv.com (China OR Chinese OR Beijing) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "EUobserver",
+   "type": "rss",
+   "value": "https://euobserver.com/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "EU Commission · Press corner",
+   "type": "rss",
+   "value": "https://ec.europa.eu/commission/presscorner/api/rss?language=en",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "DG TRADE · 贸易与经济安全",
+   "type": "rss",
+   "value": "https://policy.trade.ec.europa.eu/node/2/rss_en",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "trade-tariff",
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "European Parliament · Press",
+   "type": "rss",
+   "value": "https://www.europarl.europa.eu/rss/doc/press-releases/en.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Council of the EU (via GNews)",
+   "type": "gnews",
+   "value": "site:consilium.europa.eu (China OR Chinese) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "EEAS (via GNews)",
+   "type": "gnews",
+   "value": "site:eeas.europa.eu (China OR Chinese) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "Reuters · China×Europe",
+   "type": "gnews",
+   "value": "site:reuters.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Bloomberg · China×Europe",
+   "type": "gnews",
+   "value": "site:bloomberg.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Financial Times · China×Europe",
+   "type": "gnews",
+   "value": "site:ft.com (China OR Chinese) (EU OR Europe OR Germany OR Brussels) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "WSJ · China×Europe",
+   "type": "gnews",
+   "value": "site:wsj.com (China) (EU OR Germany OR Europe) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Nikkei Asia · China×Europe",
+   "type": "gnews",
+   "value": "site:asia.nikkei.com (China OR Chinese) (Europe OR EU OR Germany OR Netherlands) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "兜底 · China×Germany (全网)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (Germany OR Berlin OR Bundestag OR Merz) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "兜底 · China×EU (全网)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (\"European Union\" OR Brussels OR \"European Commission\") when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "SCMP · China Diplomacy",
+   "type": "rss",
+   "value": "https://www.scmp.com/rss/318199/feed",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn-hk",
+   "source_type": "mainstream",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "SCMP · China Economy",
+   "type": "rss",
+   "value": "https://www.scmp.com/rss/318421/feed",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn-hk",
+   "source_type": "mainstream",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "SCMP · Tech",
+   "type": "rss",
+   "value": "https://www.scmp.com/rss/36/feed",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn-hk",
+   "source_type": "mainstream",
+   "domains": [
+    "ai",
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Caixin Global (via GNews)",
+   "type": "gnews",
+   "value": "site:caixinglobal.com when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Yicai Global (via GNews)",
+   "type": "gnews",
+   "value": "site:yicaiglobal.com when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Global Times · Europe",
+   "type": "gnews",
+   "value": "site:globaltimes.cn (Europe OR EU OR Germany OR Brussels) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Xinhua EN · Europe",
+   "type": "gnews",
+   "value": "site:english.news.cn (China OR Chinese) (Europe OR EU OR Germany) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "MOFCOM / 外交部 公告",
+   "type": "gnews",
+   "value": "(site:english.mofcom.gov.cn OR site:mfa.gov.cn) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "trade-tariff",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Sixth Tone",
+   "type": "rss",
+   "value": "https://www.sixthtone.com/rss",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "CnEVPost",
+   "type": "rss",
+   "value": "https://cnevpost.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "electrive (EN)",
+   "type": "rss",
+   "value": "https://www.electrive.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "electrive.net (DE)",
+   "type": "rss",
+   "value": "https://www.electrive.net/feed/",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "Automobilwoche",
+   "type": "rss",
+   "value": "https://www.automobilwoche.de/arc/outboundfeeds/rss/?outputType=xml",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "pv magazine Global",
+   "type": "rss",
+   "value": "https://www.pv-magazine.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "CarNewsChina",
+   "type": "rss",
+   "value": "https://carnewschina.com/feed/",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "Electrek · China",
+   "type": "rss",
+   "value": "https://electrek.co/guides/china/feed/",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "芯片 · 中欧半导体 (全网)",
+   "type": "gnews",
+   "value": "(China) (ASML OR semiconductor OR chips OR \"export controls\") (Europe OR Netherlands OR EU OR Germany) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "电池 · 中企在欧 (全网)",
+   "type": "gnews",
+   "value": "(CATL OR BYD OR Gotion OR \"battery plant\" OR gigafactory) (Europe OR Germany OR Hungary OR EU) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Bundesregierung · Presse",
+   "type": "rss",
+   "value": "https://www.bundesregierung.de/service/rss/breg-de/1151244/feed.xml",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Auswärtiges Amt · Press (EN)",
+   "type": "rss",
+   "value": "https://www.auswaertiges-amt.de/static/includes/rss_en/RSS_Pressemitteilungen_Reden.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "BMWE · Presse",
+   "type": "rss",
+   "value": "https://www.bundeswirtschaftsministerium.de/SiteGlobals/BMWI/Functions/RSSFeed/DE/RSSFeed-Pressemitteilung.xml",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "BMWE · Außenwirtschaft",
+   "type": "rss",
+   "value": "https://www.bundeswirtschaftsministerium.de/SiteGlobals/BMWI/Functions/RSSFeed/DE/RSSFeed-Aussenwirtschaft.xml",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "MERICS",
+   "type": "rss",
+   "value": "https://merics.org/en/rss",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Bruegel",
+   "type": "rss",
+   "value": "https://www.bruegel.org/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "Rhodium Group",
+   "type": "rss",
+   "value": "https://rhg.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "macro",
+    "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": true
+  },
+  {
+   "name": "ECFR",
+   "type": "rss",
+   "value": "https://ecfr.eu/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "SWP Berlin (EN)",
+   "type": "rss",
+   "value": "https://www.swp-berlin.org/en/SWPPublications.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "CER",
+   "type": "rss",
+   "value": "https://www.cer.eu/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "root",
+   "enabled": false
+  },
+  {
+   "name": "界面新闻 · 快报",
+   "type": "rss",
+   "value": "https://a.jiemian.com/index.php?m=article&a=rss",
+   "lang": "zh",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "中新社 · 要闻",
+   "type": "rss",
+   "value": "https://www.chinanews.com.cn/rss/importnews.xml",
+   "lang": "zh",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "中新社 · 国际",
+   "type": "rss",
+   "value": "https://www.chinanews.com.cn/rss/world.xml",
+   "lang": "zh",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "CGTN · World",
+   "type": "rss",
+   "value": "https://www.cgtn.com/subscribe/rss/section/world.xml",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "澎湃新闻 · 欧洲",
+   "type": "gnews",
+   "value": "site:thepaper.cn (欧盟 OR 欧洲 OR 德国 OR 法国 OR 英国 OR 中欧) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "财新 · 欧洲",
+   "type": "gnews",
+   "value": "site:caixin.com (欧盟 OR 欧洲 OR 德国 OR 法国 OR 英国) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "环球时报中文 · 欧洲",
+   "type": "gnews",
+   "value": "site:huanqiu.com (欧盟 OR 欧洲 OR 德国 OR 法国 OR 英国 OR 北约) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "中新社 · 财经",
+   "type": "rss",
+   "value": "https://www.chinanews.com.cn/rss/finance.xml",
+   "lang": "zh",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "中新社 · 即时新闻",
+   "type": "rss",
+   "value": "https://www.chinanews.com.cn/rss/scroll-news.xml",
+   "lang": "zh",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "CGTN · Business",
+   "type": "rss",
+   "value": "https://www.cgtn.com/subscribe/rss/section/business.xml",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "CGTN · China",
+   "type": "rss",
+   "value": "https://www.cgtn.com/subscribe/rss/section/china.xml",
+   "lang": "en",
+   "filter": "europe",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "人民网 · 欧洲",
+   "type": "gnews",
+   "value": "site:people.com.cn (欧盟 OR 欧洲 OR 德国 OR 法国) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "新华网中文 · 欧洲",
+   "type": "gnews",
+   "value": "site:news.cn (欧盟 OR 欧洲 OR 德国 OR 法国) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "中国日报 EN · Europe",
+   "type": "gnews",
+   "value": "site:chinadaily.com.cn (Europe OR EU OR Germany OR Brussels) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Inside Higher Ed",
+   "type": "rss",
+   "value": "https://www.insidehighered.com/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Times Higher Education (via GNews)",
+   "type": "gnews",
+   "value": "site:timeshighereducation.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "The PIE News",
+   "type": "rss",
+   "value": "https://thepienews.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "University World News (via GNews)",
+   "type": "gnews",
+   "value": "site:universityworldnews.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "中国教育报/中国教育新闻网 (via GNews)",
+   "type": "gnews",
+   "value": "site:jyb.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "教育部 moe.gov.cn (via GNews)",
+   "type": "gnews",
+   "value": "site:moe.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "兜底 · 中国教育 ZH (全网)",
+   "type": "gnews",
+   "value": "(教育部 OR 高校 OR 留学生 OR 双减) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "兜底 · China education EN (全网)",
+   "type": "gnews",
+   "value": "intitle:China (education OR universities OR students) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Guardian · Education",
+   "type": "rss",
+   "value": "https://www.theguardian.com/education/rss",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BBC News · Education",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/education/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "ICEF Monitor",
+   "type": "rss",
+   "value": "https://monitor.icef.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Chronicle of Higher Education (via GNews)",
+   "type": "gnews",
+   "value": "site:chronicle.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "芥末堆 (via GNews)",
+   "type": "gnews",
+   "value": "site:jiemodui.com when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "澎湃新闻 · 教育 (via GNews)",
+   "type": "gnews",
+   "value": "site:thepaper.cn (教育 OR 高校 OR 双减) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Financial Times · Markets",
+   "type": "rss",
+   "value": "https://www.ft.com/markets?format=rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "CNBC · Finance",
+   "type": "rss",
+   "value": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Caixin Global · Finance",
+   "type": "gnews",
+   "value": "site:caixinglobal.com (finance OR markets OR bond OR banking OR stocks) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "证券时报 Securities Times",
+   "type": "gnews",
+   "value": "site:stcn.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "21财经 21jingji",
+   "type": "gnews",
+   "value": "site:21jingji.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "央行/证监会官网公告 PBoC+CSRC announcements",
+   "type": "gnews",
+   "value": "(site:pbc.gov.cn OR site:csrc.gov.cn) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "central-bank",
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "ECB · Press",
+   "type": "rss",
+   "value": "https://www.ecb.europa.eu/rss/press.html",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "central-bank",
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "China markets & PBoC policy (EN catch-all)",
+   "type": "gnews",
+   "value": "(China (\"financial markets\" OR PBOC OR \"bond market\" OR yuan OR renminbi OR \"stock market\")) when:1d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets",
+    "macro",
+    "central-bank"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Federal Reserve · Press releases",
+   "type": "rss",
+   "value": "https://www.federalreserve.gov/feeds/press_all.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "gov",
+   "domains": [
+    "central-bank",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BIS · Press releases",
+   "type": "rss",
+   "value": "https://www.bis.org/doclist/all_pressrels.rss",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "gov",
+   "domains": [
+    "central-bank",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BIS · Central bankers' speeches",
+   "type": "rss",
+   "value": "https://www.bis.org/doclist/cbspeeches.rss",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "gov",
+   "domains": [
+    "central-bank",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "IMF (via Google News)",
+   "type": "gnews",
+   "value": "site:imf.org when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "上海证券报 Shanghai Securities News",
+   "type": "gnews",
+   "value": "site:cnstock.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "监管政策动态 China regulator watch (zh media)",
+   "type": "gnews",
+   "value": "(央行 OR 中国人民银行 OR 证监会 OR 金融监管总局) (政策 OR 公告 OR 通知 OR 发布 OR 表态) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "central-bank",
+    "finance-markets",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Endpoints News",
+   "type": "rss",
+   "value": "https://endpts.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Fierce Pharma",
+   "type": "gnews",
+   "value": "site:fiercepharma.com when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Fierce Biotech",
+   "type": "gnews",
+   "value": "site:fiercebiotech.com when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "BioPharma Dive",
+   "type": "rss",
+   "value": "https://www.biopharmadive.com/feeds/news/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "STAT News",
+   "type": "rss",
+   "value": "https://www.statnews.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Reuters · Pharma & Health",
+   "type": "gnews",
+   "value": "site:reuters.com (pharma OR pharmaceutical OR biotech OR drugmaker OR FDA) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "wires",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Google News · China Pharma/Biotech (EN)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (pharma OR biotech OR drugmaker OR \"drug approval\" OR NMPA) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "NMPA 国家药监局 · 官方公告",
+   "type": "gnews",
+   "value": "site:nmpa.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "国家卫健委 · 政策与报道",
+   "type": "gnews",
+   "value": "国家卫健委 when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "创新药出海/授权 (中文业界脉搏)",
+   "type": "gnews",
+   "value": "创新药 (出海 OR 授权 OR BD交易) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "WHO · News",
+   "type": "rss",
+   "value": "https://www.who.int/rss-feeds/news-english.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Pharmaphorum",
+   "type": "rss",
+   "value": "https://pharmaphorum.com/rssfeed/news-and-features",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "The Lancet · Current Issue",
+   "type": "rss",
+   "value": "https://www.thelancet.com/rssfeed/lancet_current.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BMJ · Latest",
+   "type": "rss",
+   "value": "https://www.bmj.com/rss/recent.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BBC · China",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/world/asia/china/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Guardian · China",
+   "type": "rss",
+   "value": "https://www.theguardian.com/world/china/rss",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Economist · China",
+   "type": "rss",
+   "value": "https://www.economist.com/china/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "AP · China (Google News)",
+   "type": "gnews",
+   "value": "site:apnews.com (China OR Chinese) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Reuters · China (Google News)",
+   "type": "gnews",
+   "value": "site:reuters.com (China OR Chinese) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "BBC · Europe",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Guardian · Europe",
+   "type": "rss",
+   "value": "https://www.theguardian.com/world/europe-news/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "NYT · Europe",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Europe.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Economist · Europe",
+   "type": "rss",
+   "value": "https://www.economist.com/europe/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "BBC · World",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/world/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Guardian · World",
+   "type": "rss",
+   "value": "https://www.theguardian.com/world/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "NYT · World",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "Economist · Finance & economics",
+   "type": "rss",
+   "value": "https://www.economist.com/finance-and-economics/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets",
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "NYT · Business",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "library",
+   "enabled": true
+  },
+  {
+   "name": "BBC · Business",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/business/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Guardian · Business",
+   "type": "rss",
+   "value": "https://www.theguardian.com/business/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Economist · Business",
+   "type": "rss",
+   "value": "https://www.economist.com/business/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Economy",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "CNBC · Economy",
+   "type": "rss",
+   "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "CNBC · Asia",
+   "type": "rss",
+   "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "CNBC · International",
+   "type": "rss",
+   "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100727362",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "CNBC · Tech",
+   "type": "rss",
+   "value": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "ai",
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BBC · Technology",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "ai",
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Guardian · Technology",
+   "type": "rss",
+   "value": "https://www.theguardian.com/technology/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "ai",
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Technology",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "ai",
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Economist · Science & technology",
+   "type": "rss",
+   "value": "https://www.economist.com/science-and-technology/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "ai",
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BBC · Science & Environment",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "climate"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Guardian · Environment",
+   "type": "rss",
+   "value": "https://www.theguardian.com/environment/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "climate"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Climate",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "climate"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Guardian · Science",
+   "type": "rss",
+   "value": "https://www.theguardian.com/science/rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Science",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Science.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NPR · Science",
+   "type": "rss",
+   "value": "https://feeds.npr.org/1007/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "BBC · Health",
+   "type": "rss",
+   "value": "https://feeds.bbci.co.uk/news/health/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Health",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Health.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NPR · Health",
+   "type": "rss",
+   "value": "https://feeds.npr.org/1128/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Education",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/Education.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NPR · Education",
+   "type": "rss",
+   "value": "https://feeds.npr.org/1013/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "NYT · Asia Pacific",
+   "type": "rss",
+   "value": "https://rss.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Economist · International",
+   "type": "rss",
+   "value": "https://www.economist.com/international/rss.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "Al Jazeera English · All news",
+   "type": "rss",
+   "value": "https://www.aljazeera.com/xml/rss/all.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "diplomacy"
+   ],
+   "tier": "extended",
+   "origin": "library",
+   "enabled": false
+  },
+  {
+   "name": "TechNode",
+   "type": "rss",
+   "value": "https://technode.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "platforms",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "36氪",
+   "type": "rss",
+   "value": "https://www.36kr.com/feed",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "platforms",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "雷峰网",
+   "type": "rss",
+   "value": "https://www.leiphone.com/feed",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "钛媒体",
+   "type": "rss",
+   "value": "https://www.tmtpost.com/rss.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "量子位",
+   "type": "rss",
+   "value": "https://www.qbitai.com/feed",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "经济观察报",
+   "type": "rss",
+   "value": "https://www.eeo.com.cn/rss.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "芥末堆 · 原生 RSS",
+   "type": "rss",
+   "value": "https://www.jiemodui.com/rss",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": false,
+   "caveat": "中文本地化 pubDate(星期三/八月)feedparser 解析不了,修复日期归一前启用会静默 0 条(WECHAT_SOURCES.md 实测)"
+  },
+  {
+   "name": "机器之心 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/51e92aad2728acdd1fda7314be32b16639353001.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "量子位 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/7131b577c61365cb47e81000738c10d872685908.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true,
+   "caveat": "与量子位原生 RSS(qbitai.com)内容重叠,靠下游 URL/标题去重"
+  },
+  {
+   "name": "新智元 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/ede30346413ea70dbef5d485ea5cbb95cca446e7.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "上海器审 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/7a292852e873eabf64cc2b76e0d883bae4306517.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "空天防务观察 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/b3da5de3b7697f10c0e22ce8909063ea84c44bbd.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "42章经 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/31436fcc3bba8c2c2a9337a163afcb3b5a57a0a0.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "集思录 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/f75bbb0bffd9fd6e0dda725282202ccc23a2bdff.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "思想钢印 · Wechat2RSS",
+   "type": "rss",
+   "value": "https://wechat2rss.xlab.app/feed/a55006fab25a17c43a412246fda317822609f2ea.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 汽车/新能源",
+   "type": "gnews",
+   "value": "(\"乘联会\" OR \"中汽协\" OR \"电动汽车观察家\" OR \"汽车商业评论\" OR \"高工锂电\") when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "nev",
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true,
+   "caveat": "已按用户裁定从原组合中移除盖世汽车"
+  },
+  {
+   "name": "公众号组合 · 汽车×欧洲",
+   "type": "gnews",
+   "value": "(\"乘联会\" OR \"电动汽车观察家\" OR \"高工锂电\" OR \"汽车商业评论\") (欧洲 OR 欧盟 OR 德国 OR 匈牙利 OR 出口) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "nev",
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 科技/半导体",
+   "type": "gnews",
+   "value": "(\"半导体行业观察\" OR \"芯智讯\" OR \"集微网\" OR \"量子位\" OR \"智东西\" OR \"甲子光年\" OR \"硅星人\") when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 半导体×欧洲",
+   "type": "gnews",
+   "value": "(\"半导体行业观察\" OR \"集微网\" OR \"芯智讯\") (欧洲 OR 荷兰 OR 德国 OR ASML OR 出口管制) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "semiconductor",
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 金融",
+   "type": "gnews",
+   "value": "(\"券商中国\" OR \"中国基金报\" OR \"财联社\" OR \"华尔街见闻\" OR \"证券时报\") when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 地产",
+   "type": "gnews",
+   "value": "(\"克而瑞\" OR \"中指研究院\" OR \"丁祖昱\" OR \"贝壳研究院\") when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "real-estate"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 消费",
+   "type": "gnews",
+   "value": "(\"窄门餐眼\" OR \"餐饮老板内参\" OR \"CBNData\" OR \"36氪\" OR \"亿邦动力\") 消费 when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "consumer",
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 产业深度",
+   "type": "gnews",
+   "value": "(\"远川研究所\" OR \"晚点LatePost\" OR \"字母榜\" OR \"虎嗅\" OR \"钛媒体\") when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "general",
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "公众号组合 · 教育",
+   "type": "gnews",
+   "value": "(\"芥末堆\" OR \"蓝鲸教育\" OR \"多鲸\" OR \"校长派\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "医药 · 生物谷镜像",
+   "type": "gnews",
+   "value": "site:news.bioon.com when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true,
+   "caveat": "医药公众号组合的改写替代之一(实测 81/7d);实为行业站直查"
+  },
+  {
+   "name": "医药 · 健康界镜像",
+   "type": "gnews",
+   "value": "site:cn-healthcare.com when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true,
+   "caveat": "医药公众号组合的改写替代之二(实测 60/7d);实为行业站直查"
+  },
+  {
+   "name": "医药 · 公众号名组合",
+   "type": "gnews",
+   "value": "(\"赛柏蓝\" OR \"E药经理人\" OR \"医药魔方\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true
+  },
+  {
+   "name": "宏观 · CF40 中国金融四十人论坛",
+   "type": "gnews",
+   "value": "site:cf40.org.cn when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "macro",
+    "finance-markets",
+    "fiscal"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true,
+   "caveat": "宏观公众号组合的改写替代(实为智库官网直查);改写第三路(财新/第一财经)已由现库 Caixin/Yicai 源覆盖,不另设"
+  },
+  {
+   "name": "宏观 · NIFD 国家金融与发展实验室",
+   "type": "gnews",
+   "value": "site:nifd.cn when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "macro",
+    "fiscal"
+   ],
+   "tier": "core",
+   "origin": "wechat",
+   "enabled": true,
+   "caveat": "宏观公众号组合的改写替代(实为智库官网直查)"
+  },
+  {
+   "name": "DigiTimes Asia · Daily",
+   "type": "rss",
+   "value": "https://www.digitimes.com/rss/daily.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "台湾供应链视角,中美芯片战核心料源;深度报道付费,feed 摘要免费可用"
+  },
+  {
+   "name": "Tom's Hardware · 中国/出口管制",
+   "type": "gnews",
+   "value": "site:tomshardware.com (China OR Chinese OR SMIC OR Huawei OR \"export controls\") when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全站 RSS (feeds/all) 也活跃(50/50 7天内)但消费级硬件噪音大,建议用此过滤版查询"
+  },
+  {
+   "name": "The Register · 中国科技",
+   "type": "gnews",
+   "value": "site:theregister.com (China OR Chinese) (chip OR semiconductor OR AI OR Huawei) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "量极大且文风辛辣,含 AI/云等泛科技,兼填 AI×中美;需按条目关键词二次过滤"
+  },
+  {
+   "name": "EE Times · 中国",
+   "type": "gnews",
+   "value": "site:eetimes.com (China OR Chinese) when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "原生 feed 无中国过滤,建议 gnews 版进中美格、原生 feed 进跨区行业格"
+  },
+  {
+   "name": "SemiAnalysis (Dylan Patel)",
+   "type": "rss",
+   "value": "https://newsletter.semianalysis.com/feed",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "主域 semianalysis.com/feed/ 对脚本抓取返回 429(Cloudflare),必须用 substack 镜像;深度长文付费,免费层可见开头;主域 429,入库用 301 终址 newsletter 域(SOURCE_TREE 裁决)"
+  },
+  {
+   "name": "Semiconductor Engineering",
+   "type": "rss",
+   "value": "https://semiengineering.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "偏技术深水区(EDA/制造/封装),中国相关需条目过滤"
+  },
+  {
+   "name": "SemiWiki",
+   "type": "rss",
+   "value": "https://semiwiki.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "feed 仅 5 条封顶,量小;社区分析文风格"
+  },
+  {
+   "name": "TrendForce 集邦咨询",
+   "type": "gnews",
+   "value": "site:trendforce.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "原生 RSS trendforce.com/news/feed 已冻结(最新条目 37 天前,0/7d),presscenter/rss 404,必须走 gnews"
+  },
+  {
+   "name": "美国商务部 BIS 动向(代理)",
+   "type": "gnews",
+   "value": "\"Bureau of Industry and Security\" (China OR chips OR \"export controls\") when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "gov",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "BIS 官网完全不被 Google News 索引且无 RSS,此为媒体报道 BIS 的代理查询,非官网直达"
+  },
+  {
+   "name": "ChinAI (Jeffrey Ding)",
+   "type": "rss",
+   "value": "https://chinai.substack.com/feed",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "thinktank",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "周更低频但为中国 AI 中文材料英译分析的唯一直达源,对中美档刚需"
+  },
+  {
+   "name": "Import AI (Jack Clark)",
+   "type": "rss",
+   "value": "https://importai.substack.com/feed",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "周更低频;AI 政策/前沿信号密度高,含中美政策条目"
+  },
+  {
+   "name": "Interconnected (Kevin Xu)",
+   "type": "rss",
+   "value": "https://interconnected.blog/rss/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "thinktank",
+   "domains": [
+    "ai"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "个人博客约周更;注意路径是 /rss/(/feed.xml 返回 404)"
+  },
+  {
+   "name": "The Decoder",
+   "type": "rss",
+   "value": "https://the-decoder.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "德媒英文版,盯欧美模型动态为主,中国模型(DeepSeek/Kimi)也跟"
+  },
+  {
+   "name": "TechCrunch · AI",
+   "type": "rss",
+   "value": "https://techcrunch.com/category/artificial-intelligence/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "美国创投视角,量大,中国相关需条目过滤"
+  },
+  {
+   "name": "VentureBeat(主 feed)",
+   "type": "rss",
+   "value": "https://venturebeat.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "ai"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "AI 子分类 feed 已死,必须用主 feed;VB 转型后内容本就几乎全是 AI"
+  },
+  {
+   "name": "AI×中美 兜底(全网)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (\"artificial intelligence\" OR AI) (\"United States\" OR OpenAI OR Nvidia OR Washington) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全网 catchall,来源混杂,建议做域名白名单或条目级去噪"
+  },
+  {
+   "name": "芯片战×中美 兜底(全网)",
+   "type": "gnews",
+   "value": "(China) (Nvidia OR SMIC OR TSMC OR \"export controls\" OR chips) (Washington OR \"United States\" OR US) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全网 catchall,与 sources.json 已有中欧半导体查询互补(那条限定 Europe/ASML)"
+  },
+  {
+   "name": "Rest of World",
+   "type": "rss",
+   "value": "https://restofworld.org/feed/latest/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "非每日高频,但中国科技出海/平台报道质量高;P1 平台格兼 AI 出海"
+  },
+  {
+   "name": "The Information · 中国/芯片/AI",
+   "type": "gnews",
+   "value": "site:theinformation.com (China OR chips OR AI) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "platforms",
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "硬付费墙,gnews 只能拿标题当线索,正文不可读;仅作选题雷达"
+  },
+  {
+   "name": "中国出口管制信息网 · 商务部公告",
+   "type": "gnews",
+   "value": "site:exportcontrol.mofcom.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "商务部安全与管制局的公告门户(aqygzj 子域已废);低频源,周约 6 条,勿因单日 0 条误判失效"
+  },
+  {
+   "name": "商务部 · 出口管制/两用物项(主站)",
+   "type": "gnews",
+   "value": "site:mofcom.gov.cn (出口管制 OR 两用物项) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": ".gov.cn 惯有陈年存档页混入 + 少量'中华人民共和国商务部'无题名导航页——必须条目级日期过滤"
+  },
+  {
+   "name": "商务部新闻发言人 · 发布会/答记者问",
+   "type": "gnews",
+   "value": "site:mofcom.gov.cn (新闻发言人 OR 例行新闻发布会) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "与主站查询有部分重叠,入库时靠 URL 去重;同样需条目级日期过滤"
+  },
+  {
+   "name": "出口管制 · 全网中文兜底",
+   "type": "gnews",
+   "value": "(出口管制 OR 两用物项) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "含股评/ETF 类噪音和民族主义自媒体(风闻),建议下游关键词降噪"
+  },
+  {
+   "name": "稀土/关键矿产管制 · 全网中文",
+   "type": "gnews",
+   "value": "(稀土 OR 镓 OR 锗 OR 石墨 OR 锑) (出口管制 OR 出口许可) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "wires",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "基金/行情类噪音占比约三分之一"
+  },
+  {
+   "name": "Federal Register · BIS (工业与安全局) 规则流",
+   "type": "rss",
+   "value": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=industry-and-security-bureau",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "gov",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "低频官方规则流(feed 固定只给最近几条);BIS 官网本身无 RSS,这是唯一直连官方渠道;Entity List/EAR 对中欧同样刚需(长臂管辖),SOURCE_TREE 建议升 cross"
+  },
+  {
+   "name": "CSIS · 中国相关分析",
+   "type": "gnews",
+   "value": "site:csis.org China when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "thinktank",
+   "domains": [
+    "export-control",
+    "defense",
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "CSIS 官网 RSS 已冻结在 2016 年(实测最新条目 2016-03),必须走 gnews;同时覆盖军工领域;保留宽版查询,下游按关键词分流到出口管制/军工/半导体(SOURCE_TREE 裁决)"
+  },
+  {
+   "name": "CSET (Georgetown)",
+   "type": "rss",
+   "value": "https://cset.georgetown.edu/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "export-control",
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "feed 混有 newsletter 链接汇总条目(指向外部媒体),非全为原创报告;三线共用(出口管制/半导体/AI),SOURCE_TREE 建议升 cross"
+  },
+  {
+   "name": "Export Compliance Daily",
+   "type": "gnews",
+   "value": "site:exportcompliancedaily.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "Warren Communications 硬付费墙,gnews 只能拿到标题线索,正文需订阅;标题信息量尚可用作预警"
+  },
+  {
+   "name": "WorldECR",
+   "type": "gnews",
+   "value": "site:worldecr.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "官网 /feed/ 存在但近乎冻结(实测仅 1 条且为 5 月旧条),只能走 gnews;正文订阅制"
+  },
+  {
+   "name": "出口管制/实体清单 · 全网英文兜底",
+   "type": "gnews",
+   "value": "(\"export controls\" OR \"entity list\" OR \"export license\") (China OR Chinese) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "wires",
+   "domains": [
+    "export-control"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "混合源,含 Bloomberg/FT 等 metered 链接"
+  },
+  {
+   "name": "Defense News",
+   "type": "rss",
+   "value": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全量 feed,需下游 China/Taiwan 关键词过滤"
+  },
+  {
+   "name": "Breaking Defense",
+   "type": "rss",
+   "value": "https://breakingdefense.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全量 feed,需 China 过滤;欧洲防务覆盖好,兼益中欧军工格"
+  },
+  {
+   "name": "The War Zone (TWZ)",
+   "type": "rss",
+   "value": "https://www.twz.com/feed",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "少量 premium 文章;需 China 过滤"
+  },
+  {
+   "name": "Defense One",
+   "type": "rss",
+   "value": "https://www.defenseone.com/rss/all/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "偏美国防务政策/采办,需 China 过滤"
+  },
+  {
+   "name": "War on the Rocks",
+   "type": "rss",
+   "value": "https://warontherocks.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "defense"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "深度分析非快讯,部分会员专属;需 China 过滤"
+  },
+  {
+   "name": "Naval News",
+   "type": "gnews",
+   "value": "site:navalnews.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "defense"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "只能走 gnews(原生 RSS 被 503);海军/造船条线对解放军海军跟踪价值高,需 China 过滤"
+  },
+  {
+   "name": "Janes",
+   "type": "gnews",
+   "value": "site:janes.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "新闻短讯免费、深度数据订阅制;需 China 过滤"
+  },
+  {
+   "name": "美国防部 · 新闻发布",
+   "type": "rss",
+   "value": "https://www.war.gov/DesktopModules/ArticleCS/RSS.ashx?ContentType=1&Site=945&max=20",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "gov",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全量官方发布,涉华占比低,必须 China/Indo-Pacific 关键词过滤;defense.gov 已 302 迁移 war.gov,入库用终址(SOURCE_TREE 裁决)"
+  },
+  {
+   "name": "中国军网英文 (China Military Online)",
+   "type": "gnews",
+   "value": "site:eng.chinamil.com.cn when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "官方军媒口径,大量例行训练图集类条目,建议下游按关键词分级"
+  },
+  {
+   "name": "国防部官网(中文)",
+   "type": "gnews",
+   "value": "site:mod.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "混入'视频/法律法规/要闻'等栏目导航页,必须条目级过滤;.gov.cn 存档页问题同样适用"
+  },
+  {
+   "name": "国防部英文 (eng.mod.gov.cn)",
+   "type": "gnews",
+   "value": "site:eng.mod.gov.cn when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "与中文站部分重复,记者会英文版有时滞后数日"
+  },
+  {
+   "name": "中国军网 81.cn(中文)",
+   "type": "gnews",
+   "value": "site:81.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "defense"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "混入'在线调查'等站内功能页噪音;量大需过滤"
+  },
+  {
+   "name": "国家国防科工局 (SASTIND)",
+   "type": "gnews",
+   "value": "site:sastind.gov.cn when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "defense"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "导航页噪音比例高 + 旧存档页混入,7 天真实新条较少——需严格条目级日期+标题过滤后才可用"
+  },
+  {
+   "name": "Stimson Center",
+   "type": "rss",
+   "value": "https://www.stimson.org/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "thinktank",
+   "domains": [
+    "defense"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "涉华占比低,作为军控/东亚安全的补充源而非主力"
+  },
+  {
+   "name": "外交部英文发言人页(需写解析器)",
+   "type": "rss",
+   "value": "https://www.fmprc.gov.cn/eng/xw/fyrbt/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "特殊条目:非 RSS 非 gnews,系统需先写 HTML 解析器才能接入;在此登记以免遗忘;非标准 feed(HTML 列表页):需先开发解析器才能接入,修好前勿启用"
+  },
+  {
+   "name": "中国驻德国大使馆",
+   "type": "gnews",
+   "value": "site:de.china-embassy.gov.cn when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "约半数条目为外交部例行记者会转载,与 MFA 源重复,需 URL 去重;真正使馆独家(大使表态/涉德声明)是低频高价值部分"
+  },
+  {
+   "name": "中新社英文 ECNS(前轮已验)",
+   "type": "rss",
+   "value": "https://www.ecns.cn/rss/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "量大且全领域混杂,需下游按关键词分流到各领域"
+  },
+  {
+   "name": "CHOICE / China Observers in CEE(前轮已验)",
+   "type": "rss",
+   "value": "https://chinaobservers.eu/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "周更节奏,分析为主"
+  },
+  {
+   "name": "Trivium China(前轮已验)",
+   "type": "rss",
+   "value": "https://triviumchina.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "macro",
+    "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "免费 feed 为摘要,深度报告订阅制;宏观/贸易关税双线共用,region=cross(SOURCE_TREE 合并裁决)"
+  },
+  {
+   "name": "关税/加征 · 全网中文",
+   "type": "gnews",
+   "value": "(国务院关税税则委员会 OR 加征关税) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "wires",
+   "domains": [
+    "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "财经快讯类重复转载多,需标题去重;对照测试 site:mof.gov.cn (关税) 仅 6 条且 7 天内 0 条全是栏目页——财政部官网直连路线不可用"
+  },
+  {
+   "name": "交通运输部 · 航运物流",
+   "type": "gnews",
+   "value": "site:mot.gov.cn (航运 OR 港口 OR 水运 OR 物流 OR 班列 OR 货运) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": ".gov.cn 存档风险(铁律4),需条目级日期过滤;需 gnews_locale: zh"
+  },
+  {
+   "name": "国际船舶网 (eworldship)",
+   "type": "gnews",
+   "value": "site:eworldship.com when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "官网 RSS (rss.xml) 返回 200+0 条,只能走 gnews;需 gnews_locale: zh"
+  },
+  {
+   "name": "信德海事 · 公众号镜像",
+   "type": "gnews",
+   "value": "\"信德海事\" when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "依赖搜狐转载,偶有招聘帖噪音;site:xindemarinenews.com 直查 0 条;需 gnews_locale: zh"
+  },
+  {
+   "name": "中国航务周刊 · 公众号镜像",
+   "type": "gnews",
+   "value": "\"中国航务周刊\" when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "依赖搜狐转载;需 gnews_locale: zh"
+  },
+  {
+   "name": "中远海运 · 动态聚合",
+   "type": "gnews",
+   "value": "(中远海运 OR 中远海控) when:3d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "含公告类噪音(中财网董事会决议);需 gnews_locale: zh"
+  },
+  {
+   "name": "民航资源网 · 货运",
+   "type": "gnews",
+   "value": "site:carnoc.com 货运 when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "需 gnews_locale: zh"
+  },
+  {
+   "name": "SCFI 运价指数 · 转载聚合",
+   "type": "gnews",
+   "value": "(SCFI OR \"上海出口集装箱运价指数\" OR 集运运价) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "上海航运交易所官网无法直达(见 weak 条目),只能靠财经媒体转载;低频但每周必有;需 gnews_locale: zh"
+  },
+  {
+   "name": "RailFreight.com",
+   "type": "rss",
+   "value": "https://www.railfreight.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "部分 Premium 文章;泛欧铁路内容需 china 关键词过滤"
+  },
+  {
+   "name": "中欧班列 · 中文专题",
+   "type": "gnews",
+   "value": "中欧班列 when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "官媒宣传稿比例高,需人工筛;需 gnews_locale: zh"
+  },
+  {
+   "name": "China-Europe rail · EN 专题",
+   "type": "gnews",
+   "value": "(\"China-Europe freight train\" OR \"China-Europe railway express\" OR \"rail freight\" China Europe) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "与 RailFreight RSS 有部分重叠"
+  },
+  {
+   "name": "欧洲港口×中国 · EN 专题",
+   "type": "gnews",
+   "value": "(Duisburg OR Piraeus OR Rotterdam OR Antwerp OR Hamburg) (China OR Chinese OR Cosco) (port OR container OR rail) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "有少量低质站点噪音(如 debuglies.com)"
+  },
+  {
+   "name": "The Loadstar",
+   "type": "rss",
+   "value": "https://theloadstar.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全球货运视角,中欧含量高但需关键词过滤;Premium 板块独立不影响 feed"
+  },
+  {
+   "name": "空运 · 中国×欧洲 专题",
+   "type": "gnews",
+   "value": "\"air cargo\" (China OR Chinese) (Europe OR Liege OR Luxembourg OR Frankfurt OR Budapest) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "与 Air Cargo News RSS 部分重叠"
+  },
+  {
+   "name": "duisport · Presse",
+   "type": "rss",
+   "value": "https://www.duisport.de/feed/",
+   "lang": "de",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "德语;新闻稿低频(月约 2-4 条),0-in-7d 属正常节奏而非失效"
+  },
+  {
+   "name": "Ports Europe",
+   "type": "rss",
+   "value": "https://www.portseurope.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "全文需订阅,RSS 给摘要;泛欧内容需 china 过滤"
+  },
+  {
+   "name": "FreightWaves",
+   "type": "rss",
+   "value": "https://www.freightwaves.com/news/feed",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "feed 顶部混有 2021-2022 置顶旧条,必须做条目级日期过滤(铁律2实锤)"
+  },
+  {
+   "name": "Journal of Commerce (JOC)",
+   "type": "gnews",
+   "value": "site:joc.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "S&P Global 硬付费墙,只能做标题监测"
+  },
+  {
+   "name": "gCaptain",
+   "type": "rss",
+   "value": "https://gcaptain.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "泛海事内容需 china 关键词过滤"
+  },
+  {
+   "name": "Splash 247",
+   "type": "rss",
+   "value": "https://splash247.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "Seatrade Maritime News",
+   "type": "rss",
+   "value": "https://www.seatrade-maritime.com/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "The Maritime Executive",
+   "type": "rss",
+   "value": "https://maritime-executive.com/articles.rss",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "量大,建议配 china/cosco 过滤"
+  },
+  {
+   "name": "Container News",
+   "type": "rss",
+   "value": "https://container-news.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "Air Cargo News",
+   "type": "rss",
+   "value": "https://www.aircargonews.net/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "Lloyd's List",
+   "type": "gnews",
+   "value": "site:lloydslist.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "硬付费墙,只能做标题监测"
+  },
+  {
+   "name": "TradeWinds",
+   "type": "gnews",
+   "value": "site:tradewindsnews.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "硬付费墙,只能做标题监测"
+  },
+  {
+   "name": "Hellenic Shipping News",
+   "type": "rss",
+   "value": "https://www.hellenicshippingnews.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "聚合站,与 Reuters/其他行业媒体高度重复,去重压力大"
+  },
+  {
+   "name": "Railway Gazette International",
+   "type": "rss",
+   "value": "https://www.railwaygazette.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "全球铁路视角,中欧班列内容需过滤;/rss 重定向,入库用 /feed/(SOURCE_TREE 裁决)"
+  },
+  {
+   "name": "Port Technology International",
+   "type": "rss",
+   "value": "https://www.porttechnology.org/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "偏港口科技/自动化,政经含量低"
+  },
+  {
+   "name": "Temu/Shein 物流 · 专题",
+   "type": "gnews",
+   "value": "(Temu OR Shein) (\"air cargo\" OR freight OR logistics OR \"air freight\") when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "跨境电商物流,美线(de minimis)与欧线皆有,故 cross"
+  },
+  {
+   "name": "Drewry(WCI 运价)",
+   "type": "gnews",
+   "value": "site:drewry.co.uk when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "shipping-logistics"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "低频周度,建议 when:30d 抓取窗口"
+  },
+  {
+   "name": "PV-Tech",
+   "type": "rss",
+   "value": "https://www.pv-tech.org/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全球光伏制造/供应链,中国厂商覆盖密集;建议 filter=china 降噪"
+  },
+  {
+   "name": "pv magazine Deutschland",
+   "type": "rss",
+   "value": "https://www.pv-magazine.de/feed/",
+   "lang": "de",
+   "filter": "china",
+   "region": "cn-de",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "德国光伏市场视角,中企条目需 filter=china;与已有 pv-magazine.com Global 不同域"
+  },
+  {
+   "name": "pv magazine 中文版",
+   "type": "rss",
+   "value": "https://www.pv-magazine-china.com/feed/",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "周更节奏,量小但全是产业硬信息;原生 RSS 优于 gnews(gnews 同站 12/7d 可作备份)"
+  },
+  {
+   "name": "索比光伏网 Solarbe",
+   "type": "gnews",
+   "value": "site:solarbe.com (光伏 OR 组件 OR 硅料) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "Google 显示的发布者名错标为'碳索储能网'但链接实为 solarbe.com;不加关键词会混入 video.solarbe.com 访谈页"
+  },
+  {
+   "name": "TaiyangNews (via GNews)",
+   "type": "gnews",
+   "value": "site:taiyangnews.info when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "官方 feed https://taiyangnews.info/feed/ 返回 200+0 条(已死),必须走 gnews"
+  },
+  {
+   "name": "CPIA 中国光伏行业协会",
+   "type": "gnews",
+   "value": "site:chinapv.org.cn when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "solar"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "条目标题字段为空(只剩'- 中国光伏行业协会'),需靠链接/正文判别;协会官方口径,量小但权威"
+  },
+  {
+   "name": "中国光伏×欧洲 (全网组合)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (solar OR photovoltaic OR polysilicon) (EU OR Europe OR European) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "solar"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "含少量美国关税条目串入;建议保留(光伏贸易战美欧联动)"
+  },
+  {
+   "name": "北极星系(转载镜像)",
+   "type": "gnews",
+   "value": "(\"北极星电力网\" OR \"北极星太阳能光伏网\" OR \"北极星储能网\" OR \"北极星风力发电网\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "solar",
+    "oil-power"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "bjx.com.cn 本站 site: 查询被招聘子域 100% 污染、news/guangfu 子域 gnews 0 索引,只能吃转载镜像;量偏小 2026-08-08 升级为四网组合(补风电/储能),实测 9/7d,记者点名"
+  },
+  {
+   "name": "Energy-Storage.news",
+   "type": "rss",
+   "value": "https://www.energy-storage.news/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "Solar Media 旗下,全球储能项目/政策,中企(阳光电源/比亚迪储能等)高频出现;建议 filter=china"
+  },
+  {
+   "name": "ESS News (pv magazine 储能)",
+   "type": "rss",
+   "value": "https://www.ess-news.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "pv magazine 集团储能垂类,与已有 pv-magazine.com 不同域;建议 filter=china"
+  },
+  {
+   "name": "Batteries News",
+   "type": "rss",
+   "value": "https://batteriesnews.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "聚合型行业站,部分条目为厂商通稿,需人工分辨"
+  },
+  {
+   "name": "Battery-News.de",
+   "type": "rss",
+   "value": "https://battery-news.de/feed/",
+   "lang": "de",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "德国电池产业垂类,更新约每日 1 条,量小质高"
+  },
+  {
+   "name": "SNE Research (媒体引用面)",
+   "type": "gnews",
+   "value": "\"SNE Research\" when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "抓的是各媒体引用 SNE 数据的报道而非官网(官网无可用 feed);月度装机数据发布日集中爆发"
+  },
+  {
+   "name": "Benchmark Mineral Intelligence",
+   "type": "gnews",
+   "value": "site:benchmarkminerals.com when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "官网 /feed 404;深度报告收费,新闻/价格评论层免费可读"
+  },
+  {
+   "name": "电池网 itdcw",
+   "type": "gnews",
+   "value": "site:itdcw.com when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "含会议赞助类软文,需容忍一定噪音"
+  },
+  {
+   "name": "中国汽车动力电池产业创新联盟 CABIA",
+   "type": "gnews",
+   "value": "(\"动力电池产业创新联盟\" OR \"电池联盟\") when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "月度装机数据发布时爆发;名称查询有少量歧义噪音"
+  },
+  {
+   "name": "CNESA 中关村储能产业技术联盟",
+   "type": "gnews",
+   "value": "(\"中关村储能产业技术联盟\" OR CNESA) when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "battery"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "site:esresearch.com.cn 实测 0 条,只能走名称查询;量小,数据发布月报节奏"
+  },
+  {
+   "name": "高工储能(镜像)",
+   "type": "gnews",
+   "value": "\"高工储能\" when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "battery"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "镜像面窄(官网 gg-ess.com 未被 Google News 索引);已有高工锂电镜像,此为储能条线补充,量小"
+  },
+  {
+   "name": "中企电池×美国 (全网组合)",
+   "type": "gnews",
+   "value": "(CATL OR Gotion OR CALB OR \"EVE Energy\" OR \"Chinese battery\") (tariff OR \"United States\" OR Michigan OR Illinois OR IRA) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "不含 BYD 是刻意的——加 BYD 会被股价页(BYDDY quote)污染(实测 38 条中大半为行情页)"
+  },
+  {
+   "name": "国家能源局 NEA",
+   "type": "gnews",
+   "value": "site:nea.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": ".gov.cn 存档页风险——入库后必须做条目级日期过滤,不能只信 when: 参数"
+  },
+  {
+   "name": "发改委·能源条线",
+   "type": "gnews",
+   "value": "site:ndrc.gov.cn (能源 OR 电力 OR 新能源) when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "同 .gov.cn 存档页风险,需条目级日期过滤"
+  },
+  {
+   "name": "界面新闻·能源条线",
+   "type": "gnews",
+   "value": "site:jiemian.com (能源 OR 电力 OR 石油 OR 天然气 OR 煤炭) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "库里已有 a.jiemian.com 快报 RSS(不同子域、无领域过滤),此为能源条线专用查询;若维护者认定域名重复可弃"
+  },
+  {
+   "name": "中国能源报(人民日报系镜像)",
+   "type": "gnews",
+   "value": "\"中国能源报\" when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "名称查询,含少量提及'中国能源报'的他媒体条目"
+  },
+  {
+   "name": "OilPrice.com",
+   "type": "rss",
+   "value": "https://oilprice.com/rss/main",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全球油气快讯,中国相关约 1/5,必须 filter=china"
+  },
+  {
+   "name": "IEA 国际能源署",
+   "type": "gnews",
+   "value": "site:iea.org when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "官方 /rss/news 404,只能走 gnews;报告发布节奏周更,when:30d 才够量,入库后按条目日期过滤"
+  },
+  {
+   "name": "中国油气×美国/制裁 (全网组合)",
+   "type": "gnews",
+   "value": "(CNOOC OR Sinopec OR PetroChina OR \"China LNG\") (US OR \"United States\" OR sanctions OR Russia) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "oil-power"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "查询含 Russia 维度(中美油气博弈绕不开俄罗斯),条目质量实测极高"
+  },
+  {
+   "name": "Carbon Brief",
+   "type": "rss",
+   "value": "https://www.carbonbrief.org/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "climate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "日更 1-2 篇长文,量小质极高;China 专栏无独立 feed(/category/china-policy/feed 404),主 feed 已含"
+  },
+  {
+   "name": "Dialogue Earth (原中外对话)",
+   "type": "rss",
+   "value": "https://dialogue.earth/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "thinktank",
+   "domains": [
+    "climate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "原 China Dialogue,中国气候/环境深度最强的英文源之一;另有中文版子站未测"
+  },
+  {
+   "name": "生态环境部 MEE",
+   "type": "gnews",
+   "value": "site:mee.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "climate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "碳市场/双碳政策主管部委;.gov.cn 存档页风险,需条目级日期过滤;公告类噪音多,可加关键词(碳 OR 气候)收窄"
+  },
+  {
+   "name": "中国碳排放交易网",
+   "type": "gnews",
+   "value": "site:tanpaifang.com when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "climate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "聚合型行业站,含论坛会议类软文;全国碳市场行情/CCER 动态覆盖全"
+  },
+  {
+   "name": "CBAM/EU ETS×中国 (全网组合)",
+   "type": "gnews",
+   "value": "(CBAM OR \"EU ETS\" OR \"carbon border\") (China OR Chinese) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "climate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "CBAM 过渡期结束前后会爆量,建议届时收紧 when:"
+  },
+  {
+   "name": "Climate Home News",
+   "type": "rss",
+   "value": "https://www.climatechangenews.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "climate"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "全球气候政治/COP 谈判条线,中国相关需 filter=china"
+  },
+  {
+   "name": "Clean Energy Wire (via GNews)",
+   "type": "gnews",
+   "value": "site:cleanenergywire.org when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "climate"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "德国能源转型条线,中国条目占比低,必须 filter=china;daily 'In brief' 栏目只有 gnews 能抓到"
+  },
+  {
+   "name": "第一电动网 d1ev",
+   "type": "gnews",
+   "value": "site:d1ev.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "WECHAT_SOURCES 已验证过该模式但未入库;新车谍照类条目多,政策/销量数据混在其中"
+  },
+  {
+   "name": "工信部·新能源汽车口径 (媒体面)",
+   "type": "gnews",
+   "value": "(\"工信部\" OR \"工业和信息化部\") (新能源汽车 OR 动力电池 OR 光伏 OR 装备) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "site:miit.gov.cn 直查实测仅剩招标平台页(1 条/30d,正文页未被索引),只能走媒体转述面"
+  },
+  {
+   "name": "中汽协 CAAM 官网",
+   "type": "gnews",
+   "value": "site:caam.org.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "官网公告/团体标准为主,月度产销数据发布日最有价值;Wechat2RSS 收录申请已被判死,此为唯一稳定通道"
+  },
+  {
+   "name": "国家统计局·最新发布(zh)",
+   "type": "rss",
+   "value": "https://www.stats.gov.cn/sj/zxfb/rss.xml",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "前轮已验;中文 RSS 注意本地化日期解析问题,入库前抽查 pubDate 格式"
+  },
+  {
+   "name": "国家统计局·English Press Release",
+   "type": "rss",
+   "value": "https://www.stats.gov.cn/english/PressRelease/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "前轮已验;英文发布节奏慢于中文版"
+  },
+  {
+   "name": "海关总署·统计与进出口(gnews)",
+   "type": "gnews",
+   "value": "site:customs.gov.cn (统计 OR 进出口 OR 数据 OR 发言人) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro",
+    "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "必须带关键词过滤——裸 site: 查询被招标采购公告淹没(实测裸查 88/7d 里前排全是采购公告);仍有地方海关动态混入"
+  },
+  {
+   "name": "财政部官网(gnews)",
+   "type": "gnews",
+   "value": "site:mof.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro",
+    "fiscal"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "国债发行公告占比高(对债市记者反而有用);含 sbs.mof.gov.cn 等子域杂项;需条目级日期过滤(铁律4)"
+  },
+  {
+   "name": "发改委官网(gnews)",
+   "type": "gnews",
+   "value": "site:ndrc.gov.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro",
+    "fiscal"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "混有'地方动态'类软文;需条目级日期过滤(铁律4)"
+  },
+  {
+   "name": "外管局·数据与储备(gnews)",
+   "type": "gnews",
+   "value": "site:safe.gov.cn (外汇储备 OR 国际收支 OR 结售汇 OR 数据 OR 发言人) when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "省分局动态噪音仍大,建议下游再按标题排除'分局';外汇储备月度数据发布日信号最强"
+  },
+  {
+   "name": "Destatis 德国统计局·Aktuell",
+   "type": "rss",
+   "value": "https://www.destatis.de/SiteGlobals/Functions/RSSFeed/DE/RSSNewsfeed/Aktuell.xml",
+   "lang": "de",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "仅德语(EN 版 Aktuell.xml 实测 404,英文用下面的 gnews 补);feed 只保留 10 条,抓取间隔别超过 1 天"
+  },
+  {
+   "name": "Destatis 英文发布(gnews)",
+   "type": "gnews",
+   "value": "site:destatis.de when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "作为德语 RSS 的英文替身;含卡车通行里程指数等周频小数据,量少但全是正经发布"
+  },
+  {
+   "name": "ifo 研究所(慕尼黑景气指数)",
+   "type": "rss",
+   "value": "https://www.ifo.de/pressemitteilungen/rss.xml",
+   "lang": "de",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "thinktank",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "德语;pubDate 用两位年份(Fri, 07 Aug 26)但 feedparser 实测可解析;混有活动/出版物条目;ifo 景气指数发布日是关键节点;/en/rss.xml 实测返回 0 条勿用;301 终址(SOURCE_TREE 裁决)"
+  },
+  {
+   "name": "ZEW 景气指数(gnews)",
+   "type": "gnews",
+   "value": "site:zew.de when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-de",
+   "source_type": "thinktank",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "ZEW 官网 RSS 路径实测全 404,只能走 gnews;混有 Event/Publication 条目,ZEW 经济景气指数月度发布是核心价值"
+  },
+  {
+   "name": "Bundesbank·Latest(英文)",
+   "type": "rss",
+   "value": "https://www.bundesbank.de/service/rss/en/633306/feed.rss",
+   "lang": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "gov",
+   "domains": [
+    "central-bank"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "央行跨区域豁免源;feed 只保留 10 条;同站 Speeches feed(633296)实测最新 17 天前太冷,勿用"
+  },
+  {
+   "name": "金融时报(央行主管报,gnews)",
+   "type": "gnews",
+   "value": "site:financialnews.com.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "central-bank",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "中国人民银行主管报纸,是读央行政策风向的一手渠道;量不大但信噪比高"
+  },
+  {
+   "name": "央行×中欧组合(zh gnews)",
+   "type": "gnews",
+   "value": "(中国人民银行 OR 央行 OR 人民币) (欧洲央行 OR 欧元区 OR 欧元) when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "central-bank"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "含搜狐/moomoo 等聚合转载,需去重;对应的英文版查询实测不可用(见 weak 条目)"
+  },
+  {
+   "name": "PBOC×Fed 中美央行组合(en gnews)",
+   "type": "gnews",
+   "value": "(\"People's Bank of China\" OR PBOC) (\"Federal Reserve\" OR Fed OR dollar OR Treasury) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "central-bank"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "约四分之一是 crypto 媒体噪音,保持 when:7d 勿放宽;条目质量整体可用"
+  },
+  {
+   "name": "BEA 美国经济分析局",
+   "type": "rss",
+   "value": "https://apps.bea.gov/rss/rss.xml",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "按数据发布日历出条,平日安静属正常;GDP/贸易数据发布日必出,别把低频误判为死源"
+  },
+  {
+   "name": "BLS 数据发布(gnews)",
+   "type": "gnews",
+   "value": "site:bls.gov (CPI OR \"employment situation\" OR payrolls OR \"price index\" OR unemployment) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "BLS 原生 RSS 被 Akamai 403 硬屏蔽只能走 gnews;结果里混有空标题条目(gnews 索引缺陷),下游需过滤 title 为空/仅域名的条目"
+  },
+  {
+   "name": "Mysteel 我的钢铁(zh gnews)",
+   "type": "gnews",
+   "value": "site:mysteel.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "行情快报密度极高,建议 when:2d 并做标题去重;深度报告需订阅但新闻页免费"
+  },
+  {
+   "name": "Mysteel Global(en gnews)",
+   "type": "gnews",
+   "value": "site:mysteel.net when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "价格行情条目占比高且标题常被截断;全文多需订阅,标题本身已含数据点"
+  },
+  {
+   "name": "SMM 上海有色(zh gnews)",
+   "type": "gnews",
+   "value": "site:smm.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "覆盖面比名字宽(含楼市新政等宏观转载);行情类条目多"
+  },
+  {
+   "name": "SMM Shanghai Metals Market(en gnews)",
+   "type": "gnews",
+   "value": "site:metal.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "部分数据页需注册;标题偶有截断"
+  },
+  {
+   "name": "Argus Media 免费新闻层(gnews)",
+   "type": "gnews",
+   "value": "site:argusmedia.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "官网 RSS 路径实测 404/500 只能走 gnews;全球视角,进中国条线建议叠加 China 关键词或下游 filter=china;价格评估服务收费但新闻免费"
+  },
+  {
+   "name": "Mining.com",
+   "type": "rss",
+   "value": "https://www.mining.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cross",
+   "source_type": "industry",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "全球矿业视角,中国内容占比可观但建议 filter=china 进中国条线"
+  },
+  {
+   "name": "中国大宗商品英文组合(gnews)",
+   "type": "gnews",
+   "value": "China (\"iron ore\" OR copper OR lithium OR \"rare earth\" OR coal) (imports OR exports OR prices) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cross",
+   "source_type": "mainstream",
+   "domains": [
+    "commodities"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "跨媒体主题查询,混有少量小站噪音(crypto/东南亚小报),整体信噪比可接受"
+  },
+  {
+   "name": "观点网(地产,gnews)",
+   "type": "gnews",
+   "value": "site:guandian.cn when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "real-estate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "量大,建议 when:2d;与已入库的克而瑞/中指镜像互补(观点网偏企业动态)"
+  },
+  {
+   "name": "Mingtiandi 明天地",
+   "type": "rss",
+   "value": "https://www.mingtiandi.com/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "real-estate"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "英文视角看中国地产资本流向的稀缺源;部分深度内容会员制;feed 只保留 10 条"
+  },
+  {
+   "name": "EMA · News",
+   "type": "rss",
+   "value": "https://www.ema.europa.eu/en/news.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "低频高信号;真实地址来自 /en/rss-feeds 页,猜测路径(/en/rss.xml、/en/news/rss.xml)均 404;需 china 过滤,命中率低但是 EMA 一手口径"
+  },
+  {
+   "name": "EMA · 人用药批准动态 (EPAR)",
+   "type": "rss",
+   "value": "https://www.ema.europa.eu/en/human-medicine-new.xml",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "条目标题是药名不含 China 字样——抓中国药企在欧获批需公司名/药名词表匹配,普通 china 关键词过滤会全漏;量大需下游筛"
+  },
+  {
+   "name": "Labiotech.eu",
+   "type": "rss",
+   "value": "https://www.labiotech.eu/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "周更节奏量小;泛欧生物医药,需 china 过滤"
+  },
+  {
+   "name": "PharmaTimes",
+   "type": "rss",
+   "value": "https://pharmatimes.com/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "英国/NHS/EMA 视角为主,中国相关密度低,需 china 过滤"
+  },
+  {
+   "name": "European Pharmaceutical Review",
+   "type": "gnews",
+   "value": "site:europeanpharmaceuticalreview.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "原生 /feed /rss /news/feed/ 全部 404,只能走 gnews;偶混入 'Sign In' 垃圾条目;站点部分内容需免费注册"
+  },
+  {
+   "name": "中国药企×欧洲 EN (全网)",
+   "type": "gnews",
+   "value": "(China OR Chinese) (pharma OR biotech OR drugmaker OR \"licensing deal\") (Europe OR EU OR Germany OR EMA) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "跨源聚合,与 health 包已有 Endpoints/Fierce 条目会部分重复,依赖下游去重"
+  },
+  {
+   "name": "药企出海欧洲 ZH (全网)",
+   "type": "gnews",
+   "value": "(药企 OR 创新药 OR 生物医药) (欧洲 OR 欧盟 OR 德国 OR 法国 OR EMA) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "必须 gnews_locale=zh;实测混入个别 SEO 劫持垃圾条(香港中联办域名被注入页),需下游降噪;与已有 创新药(出海 OR 授权) 查询部分重叠但本条锁定欧洲"
+  },
+  {
+   "name": "国家医保局 NHSA 官网",
+   "type": "gnews",
+   "value": "site:nhsa.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "必须 gnews_locale=zh;.gov.cn 惯例仍需条目级日期过滤(本次实测未见陈年存档)"
+  },
+  {
+   "name": "Chinese students × Europe EN (全网)",
+   "type": "gnews",
+   "value": "\"Chinese students\" (Europe OR Germany OR UK OR France OR Netherlands OR visa) when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "美国签证议题会溢入(实测含 US visa crackdown 条目),因 visa 关键词所致;可接受,欧美对照本身有报道价值"
+  },
+  {
+   "name": "留学欧洲 ZH (全网)",
+   "type": "gnews",
+   "value": "留学 (欧洲 OR 德国 OR 法国 OR 英国 OR 荷兰) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "必须 gnews_locale=zh;留学中介软文占比高(教育在线等 SEO 内容),需人工降噪或后续收紧为 留学生 (政策 OR 签证) 类查询"
+  },
+  {
+   "name": "Science|Business",
+   "type": "gnews",
+   "value": "site:sciencebusiness.net when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "china",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "站点直连 403、原生 rss.xml 404,只能走 gnews;科研政策全量流需 china 过滤(对华科研合作/研究安全是其常设议题);偶有自家招聘启事"
+  },
+  {
+   "name": "RetailDetail EU",
+   "type": "rss",
+   "value": "https://www.retaildetail.eu/feed/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "泛欧零售全量流,需 china/Temu/Shein/AliExpress 关键词过滤;深度内容为 premium,新闻条目免费"
+  },
+  {
+   "name": "Jing Daily",
+   "type": "gnews",
+   "value": "site:jingdaily.com when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "industry",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "原生 /feed/ 404(Next.js 站),直连主页 429 限流——只能走 gnews"
+  },
+  {
+   "name": "奢侈品×中国 EN (全网)",
+   "type": "gnews",
+   "value": "(LVMH OR Kering OR Hermes OR Richemont OR luxury) (China OR Chinese) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "luxury 关键词有漂移(实测混入 BMW 在华销量等汽车条目),可接受"
+  },
+  {
+   "name": "Shein/Temu×欧盟 EN (全网)",
+   "type": "gnews",
+   "value": "(Shein OR Temu OR AliExpress) (EU OR Europe OR Brussels OR customs) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "consumer",
+    "platforms"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "有漂移:实测混入 UPS 财报、SK Hynix 等物流/宏观条目;命中欧盟海关改革、产品安全线核心议题"
+  },
+  {
+   "name": "跨境电商出海欧洲 ZH (全网)",
+   "type": "gnews",
+   "value": "(跨境电商 OR 品牌出海 OR Temu OR Shein OR 速卖通) (欧洲 OR 欧盟 OR 德国 OR 法国) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "consumer",
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "必须 gnews_locale=zh"
+  },
+  {
+   "name": "中国游客/免税消费×欧洲 ZH (全网)",
+   "type": "gnews",
+   "value": "(中国游客 OR 免税 OR 奢侈品) (欧洲 OR 法国 OR 意大利 OR 德国) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "mainstream",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "必须 gnews_locale=zh;美通社等 PR 通稿混入约 1/5"
+  },
+  {
+   "name": "Retail Dive",
+   "type": "rss",
+   "value": "https://www.retaildive.com/feeds/news/",
+   "lang": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "美国零售全量流,需 china/Temu/Shein/tariff 过滤;Industry Dive 的 /feeds/news/ 模式与已入库 BioPharma Dive 相同"
+  },
+  {
+   "name": "Modern Retail",
+   "type": "rss",
+   "value": "https://www.modernretail.co/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn-us",
+   "source_type": "industry",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "需 china 过滤;部分深度稿在 Digiday+ 订阅墙内,feed 带标题+摘要可监控"
+  },
+  {
+   "name": "Shein/Temu×美国关税 EN (全网)",
+   "type": "gnews",
+   "value": "(Shein OR Temu OR \"TikTok Shop\") (tariff OR \"de minimis\" OR US OR American) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-us",
+   "source_type": "mainstream",
+   "domains": [
+    "consumer",
+    "platforms"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "无明显漂移,质量好"
+  },
+  {
+   "name": "Inside Retail Asia",
+   "type": "rss",
+   "value": "https://insideretail.asia/feed/",
+   "lang": "en",
+   "filter": "china",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "亚太全域(韩日东南亚为主),需 china 过滤;部分 premium"
+  },
+  {
+   "name": "消费监管 watch ZH (市场监管总局/中消协报道口径)",
+   "type": "gnews",
+   "value": "(市场监管总局 OR 中消协 OR 消费者协会) (消费 OR 召回 OR 处罚 OR 约谈) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "必须 gnews_locale=zh;走媒体报道口径——samr.gov.cn 官网 site: 查询实测全是门户噪音页(见 weak 条目),此查询是监管线唯一可用路径"
+  },
+  {
+   "name": "财新中文 (via GNews)",
+   "type": "gnews",
+   "value": "site:caixin.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "deepview.caixin.com 子域栏目页会混入,下游按标题长度/URL 过滤;付费墙 metered,标题层可用"
+  },
+  {
+   "name": "财联社 (via GNews)",
+   "type": "gnews",
+   "value": "site:cls.cn when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "快讯流量极大,窗口锁 when:1d;2026-08-08 实测 100 条全在当日"
+  },
+  {
+   "name": "央视新闻 (via GNews)",
+   "type": "gnews",
+   "value": "site:news.cctv.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "2026-08-08 实测 100/7d"
+  },
+  {
+   "name": "人民日报 (via GNews)",
+   "type": "gnews",
+   "value": "site:people.com.cn when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "含'责编/邮箱'类版面元数据噪音条,需下游标题过滤;2026-08-08 实测 100/7d"
+  },
+  {
+   "name": "新京报 (via GNews)",
+   "type": "gnews",
+   "value": "site:bjnews.com.cn when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "2026-08-08 实测 100/7d"
+  },
+  {
+   "name": "经济日报/中经网 (via GNews)",
+   "type": "gnews",
+   "value": "site:ce.cn when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "2026-08-08 实测 100/7d"
+  },
+  {
+   "name": "国务院常务会议 · 全网中文 watch",
+   "type": "gnews",
+   "value": "国务院常务会议 when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro",
+    "fiscal"
+   ],
+   "tier": "core",
+   "caveat": "媒体面转述,非官网原文;公积金条例修改等重磅政策首发口径常在此",
+   "evidence": "2026-08-08 实测 zh 区: n=42 fresh7=42,样本『李强主持召开国务院常务会议』『住房公积金管理条例将迎重大修改』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "金融监管总局 NFRA 官网",
+   "type": "gnews",
+   "value": "site:nfra.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": ".gov.cn 存档污染(金融许可证信息页 840d);7 天内真实条目充足,含四部门联合实施意见",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=70(已剔存档),样本『关于健全金融机构治理的实施意见 - nfra.gov.cn』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "证券处罚/立案 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(证监会 OR 金融监管总局) (处罚 OR 罚单 OR 立案) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "高频高质;与既有『监管政策动态 watch』互补(彼查政策表态,此查执法动作)",
+   "evidence": "2026-08-08 实测 zh 区: n=65 fresh7=65,样本『2家A股公司被证监会立案』『一晚两股,证监会出手立案』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "债券违约/重组 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(债券违约 OR 未能兑付 OR 债券展期 OR 债务重组) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "初版含『城投债』引入 ETF 行情噪声,已剔除;仍有少量海外公司债务重组混入",
+   "evidence": "2026-08-08 实测 zh 区(精修版): n=39 fresh7=39,样本『高新兴拟开展应收账款债务重组』『花样年五年化债』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "IPO 审核动态 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(IPO OR 首发) (上会 OR 过会 OR 注册生效 OR 终止审核) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "覆盖沪深北三所审核节奏;命中即审核事件,噪声极低",
+   "evidence": "2026-08-08 实测 zh 区: n=47 fresh7=47,样本『深交所最大一单IPO过会,红筹回A破冰 - 财联社』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "港交所公告/招股 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(港交所 OR 联交所) (公告 OR 披露 OR 招股书) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "披露易原始公告无 RSS,此为媒体转述面;独家递表消息(晚点)也走此通道",
+   "evidence": "2026-08-08 实测 zh 区: n=32 fresh7=32,样本『国泰君安国际拟私有化退市』『晚点独家丨Momenta 港股秘密递表』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "每日经济新闻",
+   "type": "gnews",
+   "value": "site:nbd.com.cn when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "市场化财经大报,上市公司/监管条线日更量大",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=100",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "第一财经中文网",
+   "type": "gnews",
+   "value": "site:yicai.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "macro",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "库内仅有 Yicai Global 英文版;中文版信息量远大于英文版",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=100,样本『宇树科技估值610亿』『7月外汇储备』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "财经杂志 caijing.com.cn",
+   "type": "gnews",
+   "value": "site:caijing.com.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general",
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "caveat": "量中等(25/7d)但调查/深度浓度高",
+   "evidence": "2026-08-08 实测 zh 区: n=25 fresh7=25",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "卖方宏观研报 · 公众号名 watch",
+   "type": "gnews",
+   "value": "(\"华创宏观\" OR \"招商宏观\" OR \"中金宏观\" OR \"民生宏观\" OR \"广发宏观\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "caveat": "量小(3/7d)但全是研报转述(华尔街见闻/21财经转载面);财新宏观记者的卖方解读需求只有此通道",
+   "evidence": "2026-08-08 实测 zh 区: n=3 fresh7=3,样本『广发郭磊:出口是当前资产定价的宏观条件』",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "CDE 药审中心官网",
+   "type": "gnews",
+   "value": "site:cde.org.cn when:30d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "caveat": "低频官方源(指导原则/征求意见);30 天窗口内 8 条、7 天内仅 3 条,须配 when:30d",
+   "evidence": "2026-08-08 实测 zh 区: n=8 fresh7=3,样本『流感病毒疫苗药学研究指导原则征求意见』",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "药审受理/批准 · 媒体面 watch",
+   "type": "gnews",
+   "value": "药审中心 (受理 OR 批准 OR 优先审评 OR 突破性疗法) when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "caveat": "个药审批事件全走此口径,比 CDE 官网快",
+   "evidence": "2026-08-08 实测 zh 区: n=29 fresh7=18,样本『石药集团注射用西罗莫司上市申请获受理 纳入突破性治疗』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "药品集采 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(集采 OR 带量采购) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "caveat": "第十二批国采开标周实测,命中密度极高;非开标周会回落",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=100,样本『第十二批全国药品集采开标 10款参比制剂中选』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "医保目录/国谈 · 全网中文 watch",
+   "type": "gnews",
+   "value": "医保 (谈判 OR 目录 OR 国谈) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "caveat": "与既有 NHSA 官网源互补(官网慢、此为媒体面)",
+   "evidence": "2026-08-08 实测 zh 区: n=25 fresh7=25,样本『医保可报销药品达5890个,创新药准入提速 - 第一财经』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "医药调查公众号 · 健识局/深蓝观",
+   "type": "gnews",
+   "value": "(\"健识局\" OR \"深蓝观\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "extended",
+   "caveat": "量小(7/7d)且为转载面;初版含『医学界』因撞普通词条已剔除",
+   "evidence": "2026-08-08 实测 zh 区(精修版): n=7 fresh7=7,样本『河南一药企钻了药品管理法的漏洞』",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "网信办 CAC 官网",
+   "type": "gnews",
+   "value": "site:cac.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "platforms"
+   ],
+   "tier": "extended",
+   "caveat": ".gov.cn 存档污染重(领导简历页 891d);14 天窗口内真实条目 11 条",
+   "evidence": "2026-08-08 实测 zh 区: n=29 fresh7=11(已剔存档),样本『清朗系列专项行动』",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "网信办执法 · 媒体面 watch",
+   "type": "gnews",
+   "value": "网信办 (约谈 OR 处罚 OR 通报 OR 发布) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "platforms"
+   ],
+   "tier": "core",
+   "caveat": "比官网源快且干净;网络安全审查、账号处置等平台监管事件首选通道",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=100,样本『网信办对派拓公司启动网络安全审查』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "大厂财报/业绩 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(财报 OR 业绩) (腾讯 OR 阿里巴巴 OR 美团 OR 拼多多 OR 京东 OR 小米) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "platforms",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "caveat": "财报季外量会回落;含业绩会实录转述",
+   "evidence": "2026-08-08 实测 zh 区: n=47 fresh7=47,样本『直击美团业绩会:Q1亏损环比收窄 - 财联社』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "应急管理部官网",
+   "type": "gnews",
+   "value": "site:mem.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "caveat": ".gov.cn 存档污染极重(栏目页 2536d);须只看 7 天内条目",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=34(已剔存档)",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "事故通报/调查报告 · 全网中文 watch",
+   "type": "gnews",
+   "value": "应急管理部 (事故 OR 通报 OR 调查报告) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "caveat": "平静期以避险表扬类通稿为主;重大事故发生时此源即爆点",
+   "evidence": "2026-08-08 实测 zh 区: n=23 fresh7=23",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "中央环保督察 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(中央生态环境保护督察 OR 环保督察) when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "climate"
+   ],
+   "tier": "core",
+   "caveat": "低频(7/14d)但每条都是硬新闻(整改情况/信访转办)",
+   "evidence": "2026-08-08 实测 zh 区: n=13 fresh7=7,样本『四川省公开第三轮中央生态环境保护督察整改情况』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "两高发布 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(最高人民法院 OR 最高人民检察院) (发布 OR 通报 OR 司法解释 OR 指导性案例) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "caveat": "司法条线唯一可靠通道(chinacourt.org gnews 索引为零,实测)",
+   "evidence": "2026-08-08 实测 zh 区: n=30 fresh7=30,样本『两高修改海洋公益诉讼司法解释』『最高检指导性案例发布』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "人社部政策 · 媒体面 watch",
+   "type": "gnews",
+   "value": "人社部 (发布 OR 通知 OR 政策) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "core",
+   "caveat": "site:mohrss.gov.cn 被招聘公告淹没(实测),故走媒体面;就业/养老金/社保条线主通道",
+   "evidence": "2026-08-08 实测 zh 区: n=41 fresh7=41,样本『人社部为应对AI影响将出台哪些促就业措施』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "市场监管执法 · 全网中文 watch",
+   "type": "gnews",
+   "value": "市场监管总局 (处罚 OR 约谈 OR 通报 OR 反垄断) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "consumer",
+    "platforms"
+   ],
+   "tier": "core",
+   "caveat": "site:samr.gov.cn 存档污染重(实测),故走媒体面;与既有『消费监管 watch』互补(彼偏消费者,此偏执法/反垄断)",
+   "evidence": "2026-08-08 实测 zh 区: n=39 fresh7=39,样本『市场监管总局约谈美宜佳总部』『携程被重罚』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "食品安全抽检/召回 · 全网中文 watch",
+   "type": "gnews",
+   "value": "食品安全 (抽检 OR 通报 OR 召回 OR 曝光) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "consumer",
+    "health"
+   ],
+   "tier": "core",
+   "caveat": "地方监管局通告为主,偶有全国性大案",
+   "evidence": "2026-08-08 实测 zh 区: n=34 fresh7=34,样本『第二批网络餐饮食品安全治理典型案件曝光 - 新京报』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "欠薪/劳动仲裁 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(欠薪 OR 讨薪 OR 劳动仲裁 OR 农民工工资) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "caveat": "官方治理宣传与真实纠纷混流(约各半);上市公司欠薪立案等硬新闻确能命中",
+   "evidence": "2026-08-08 实测 zh 区(精修版): n=52 fresh7=52,样本『*ST瑞和回应欠薪涉立案舆情』",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "国新办 SCIO 官网",
+   "type": "gnews",
+   "value": "site:scio.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "caveat": ".gov.cn 源,7 天外条目须剔;发布会全文+国务院令均有",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=19(已剔存档),样本『国新办举行发布会 介绍所谓产能过剩问题中方立场』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "国新办发布会 · 媒体面 watch",
+   "type": "gnews",
+   "value": "国新办 (新闻发布会 OR 吹风会) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "general"
+   ],
+   "tier": "core",
+   "caveat": "混入少量地方政府新闻办发布会;比官网源快",
+   "evidence": "2026-08-08 实测 zh 区: n=48 fresh7=48,样本『国新办举行新闻发布会 介绍2026年上半年商务工作』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "外交部例行记者会 · 中文媒体面 watch",
+   "type": "gnews",
+   "value": "外交部 (例行记者会 OR 发言人) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "diplomacy"
+   ],
+   "tier": "core",
+   "caveat": "库内已有英文 mfa.gov.cn 源;此为中文口径,发言人答问当天即出",
+   "evidence": "2026-08-08 实测 zh 区: n=32 fresh7=32,样本『外交部发言人就日本主流民意鲜明反核立场答记者问 - 人民日报』",
+   "origin": "expansion",
+   "enabled": true
+  },
+  {
+   "name": "新闻联播 · 转述聚合 watch",
+   "type": "gnews",
+   "value": "新闻联播 when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "general"
+   ],
+   "tier": "extended",
+   "caveat": "央视网/地方党媒转述面;头条时政信号灯,非全文",
+   "evidence": "2026-08-08 实测 zh 区: n=77 fresh7=77",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "中国教育在线 eol.cn",
+   "type": "gnews",
+   "value": "site:eol.cn when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "education"
+   ],
+   "tier": "extended",
+   "caveat": "高考/研招/院校动态为主,政策解读次之",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=100",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "国资委 SASAC 官网",
+   "type": "gnews",
+   "value": "site:sasac.gov.cn when:14d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "macro"
+   ],
+   "tier": "extended",
+   "caveat": ".gov.cn 存档污染(栏目页 3341d);央企人事/重组信号源",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh7=55(已剔存档)",
+   "origin": "expansion",
+   "enabled": false
+  },
+  {
+   "name": "中国证券报(中证网)",
+   "type": "gnews",
+   "value": "site:cs.com.cn when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "实测 2026-08-08:100 条/7 天内 99 条;含个股公告类条目,信噪比可接受"
+  },
+  {
+   "name": "第一财经(中文)",
+   "type": "gnews",
+   "value": "site:yicai.com when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets",
+    "macro"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "实测 2026-08-08:100 条/100 条新鲜;泛财经,金融词表负责收窄;registry 原只有 Yicai Global 英文版"
+  },
+  {
+   "name": "沪深交易所公告",
+   "type": "gnews",
+   "value": "(site:sse.com.cn OR site:szse.cn) (发布 OR 新规 OR 答记者问 OR 监管 OR 指数) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "extended",
+   "origin": "expansion",
+   "enabled": false,
+   "caveat": "实测 2026-08-08:100 条/7 天内 39-56 条,但基金/上市公司公告噪声占大头(加词过滤后仍高);默认关闭,需要交易所一手公告时再开"
+  },
+  {
+   "name": "财政部·国债与预算(窄)",
+   "type": "gnews",
+   "value": "site:mof.gov.cn (国债 OR 专项债 OR 预算 OR 财政收支) when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "gov",
+   "domains": [
+    "fiscal",
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "实测 2026-08-08:28 条/7 天内 15 条(国债发行、零基预算改革等);比 registry 里已停用的 mof 全站源窄且干净;.gov.cn 按铁律只数 7 天内条目"
+  },
+  {
+   "name": "化债/城投 主题(zh 全网)",
+   "type": "gnews",
+   "value": "(专项债 OR 化债 OR 城投债 OR 隐性债务 OR 土地出让金) when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "fiscal"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "实测 2026-08-08:7 条/24h 全新鲜(财新、一财、富途等);主题查询,量小而准"
+  },
+  {
+   "name": "LGFV/地方债 主题(en 全网)",
+   "type": "gnews",
+   "value": "(\"local government debt\" OR LGFV OR \"special bonds\") China when:7d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "fiscal"
+   ],
+   "tier": "core",
+   "origin": "expansion",
+   "enabled": true,
+   "caveat": "实测 2026-08-08:6 条/7 天全新鲜(Bloomberg LGFV 偿债、Caixin 评论等);查询词含 China 是 gnews 检索词,不入词表,不违反地理词禁令"
+  },
+  {
+   "name": "公众号组合 · 汽车条线独家 (记者荐)",
+   "type": "gnews",
+   "value": "(\"晚点Auto\" OR \"汽车产经\" OR \"未来汽车Daily\" OR \"一见Auto\" OR \"蓝鲸汽车\" OR \"云见Insight\") when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "auto-beat",
+   "enabled": true,
+   "caveat": "来自 SCMP 汽车条线记者每日必看清单(高质量有独家档);一见Auto(1/7d)、云见Insight(3/30d) 转载镜像量小,主力是 晚点Auto/汽车产经/未来汽车Daily;转载面为汽车之家/腾讯新闻/新浪/36氪",
+   "evidence": "2026-08-08 实测 zh 区: 组合 when:7d 版 n=11 fresh7=11,when:2d 版 n=3;单号 7d 命中: 晚点Auto=5(样本『晚点独家丨地平线敲定征程7目标算力』) 汽车产经=7 未来汽车Daily=7 蓝鲸汽车=4 一见Auto=1 云见Insight=0(30d=3)"
+  },
+  {
+   "name": "公众号组合 · 汽车评论与调研数据 (记者荐)",
+   "type": "gnews",
+   "value": "(\"远川汽车评论\" OR \"杰兰路\" OR \"桑之未\" OR \"腾讯汽车\") when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "auto-beat",
+   "enabled": true,
+   "caveat": "杰兰路为汽车咨询机构(NPS/品牌健康度等调研数据,单号 20/7d 是组合主力);桑之未为经销商/渠道评论(2/7d);腾讯汽车本体 site:auto.qq.com 不可被 gnews 索引(0 hits),仅靠号名转载面;远川汽车评论与库内\"远川研究所\"是同机构不同号,无重复",
+   "evidence": "2026-08-08 实测 zh 区: 组合 when:7d 版 n=26 fresh7=26,when:2d 版 n=8;单号 7d 命中: 杰兰路=20(样本『杰兰路发布《2026上半年新能源汽车品牌健康度研究》』) 远川汽车评论=8 蓝鲸汽车=4 桑之未=2 腾讯汽车=4/2d"
+  },
+  {
+   "name": "华尔街见闻 (via GNews)",
+   "type": "gnews",
+   "value": "site:wallstreetcn.com when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "auto-beat",
+   "enabled": true,
+   "caveat": "记者用途: 编译快且严谨(如特斯拉财报电话会实录翻译);量大(100/2d 触顶),下游按需加关键词过滤;此前仅以号名形式存在于 公众号组合 · 金融,本条是官网直采",
+   "evidence": "2026-08-08 实测 zh 区: n=100 fresh2=100,样本『存储涨价的\"天花板\"快到了?』『7月非农没给美联储清晰答案』"
+  },
+  {
+   "name": "Wires · 中国汽车 (Reuters/Bloomberg/WSJ)",
+   "type": "gnews",
+   "value": "(site:reuters.com OR site:bloomberg.com OR site:wsj.com) china (EV OR \"electric vehicle\" OR automaker OR BYD) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "auto-beat",
+   "enabled": true,
+   "caveat": "补齐三大外媒的汽车专口径(库内既有三条为 China×Europe 通用口径,汽车稿会漏);量大(96/2d,n=100 触顶)",
+   "evidence": "2026-08-08 实测 en 区: n=100 fresh2=96,样本 [WSJ]『Volvo Car Sales Slip 4% on China Weakness』[Reuters]『Judge blocks US decision to add WuXi…』"
+  },
+  {
+   "name": "科创板日报 · 号名镜像 watch",
+   "type": "gnews",
+   "value": "\"科创板日报\" when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "semiconductor",
+    "ai",
+    "finance-markets"
+   ],
+   "tier": "core",
+   "origin": "beat-interview",
+   "enabled": true,
+   "evidence": "2026-08-08 实测 zh 区: n=30 fresh7=30 fresh2=30,样本『华海清科Q1净利…终止港股上市 - 财联社』『宇树科技10日开启IPO申购 - 东方财富』『中巨芯2026上半年净利+72.75% - 雪球』",
+   "caveat": "site:chinastarmarket.cn 不可用——gnews 只返回栏目页(标题全为『科创板 - chinastarmarket.cn』,7d 仅 17 条且无实义标题);号名镜像(财联社/东方财富/雪球/搜狐转载面)是唯一可用通道"
+  },
+  {
+   "name": "Nikkei Asia · 科技/中国",
+   "type": "gnews",
+   "value": "site:asia.nikkei.com (chip OR semiconductor OR tech OR China OR Huawei) when:2d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "beat-interview",
+   "enabled": true,
+   "evidence": "2026-08-08 实测 en 区: n=49 fresh7=49 fresh2=48,样本『China rare-earth exports to Japan, US plunge』『China overtakes US to lead global R&D spending』",
+   "caveat": "与现有 Nikkei Asia · China×Europe(cn-eu 角度)互补,过滤词不同不重叠;正文 metered,标题层可用"
+  },
+  {
+   "name": "芯片公司组合 · 全网中文 watch",
+   "type": "gnews",
+   "value": "(\"中芯国际\" OR \"长鑫存储\" OR \"长江存储\" OR \"寒武纪\" OR \"壁仞科技\" OR \"摩尔线程\" OR \"天数智芯\") when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "beat-interview",
+   "enabled": true,
+   "evidence": "2026-08-08 实测 zh 区: when:1d n=79 fresh2=79(when:2d 达 RSS 上限 n=100),样本『寒武纪:上半年净利润23.11亿 +122% - 21财经』『寒武纪上半年净利同比翻倍 - 财新』;公司公众号信息经财联社/东方财富/财新/新京报转载面全量带出",
+   "caveat": "含少量雪球个股行情页噪声(『壁仞科技(06082)股票股价…』),下游按标题模式过滤;壁仞用全称『壁仞科技』避免误配"
+  },
+  {
+   "name": "华为 · 芯片/算力 watch",
+   "type": "gnews",
+   "value": "华为 (芯片 OR 昇腾 OR 麒麟 OR 鸿蒙 OR 算力) when:1d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wires",
+   "domains": [
+    "semiconductor",
+    "ai"
+   ],
+   "tier": "core",
+   "origin": "beat-interview",
+   "enabled": true,
+   "evidence": "2026-08-08 实测 zh 区: n=60 fresh7=60 fresh2=60,样本『华为新鸿蒙折叠笔记本发布…麒麟新芯片』『华为在印度推出两款新平板,配麒麟芯片』",
+   "caveat": "华为量大故单列并用过滤词收口;仍含消费电子/问界汽车噪声,由词表层二次过滤;华为心声社区/官方公众号本体不可直抓,此为转载面"
+  },
+  {
+   "name": "澎湃新闻 · 能源条线",
+   "type": "gnews",
+   "value": "site:thepaper.cn (能源 OR 电力 OR 光伏 OR 风电 OR 储能 OR 天然气) when:2d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "oil-power",
+    "solar",
+    "battery"
+   ],
+   "tier": "core",
+   "origin": "beat-interview",
+   "enabled": true,
+   "caveat": "实测 66 条/2d,量大;与已有'澎湃新闻·欧洲'同域不同关键词面,是能源条线专用;下游 packs 关键词可再分流"
+  },
+  {
+   "name": "电规总院 EPPEI(媒体转述面)",
+   "type": "gnews",
+   "value": "(\"电规总院\" OR \"电力规划设计总院\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "thinktank",
+   "domains": [
+    "oil-power",
+    "solar"
+   ],
+   "tier": "extended",
+   "origin": "beat-interview",
+   "enabled": true,
+   "caveat": "实测 7 条/7d;site:eppei.com gnews 0 索引、官网无 RSS,只能走媒体转述面(国际储能网/碳索氢能网等转载)"
+  },
+  {
+   "name": "电网头条/电联新媒/风电号(转载镜像)",
+   "type": "gnews",
+   "value": "(\"电网头条\" OR \"电联新媒\" OR \"北极星风力发电网\" OR \"风电世界\") when:7d",
+   "lang": "zh",
+   "gnews_locale": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "solar",
+    "oil-power"
+   ],
+   "tier": "extended",
+   "origin": "beat-interview",
+   "enabled": true,
+   "caveat": "实测组合 4 条/7d:电网头条 3、电联新媒 3(有重叠)、北极星风力发电网 1/30d、风电世界 0(保留名占位,宁多勿漏);转载主力煤炭资源网/搜狐/新浪/gdshe.org;solar 包含风电/电网词故双标"
+  },
+  {
+   "name": "Agora Energiewende(含中国项目/博众智合)",
+   "type": "gnews",
+   "value": "site:agora-energiewende.org -\"Open Positions\" when:30d",
+   "lang": "en",
+   "gnews_locale": "en",
+   "filter": "none",
+   "region": "cn-eu",
+   "source_type": "thinktank",
+   "domains": [
+    "solar"
+   ],
+   "tier": "extended",
+   "origin": "beat-interview",
+   "enabled": true,
+   "caveat": "实测 3 条/30d(含 China engagement/EU ETS),-\"Open Positions\" 已滤掉招聘页污染;官网无 RSS(/rss.xml /feed 等实测 404);中文号'博众智合'镜像仅 2 条/30d 太薄,故走机构官网 en 面;量小但权威,filter 保持 none 以免漏 EU 政策声明"
+  }
+ ]
+}

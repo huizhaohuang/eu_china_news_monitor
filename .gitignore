@@ -11,3 +11,16 @@ events.json.bak
 digests/
 sources.json.bak
 nohup.out
+
+# 个人配置零落盘(公私边界见 DESIGN.md;CI 断言见 .github/workflows/privacy-guard.yml)
+profiles/
+subscribers.json
+*.profile.json
+.claude/settings.local.json
+
+# 内部策略文档:暂留本地工作文件,先不进公开仓库(源获取方法论/条线源清单)
+DESIGN.md
+SOURCE_TREE.md
+WECHAT_SOURCES.md
+ASSESSMENT.md
+BEAT_SOURCES.md
