@@ -749,9 +749,23 @@ def _clean_gnews_title(title: str) -> tuple[str, str | None]:
     return title.strip(), None
 
 
+_CJK_RE = re.compile(r"[一-鿿぀-ヿ가-힯]+")
+
+
 def _tokens(title: str) -> frozenset[str]:
+    """聚类分词。拉丁词按空格切(原规则);CJK 段切成字符二元组——
+    中文标题没有空格,按空格切会把整题变成一个 token,导致同稿异题
+    (通稿转写/镜像加前后缀)永远无法聚类,只有逐字全同才合并(实测中文
+    合并率仅 4%,这是"重复消息"反馈的主因)。二元组让 Jaccard 对中文生效。"""
     t = re.sub(r"[^\w\s]", " ", title.lower())
-    return frozenset(w for w in t.split() if len(w) >= 3 and w not in _TOKEN_STOP)
+    out: set[str] = set()
+    for seg in _CJK_RE.findall(t):
+        if len(seg) == 1:
+            continue
+        out.update(seg[i:i + 2] for i in range(len(seg) - 1))
+    latin = _CJK_RE.sub(" ", t)
+    out.update(w for w in latin.split() if len(w) >= 3 and w not in _TOKEN_STOP)
+    return frozenset(out)
 
 
 def test_feed(src_type: str, value: str, locale: str = "en") -> tuple[bool, str]:
@@ -863,6 +877,38 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
     return items, health
 
 
+# 低质出口媒体降权(记者反馈驱动;降权≠剔除):
+# ① 不当聚类代表(同稿多源时优先展示非降权媒体的版本) ② 不计入"独立报道数"
+# (防止其转载把普通稿抬进 ⚡重点)。匹配 outlet 名或链接域名的小写子串。
+DEMOTED_OUTLETS = ("汽车之家", "autohome")
+
+
+def _demoted(it: dict) -> bool:
+    hay = (it.get("outlet", "") + " " + it.get("link", "")).lower()
+    return any(d in hay for d in DEMOTED_OUTLETS)
+
+
+_TRACKING_PARAMS = ("utm_", "fbclid", "gclid", "spm", "ref_", "share_", "from_source")
+
+
+def _canon_link(url: str) -> str:
+    """链接归一供去重:同文异链(www/m 子域、尾斜杠、跟踪参数)收敛到同一键。
+    非跟踪参数保留(部分站点用 query 定位文章)。"""
+    try:
+        from urllib.parse import urlparse, parse_qsl, urlencode
+        p = urlparse(url)
+        host = p.netloc.lower()
+        for pre in ("www.", "m.", "mobile."):
+            if host.startswith(pre):
+                host = host[len(pre):]
+                break
+        q = [(k, v) for k, v in parse_qsl(p.query, keep_blank_values=True)
+             if not any(k.lower().startswith(t) for t in _TRACKING_PARAMS)]
+        return f"{host}{p.path.rstrip('/')}" + (f"?{urlencode(q)}" if q else "")
+    except Exception:
+        return url
+
+
 def cluster_items(items: list[dict]) -> list[dict]:
     """跨源同题聚类:标题词集 Jaccard≥0.5 或包含关系即合并。
     (0.5 实测恰好合并同一事件的措辞变体,如 summoned/summons 各家改写)"""
@@ -877,7 +923,10 @@ def cluster_items(items: list[dict]) -> list[dict]:
             inter = len(tk & ref)
             union = len(tk | ref)
             contained = min(len(tk), len(ref)) >= 4 and (tk <= ref or ref <= tk)
-            if (union and inter / union >= 0.5) or contained:
+            # 短标题(快讯模板如"X指数涨幅扩大至N%")模板字符占比高,0.5 会把
+            # 不同指数/标的错并 —— 实测收紧到 0.66 可分开,真同稿(近全同)仍 ≥0.8
+            thr = 0.5 if min(len(tk), len(ref)) >= 12 else 0.66
+            if (union and inter / union >= thr) or contained:
                 target = cl
                 break
         if target is None:
@@ -888,13 +937,16 @@ def cluster_items(items: list[dict]) -> list[dict]:
     out = []
     for cl in clusters:
         its = sorted(cl["items"], key=lambda x: x["time"])  # 最早在前 = 首发
-        outlets = {i["outlet"].lower() for i in its}
+        # 降权媒体不当代表(有非降权版本时),也不计入独立报道数
+        kept = [i for i in its if not _demoted(i)]
+        rep = (kept or its)[0]
+        outlets = {i["outlet"].lower() for i in (kept or its)}
         cats = sorted({c for i in its for c in i["cats"]})
         # 独立报道数:通稿被聚合站原文转载(标题几乎一致)只算一家,
         # 各家自拟标题才是独立编辑判断 → 取「不同媒体数」与「标题变体数」的较小值
         variants = {" ".join(sorted(i["tokens"])) for i in its}
         out.append({
-            "rep": its[0], "items": its, "n": len(its),
+            "rep": rep, "items": its, "n": len(its),
             "diversity": min(len(outlets), len(variants)),
             "langs": {i["lang"] for i in its},
             "cats": cats,
@@ -918,16 +970,22 @@ def fetch_all(sources_json: str, hours: int, taxo_fp: str = "default") -> tuple[
         for items, h in ex.map(lambda s: fetch_one(s, hours), sources):
             all_items.extend(items)
             health.append(h)
-    # 完全相同链接去重(同一文章经由多个查询进入)
-    seen_links: set[str] = set()
-    unique = []
-    for it in sorted(all_items, key=lambda x: x["time"], reverse=True):
-        if it["link"] in seen_links:
-            continue
-        seen_links.add(it["link"])
-        unique.append(it)
+    # 同文异链去重(归一化:www/m 子域、尾斜杠、跟踪参数)——同一文章经多个查询进入
+    def _dedup(its: list[dict]) -> list[dict]:
+        seen: set[str] = set()
+        out = []
+        for it in its:
+            key = _canon_link(it["link"])
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(it)
+        return out
+
+    unique = _dedup(sorted(all_items, key=lambda x: x["time"], reverse=True))
     # gnews 跳转链 → 真实出版商 URL(大陆用户可直达)。任何异常吃掉,绝不影响抓取;
     # 未解出的保留原 google 链(境外用户无感)。已按时间倒序,最新条目优先解。
+    # 解码后再去重一次:gnews 版与原生 RSS 版解到同一真实 URL 时合并(修重复消息)。
     try:
         import gnews_decoder
         glinks = [it["link"] for it in unique if it["link"].startswith("https://news.google.com/")]
@@ -936,6 +994,7 @@ def fetch_all(sources_json: str, hours: int, taxo_fp: str = "default") -> tuple[
             real = mapping.get(it["link"])
             if real:
                 it["link"] = real
+        unique = _dedup(unique)
     except Exception:
         pass
     clusters = cluster_items(unique)
@@ -1256,8 +1315,10 @@ def render_cluster(cl: dict) -> None:
         if rep["summary"]:
             st.write(rep["summary"][:300])
         if cl["n"] > 1:
-            with st.expander(f"相关报道 ({cl['n'] - 1}) — 首发: {rep['outlet']} {local:%H:%M}"):
-                for it in cl["items"][1:]:
+            # rep 经降权规则挑选,未必是 items[0] —— 按身份排除,不能按位置切
+            with st.expander(f"相关报道 ({cl['n'] - 1}) — 首发: {cl['items'][0]['outlet']} "
+                             f"{cl['items'][0]['time'].astimezone(BERLIN):%H:%M}"):
+                for it in (i for i in cl["items"] if i is not rep):
                     t = it["time"].astimezone(BERLIN)
                     st.markdown(f"- [{it['title']}]({it['link']}) — {it['outlet']} · {t:%a %H:%M}")
 
