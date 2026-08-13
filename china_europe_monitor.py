@@ -1307,7 +1307,8 @@ def render_cluster(cl: dict) -> None:
         st.markdown(f"{badges}**[{rep['title']}]({rep['link']})**")
         meta = f"{rep['outlet']} · {local:%a %d %b %H:%M}"
         if rep.get("stype") in STYPE_LABELS:
-            meta += f" · {STYPE_LABELS[rep['stype']]}"
+            _st = rep["stype"]
+            meta += " · " + (i18n.STYPE_EN[_st] if i18n.is_en() else STYPE_LABELS[_st])
         if cl["diversity"] >= 2:
             meta += " · " + i18n.t("outlets_n", n=cl["diversity"])
         if len(cl["langs"]) >= 2:
