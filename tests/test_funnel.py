@@ -78,6 +78,23 @@ def test_setup_page_english():
     assert at.title and "Customize" in at.title[0].value
 
 
+@pytest.mark.skipif(os.environ.get("SKIP_E2E") == "1", reason="跳过联网 e2e")
+def test_english_p3_title_has_no_chinese():
+    """回归:p3 模式标题曾硬编码「我的条线」,英文界面下会中英混排。"""
+    import re as _re
+    from streamlit.testing.v1 import AppTest
+    code = pc.encode({"regions": ["cn-eu"], "domains": ["trade-tariff"],
+                      "source_types": ["gov"], "background": False})
+    at = AppTest.from_file(APP, default_timeout=180)
+    at.query_params["profile"] = code
+    at.query_params["lang"] = "en"
+    at.run()
+    assert not at.exception
+    title = at.title[0].value
+    assert "My beats" in title
+    assert not _re.search(r"[一-鿿]", title), f"英文标题里仍有中文: {title}"
+
+
 def test_bad_p3_code_falls_back_gracefully():
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(APP, default_timeout=180)

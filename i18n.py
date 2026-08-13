@@ -107,6 +107,11 @@ _TR: dict[str, tuple[str, str]] = {
     "modify_hint": ("要修改:回到本页(监控页侧边栏有入口),当前选择会自动带入。",
                     "To modify: return here (entry in the monitor sidebar); current choices prefill."),
 
+    # --- p3 配置码模式(无档案名,用「我的条线」作显示标签) ---
+    "my_beats": ("我的条线", "My beats"),
+    "p3_msg": ("我的条线:{n} 个板块 · 专线 {sp} 源 · 背景 {bg} 源",
+               "My beats: {n} sections · {sp} dedicated · {bg} background"),
+
     # --- 源管理(侧栏) ---
     "sources_header": ("监控源", "Sources"),
     "add_source": ("➕ 添加监控源", "➕ Add source"),

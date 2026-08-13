@@ -612,9 +612,9 @@ def apply_packs_config(cfg: dict) -> tuple[list[dict], str]:
     fp = _hl.sha1(json.dumps(cfg, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:12]
     TAXONOMY_FP = f"p3:{fp}"
     EPHEMERAL_CONFIG = True
-    PROFILE = "我的条线"
-    return sources, (f"我的条线:{len(n_cats)} 个板块 · 专线 {stats['specialist']} 源 · "
-                     f"背景 {stats['background']} 源")
+    PROFILE = i18n.t("my_beats")  # 显示标签,随 UI 语言(p3 无档案名)
+    return sources, i18n.t("p3_msg", n=len(n_cats),
+                           sp=stats["specialist"], bg=stats["background"])
 
 
 _TOKEN_STOP = {
@@ -1264,7 +1264,8 @@ st.caption(
            ts=f"{datetime.now(BERLIN):%Y-%m-%d %H:%M}")
     + (i18n.t("summary_profile", p=PROFILE) if PROFILE else "")
 )
-feedback.render(context=PROFILE or ("我的条线" if P3_CODE else "默认监测台"))
+# 反馈上下文用固定中文标签,不随 UI 语言变 —— 维护者收件箱里保持一致好归类
+feedback.render(context="我的条线" if P3_CODE else (PROFILE or "默认监测台"))
 
 # --- 早报摘要 ---
 if st.session_state.get("show_digest"):
