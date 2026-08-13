@@ -38,6 +38,7 @@ import streamlit as st
 
 import events_monitor  # 📅 活动 tab(独立模块,不与新闻逻辑耦合)
 import feedback  # 📮 首页反馈渠道(送外部 sink,密钥走 st.secrets)
+import i18n  # 🌐 UI 双语(只翻界面文案;默认中文,?lang=en 切英文)
 
 BERLIN = ZoneInfo("Europe/Berlin")
 CONFIG_PATH = Path(__file__).with_name("sources.json")
@@ -1040,6 +1041,8 @@ def build_digest(clusters: list[dict], hours: int) -> str:
 
 st.set_page_config(page_title="News Monitor!", page_icon="📰", layout="wide")
 
+i18n.init()  # 语言选择先于一切渲染(定制页/侧栏都要用)
+
 # --- 档案解析(必须先于一切数据加载;不带 ?profile= 即默认档案 = 原平台,零变化) ---
 _profile_err = None
 _p3_notices: list[str] = []
@@ -1097,22 +1100,23 @@ if "baseline" not in st.session_state:
             pass
 
 with st.sidebar:
-    st.header("设置")
+    st.header(i18n.t("settings"))
+    i18n.render_toggle()
     if _profile_err:
         st.error(_profile_err)
     for _n in _p3_notices:
         st.info(_n)
     if P3_CODE:
         st.success(_p3_msg)
-        st.markdown(f"[🎯 调整我的监控](?setup=1&profile={P3_CODE})")
+        st.markdown(i18n.t("adjust_entry", code=P3_CODE, ls=i18n.lang_suffix()))
     else:
-        st.markdown("[🎯 定制我的监控](?setup=1) — 选条线,60 秒生成专属监控页")
+        st.markdown(i18n.t("customize_entry", ls=i18n.lang_suffix()))
     _plist = list_profiles()
     if _plist:  # 有档案才显示切换器,默认部署界面不变
-        _opts = ["默认(中欧监测)"] + _plist
+        _opts = [i18n.t("profile_default")] + _plist
         _cur = _opts.index(PROFILE) if PROFILE in _plist else 0
-        _sel = st.selectbox("档案", _opts, index=_cur,
-                            help="每个档案 = 一套专属信源与分类词表;也可直接用 ?profile=名字 的链接")
+        _sel = st.selectbox(i18n.t("profile"), _opts, index=_cur,
+                            help=i18n.t("profile_help"))
         _want = "" if _sel == _opts[0] else _sel
         if _want != (PROFILE or ""):
             if _want:
@@ -1120,22 +1124,22 @@ with st.sidebar:
             else:
                 st.query_params.pop("profile", None)
             st.rerun()
-    hours = st.slider("时间窗(小时)", 6, 72, 24, step=6)
+    hours = st.slider(i18n.t("hours"), 6, 72, 24, step=6)
     lanes_selected = st.multiselect(
-        "来源类型", options=list(LANE_LABELS), default=list(LANE_LABELS),
-        format_func=lambda k: LANE_LABELS[k],
+        i18n.t("lanes"), options=list(LANE_LABELS), default=list(LANE_LABELS),
+        format_func=lambda k: (i18n.LANE_EN.get(k, k) if i18n.is_en() else LANE_LABELS[k]),
     )
-    search = st.text_input("🔍 搜索(标题/摘要)", placeholder="如 BYD、Nexperia、seltene Erden …")
+    search = st.text_input(i18n.t("search"), placeholder="BYD、Nexperia、seltene Erden …")
     c1, c2 = st.columns(2)
     with c1:
-        if st.button("🔄 刷新", use_container_width=True):
+        if st.button(i18n.t("refresh"), use_container_width=True):
             st.cache_data.clear()
             st.rerun()
     with c2:
-        digest_clicked = st.button("📋 早报摘要", use_container_width=True)
+        digest_clicked = st.button(i18n.t("digest_btn"), use_container_width=True)
     if digest_clicked:
         st.session_state.show_digest = True
-    st.caption("定制/调整自己的监控 → 上方 🎯 入口")
+    st.caption(i18n.t("customize_hint"))
 
     st.divider()
     st.subheader("监控源")
@@ -1226,7 +1230,7 @@ clusters, health, n_items = fetch_all(json.dumps(st.session_state.sources), hour
 # --- 源健康状态(放在抓取之后,侧边栏尾部) ---
 with st.sidebar:
     n_bad = sum(1 for h in health if not h["ok"])
-    with st.expander(f"📡 抓取状态 {'🔴 ' + str(n_bad) + ' 个源失败' if n_bad else '🟢 全部正常'}"):
+    with st.expander(i18n.t("fetch_status_bad", n=n_bad) if n_bad else i18n.t("fetch_status_ok")):
         for h in health:
             dot = "🟢" if h["ok"] else "🔴"
             line = f"{dot} {h['name']} — {h['kept']}/{h['total']}条 · {h['secs']}s"
@@ -1234,8 +1238,8 @@ with st.sidebar:
         try:
             import gnews_decoder
             _ds = gnews_decoder.stats()
-            _cd = f" · 熔断冷却 {_ds['cooldown_min']}min" if _ds["cooldown_min"] else ""
-            st.caption(f"🔗 链接解码缓存 {_ds['cached']} 条 · 熔断 {_ds['trips']} 次{_cd}")
+            _cd = i18n.t("decode_cooldown", m=_ds["cooldown_min"]) if _ds["cooldown_min"] else ""
+            st.caption(i18n.t("decode_stats", cached=_ds["cached"], trips=_ds["trips"], cd=_cd))
         except Exception:
             pass
 
@@ -1257,20 +1261,20 @@ visible = [c for c in clusters if _visible(c)]
 
 st.title("📰 News Monitor!" + (f" · {PROFILE}" if PROFILE else ""))
 st.caption(
-    f"{len(visible)} 组报道({n_items} 条)· 过去 {hours}h · "
-    f"更新于 {datetime.now(BERLIN):%Y-%m-%d %H:%M} Berlin · 缓存 10 分钟"
-    + (f" · 档案 {PROFILE}" if PROFILE else "")
+    i18n.t("summary_caption", groups=len(visible), items=n_items, hours=hours,
+           ts=f"{datetime.now(BERLIN):%Y-%m-%d %H:%M}")
+    + (i18n.t("summary_profile", p=PROFILE) if PROFILE else "")
 )
 feedback.render(context=PROFILE or ("我的条线" if P3_CODE else "默认监测台"))
 
 # --- 早报摘要 ---
 if st.session_state.get("show_digest"):
     digest_md = build_digest(visible, hours)
-    with st.expander("📋 早报摘要(Markdown,可直接粘贴)", expanded=True):
-        st.download_button("⬇️ 下载 .md", digest_md,
+    with st.expander(i18n.t("digest_expander"), expanded=True):
+        st.download_button(i18n.t("digest_download"), digest_md,
                            file_name=f"digest_{datetime.now(BERLIN):%Y%m%d_%H%M}.md")
         st.code(digest_md, language="markdown")
-        if st.button("收起摘要"):
+        if st.button(i18n.t("digest_collapse")):
             st.session_state.show_digest = False
             st.rerun()
 
@@ -1282,11 +1286,11 @@ _bw_cutoff = datetime.now(timezone.utc) - timedelta(hours=BREAKING_WINDOW_H)
 hot = [c for c in visible if (c["breaking"] or c["diversity"] >= 2) and c["newest"] >= _bw_cutoff
        and (not P3_CODE or c["cats"])]
 
-tab_defs: list[tuple[str, list[dict]]] = [(f"⚡ 重点 {len(hot)}", hot)]
+tab_defs: list[tuple[str, list[dict]]] = [(f"{i18n.t('tab_hot')} {len(hot)}", hot)]
 for cat in CATEGORIES:
     rows = [c for c in visible if cat["id"] in c["cats"]]
-    tab_defs.append((f"{cat['emoji']} {cat['zh']} {len(rows)}", rows))
-tab_defs.append((f"📋 全部 {len(visible)}", visible))
+    tab_defs.append((f"{cat['emoji']} {i18n.cat_label(cat)} {len(rows)}", rows))
+tab_defs.append((f"{i18n.t('tab_all')} {len(visible)}", visible))
 
 MAX_CARDS = 60
 
@@ -1305,10 +1309,10 @@ def render_cluster(cl: dict) -> None:
         if rep.get("stype") in STYPE_LABELS:
             meta += f" · {STYPE_LABELS[rep['stype']]}"
         if cl["diversity"] >= 2:
-            meta += f" · 🌐 {cl['diversity']} 家独立报道"
+            meta += " · " + i18n.t("outlets_n", n=cl["diversity"])
         if len(cl["langs"]) >= 2:
-            meta += " · 跨语言"
-        cat_chips = " ".join(f"`{CAT_BY_ID[c]['zh']}`" for c in cl["cats"] if c in CAT_BY_ID)
+            meta += " · " + i18n.t("cross_lang")
+        cat_chips = " ".join(f"`{i18n.cat_label(CAT_BY_ID[c])}`" for c in cl["cats"] if c in CAT_BY_ID)
         if cat_chips:
             meta += " · " + cat_chips
         st.caption(meta)
@@ -1316,8 +1320,8 @@ def render_cluster(cl: dict) -> None:
             st.write(rep["summary"][:300])
         if cl["n"] > 1:
             # rep 经降权规则挑选,未必是 items[0] —— 按身份排除,不能按位置切
-            with st.expander(f"相关报道 ({cl['n'] - 1}) — 首发: {cl['items'][0]['outlet']} "
-                             f"{cl['items'][0]['time'].astimezone(BERLIN):%H:%M}"):
+            with st.expander(i18n.t("related", n=cl["n"] - 1, outlet=cl["items"][0]["outlet"],
+                                    time=f"{cl['items'][0]['time'].astimezone(BERLIN):%H:%M}")):
                 for it in (i for i in cl["items"] if i is not rep):
                     t = it["time"].astimezone(BERLIN)
                     st.markdown(f"- [{it['title']}]({it['link']}) — {it['outlet']} · {t:%a %H:%M}")
@@ -1340,12 +1344,12 @@ for tab, (label, rows) in zip(tabs, tab_defs):
     with tab:
         if not rows:
             if label.startswith("⚡"):
-                st.info(f"过去 {BREAKING_WINDOW_H}h 内没有触发突发信号或多源交叉的报道。")
+                st.info(i18n.t("hot_empty", h=BREAKING_WINDOW_H))
             else:
-                st.info("该类别暂无报道。可放宽时间窗或检查来源类型筛选。")
+                st.info(i18n.t("tab_empty"))
             continue
         if label.startswith("⚡"):
-            st.caption(f"突发信号词或 ≥2 家独立媒体同题报道 · 最近 {BREAKING_WINDOW_H}h")
+            st.caption(i18n.t("hot_caption", h=BREAKING_WINDOW_H))
             rows = sorted(rows, key=lambda c: (c["breaking"], c["diversity"], c["newest"]), reverse=True)
         # p3 模式:领域 tab 内按口径二级筛选(先领域后口径;单一条线时全部混在一起的解法)
         if P3_CODE:
@@ -1355,8 +1359,8 @@ for tab, (label, rows) in zip(tabs, tab_defs):
                 _pick = st.pills("口径", options=["all"] + _opts, selection_mode="single",
                                  default="all", label_visibility="collapsed",
                                  format_func=lambda t, _c=_cnt, _n=len(rows): (
-                                     f"全部 {_n}" if t == "all"
-                                     else f"{STYPE_LABELS[t]} {_c[t]}"),
+                                     i18n.t("stype_all", n=_n) if t == "all"
+                                     else f"{i18n.STYPE_EN[t] if i18n.is_en() else STYPE_LABELS[t]} {_c[t]}"),
                                  key=f"stype_{re.sub(r'[0-9 ]+$', '', label)}")
                 if _pick and _pick != "all":
                     rows = [c for c in rows if _pick in _stype_of(c)]

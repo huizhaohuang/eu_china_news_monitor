@@ -17,6 +17,7 @@ from pathlib import Path
 
 import streamlit as st
 
+import i18n
 import profile_code
 
 REPO_DIR = Path(__file__).resolve().parent
@@ -177,10 +178,11 @@ def _ensure(key: str, value) -> None:
 def render_setup(prefill: dict | None = None, notices: list[str] | None = None) -> None:
     packs = load_packs()
     groups = _group_of(packs)
-    st.title("🎯 定制我的监控")
-    st.caption("三步:选区域 → 选条线 → 选口径。本页不抓取;你的配置只存在生成的链接里,"
-               "**不写入任何服务器文件** —— 把链接加书签就是保存,发给同事就是分享。")
-    st.markdown("[✕ 返回监测台](./)")
+    en = i18n.is_en()
+    st.title(i18n.t("setup_title"))
+    st.caption(i18n.t("setup_caption"))
+    st.markdown(i18n.t("setup_back", ls0="?lang=en" if en else ""))
+    i18n.render_toggle()
     for n in notices or []:
         st.info(n)
 
@@ -188,49 +190,48 @@ def render_setup(prefill: dict | None = None, notices: list[str] | None = None) 
     if "bp_regions" not in st.session_state:
         _apply_prefill(prefill or {}, packs)
 
-    st.subheader("① 区域")
-    regions = st.pills("区域(可多选)", options=list(REGION_LABELS),
-                       selection_mode="multi", format_func=lambda r: REGION_LABELS[r],
+    st.subheader(i18n.t("step_region"))
+    regions = st.pills(i18n.t("region_multi"), options=list(REGION_LABELS),
+                       selection_mode="multi",
+                       format_func=lambda r: (i18n.REGION_EN[r] if en else REGION_LABELS[r]),
                        label_visibility="collapsed", key="bp_regions")
-    sub = st.pills("细分(可选;选大档已自动包含,单选细分 = 只看该方向)",
+    sub = st.pills(i18n.t("region_sub"),
                    options=list(SUB_REGION_LABELS), selection_mode="multi",
-                   format_func=lambda r: SUB_REGION_LABELS[r], key="bp_regions_sub")
+                   format_func=lambda r: (i18n.SUB_REGION_EN[r] if en else SUB_REGION_LABELS[r]),
+                   key="bp_regions_sub")
     all_regions = list(regions or []) + list(sub or [])
-    st.caption("其余区域档(欧洲内部/中国×全球…)供给矩阵尚未实测,后续版本开放。")
+    st.caption(i18n.t("region_note"))
 
-    st.subheader("② 领域")
+    st.subheader(i18n.t("step_beats"))
     supply = domain_supply(set(all_regions))
     chosen: list[str] = []
     for gname, plist in groups.items():
         ids = [p["id"] for p in plist]
-        zh = {p["id"]: p["zh"] for p in plist}
+        names = {p["id"]: i18n.cat_label(p) for p in plist}
         emoji = {p["id"]: p.get("emoji", "") for p in plist}
 
-        def _label(d, zh=zh, emoji=emoji):
+        def _label(d, names=names, emoji=emoji):
             n = supply.get(d, 0)
-            return f"{emoji[d]} {zh[d]} ({n if n else '0→兜底'})"
+            return f"{emoji[d]} {names[d]} ({n if n else i18n.t('fallback_badge')})"
 
         _ensure(f"bp_dom_{gname}", [])
-        sel = st.pills(gname, options=ids, selection_mode="multi",
+        sel = st.pills(i18n.GROUP_EN.get(gname, gname) if en else gname,
+                       options=ids, selection_mode="multi",
                        format_func=_label, key=f"bp_dom_{gname}")
         chosen.extend(sel or [])
     if any(supply.get(d, 0) == 0 for d in chosen):
-        st.caption("⚠️ 标「0→兜底」的条线在所选区域暂无专线源,内容将来自综合源按词表筛出,"
-                   "命中偏少属正常 —— 不是坏了,是诚实。")
+        st.caption(i18n.t("fallback_note"))
 
-    st.subheader("③ 口径")
-    types = st.pills("领域专线(可多选)", options=list(SPECIALIST_TYPES),
-                     selection_mode="multi", format_func=lambda t: TYPE_LABELS[t],
+    st.subheader(i18n.t("step_types"))
+    types = st.pills(i18n.t("types_label"), options=list(SPECIALIST_TYPES),
+                     selection_mode="multi",
+                     format_func=lambda t: (i18n.STYPE_EN[t] if en else TYPE_LABELS[t]),
                      key="bp_types")
-    background = st.toggle("背景快讯(主流媒体 + 通讯社)", key="bp_bg",
-                           help="背景层**跟随你选的区域**,不跟条线:勾了「中欧」就会包含"
-                                "德法/欧盟媒体的综合报道;只勾「中国国内」则是财新/财联社/"
-                                "央视等中文快讯。只想看条线专线就关掉本开关。")
-    kw_in = st.text_input("一定不能漏的关键词(逗号分隔,≤12,选填)", key="bp_kw",
-                          placeholder="如: 稀土, Nexperia, 中欧班列, 集采")
-    ent_in = st.text_input("关注实体:公司/机构/人物(逗号分隔,≤20,选填;命中即进 ⚡重点)",
-                           key="bp_ent",
-                           placeholder="如: 宁德时代, 万科, BioNTech, 商务部")
+    background = st.toggle(i18n.t("bg_toggle"), key="bp_bg", help=i18n.t("bg_help"))
+    kw_in = st.text_input(i18n.t("kw_label"), key="bp_kw",
+                          placeholder="稀土, Nexperia, 中欧班列, 集采")
+    ent_in = st.text_input(i18n.t("ent_label"), key="bp_ent",
+                           placeholder="宁德时代, 万科, BioNTech, 商务部")
 
     cfg = {
         "regions": all_regions,
@@ -243,17 +244,16 @@ def render_setup(prefill: dict | None = None, notices: list[str] | None = None) 
 
     st.divider()
     if not chosen:
-        st.warning("至少勾选一个领域。")
+        st.warning(i18n.t("need_beat"))
         return
     _, _, stats = resolve(cfg)
     code = profile_code.encode(cfg)
-    st.markdown(f"**📋 你的配置:{len(all_regions)} 区域 × {len(chosen)} 条线 × "
-                f"{len(types or [])} 类口径 → 专线 {stats['specialist']} 源 · "
-                f"背景 {stats['background']} 源**")
-    st.markdown(f"### [🚀 打开我的监控页](?profile={code})")
-    st.caption("↑ 打开后**把地址栏链接加书签** —— 书签就是你的配置。换电脑用下面的备份恢复。")
-    with st.expander("🔗 配置码 / 备份"):
+    st.markdown(i18n.t("your_config", r=len(all_regions), b=len(chosen), t=len(types or []),
+                       sp=stats["specialist"], bg=stats["background"]))
+    st.markdown(i18n.t("open_monitor", code=code, ls=i18n.lang_suffix()))
+    st.caption(i18n.t("bookmark_hint"))
+    with st.expander(i18n.t("code_expander")):
         st.code(f"?profile={code}", language=None)
-        st.download_button("⬇️ 下载配置备份", json.dumps(cfg, ensure_ascii=False, indent=2),
+        st.download_button(i18n.t("backup_btn"), json.dumps(cfg, ensure_ascii=False, indent=2),
                            file_name="my_beats.profile.json")
-        st.caption("要修改:回到本页(监控页侧边栏有入口),当前选择会自动带入。")
+        st.caption(i18n.t("modify_hint"))

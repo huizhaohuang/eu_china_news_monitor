@@ -23,6 +23,8 @@ from pathlib import Path
 import requests
 import streamlit as st
 
+import i18n
+
 LOCAL_SINK = Path(__file__).with_name("feedback.jsonl")
 _TIMEOUT = 10
 
@@ -57,7 +59,7 @@ def _append_local(p: dict) -> None:
 
 
 def deliver(payload: dict) -> tuple[bool, str]:
-    """把反馈送到已配置的外部 sink。返回 (是否送达外部, 给用户看的话)。
+    """把反馈送到已配置的外部 sink。返回 (是否送达外部, 消息键——显示时经 i18n.t 翻译)。
     任何 sink 失败都兜底到本地并如实告知,绝不假装成功。"""
     webhook = _secret("feedback", "webhook_url")
     if webhook:
@@ -67,10 +69,10 @@ def deliver(payload: dict) -> tuple[bool, str]:
             r = requests.post(webhook, json={"text": text, "content": text, "feedback": payload},
                               timeout=_TIMEOUT)
             r.raise_for_status()
-            return True, "✅ 已提交,谢谢!"
+            return True, "fb_ok"
         except Exception:
             _append_local(payload)
-            return False, "⚠️ 反馈通道暂时不通,已本地留存。请稍后再试或直接联系维护者。"
+            return False, "fb_fail"
 
     key, to = _secret("feedback", "resend_api_key"), _secret("feedback", "email")
     if key and to:
@@ -84,36 +86,35 @@ def deliver(payload: dict) -> tuple[bool, str]:
                       "text": _summary(payload)},
                 timeout=_TIMEOUT)
             r.raise_for_status()
-            return True, "✅ 已提交,谢谢!"
+            return True, "fb_ok"
         except Exception:
             _append_local(payload)
-            return False, "⚠️ 邮件通道暂时不通,已本地留存。请稍后再试或直接联系维护者。"
+            return False, "fb_fail"
 
     # 未配置任何外部 sink
     _append_local(payload)
-    return False, "✅ 已记录(本地)。⚠️ 管理员尚未配置反馈通道,云端不会送达 —— 见 feedback.py 顶部说明。"
+    return False, "fb_unconfigured"
 
 
 def render(context: str = "") -> None:
     """首页反馈入口(折叠面板,默认收起,不占版面)。context = 当前页面标识。"""
-    with st.expander("📮 反馈 / 报告问题 —— 源不对?太吵?想加条线或公众号?"):
+    with st.expander(i18n.t("fb_expander")):
         if st.session_state.pop("_fb_done", None):
-            st.success(st.session_state.pop("_fb_msg", "已提交,谢谢!"))
+            st.success(i18n.t(st.session_state.pop("_fb_msg", "fb_ok")))
         with st.form("feedback_form", clear_on_submit=True):
-            who = st.text_input("你是谁(选填,方便回复)", placeholder="如 Mandy / 汽车线")
-            msg = st.text_area("反馈内容", height=120,
-                               placeholder="哪个源太吵?想加哪个号/条线?哪个 tag 不准?看到明显跑错的稿子,贴标题最有用。")
-            sent = st.form_submit_button("提交反馈")
+            who = st.text_input(i18n.t("fb_who"), placeholder=i18n.t("fb_who_ph"))
+            msg = st.text_area(i18n.t("fb_msg"), height=120, placeholder=i18n.t("fb_msg_ph"))
+            sent = st.form_submit_button(i18n.t("fb_submit"))
         if sent:
             if not msg.strip():
-                st.warning("写点内容再提交～")
+                st.warning(i18n.t("fb_empty"))
             else:
-                _, note = deliver({
+                _, note_key = deliver({
                     "time": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                     "who": who.strip(),
                     "context": context or "默认监测台",
                     "message": msg.strip(),
                 })
                 st.session_state["_fb_done"] = True
-                st.session_state["_fb_msg"] = note
+                st.session_state["_fb_msg"] = note_key
                 st.rerun()

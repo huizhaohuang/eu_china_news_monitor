@@ -55,6 +55,29 @@ def test_p3_profile_view_and_zero_disk_writes():
         "p3 模式改写了 monitor_state.json —— 零落盘被破坏"
 
 
+@pytest.mark.skipif(os.environ.get("SKIP_E2E") == "1", reason="跳过联网 e2e")
+def test_english_ui_via_lang_param():
+    """?lang=en:标签页/界面转英文;默认(无参数)仍是中文(黄金基线另测)。"""
+    from streamlit.testing.v1 import AppTest
+    at = AppTest.from_file(APP, default_timeout=180)
+    at.query_params["lang"] = "en"
+    at.run()
+    assert not at.exception
+    labels = [t.label for t in at.tabs]
+    assert labels[0].startswith("⚡ Top") and labels[-1].startswith("📋 All"), labels
+    assert any("Germany-China" in l for l in labels), labels  # 分类用词表自带 en 名
+
+
+def test_setup_page_english():
+    from streamlit.testing.v1 import AppTest
+    at = AppTest.from_file(APP, default_timeout=60)
+    at.query_params["setup"] = "1"
+    at.query_params["lang"] = "en"
+    at.run()
+    assert not at.exception
+    assert at.title and "Customize" in at.title[0].value
+
+
 def test_bad_p3_code_falls_back_gracefully():
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(APP, default_timeout=180)
