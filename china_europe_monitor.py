@@ -1142,7 +1142,7 @@ with st.sidebar:
     st.caption(i18n.t("customize_hint"))
 
     st.divider()
-    st.subheader("监控源")
+    st.subheader(i18n.t("sources_header"))
 
     # --- 按 lane 分组的启停/删除管理 ---
     to_delete = None
@@ -1154,7 +1154,8 @@ with st.sidebar:
         if not idxs:
             continue
         n_on = sum(1 for i in idxs if st.session_state.sources[i].get("enabled", True))
-        with st.expander(f"{LANE_LABELS[lane]} ({n_on}/{len(idxs)})"):
+        _lane_disp = i18n.LANE_EN.get(lane, lane) if i18n.is_en() else LANE_LABELS[lane]
+        with st.expander(f"{_lane_disp} ({n_on}/{len(idxs)})"):
             for i in idxs:
                 src = st.session_state.sources[i]
                 # widget key 用「下标+源地址」:纯下标会在删除后错位套状态,
@@ -1170,7 +1171,7 @@ with st.sidebar:
                         st.cache_data.clear()
                         st.rerun()
                 with c2:
-                    if st.button("✕", key=f"del_{skey}", help="删除该源"):
+                    if st.button("✕", key=f"del_{skey}", help=i18n.t("src_del_help")):
                         to_delete = i
     if to_delete is not None:
         st.session_state.sources.pop(to_delete)
@@ -1179,31 +1180,29 @@ with st.sidebar:
         st.rerun()
 
     # --- 添加新源 ---
-    with st.expander("➕ 添加监控源"):
-        new_name = st.text_input("名称", placeholder="例如 Kiel Institute")
-        new_type = st.radio("类型", ["rss", "gnews"], horizontal=True,
-                            help="rss = 原生 feed 地址;gnews = Google News 查询语句(适合无 RSS 或被 Cloudflare 挡的网站)")
+    with st.expander(i18n.t("add_source")):
+        new_name = st.text_input(i18n.t("src_name"), placeholder="Kiel Institute")
+        new_type = st.radio(i18n.t("src_type"), ["rss", "gnews"], horizontal=True,
+                            help=i18n.t("src_type_help"))
         if new_type == "rss":
             new_value = st.text_input("Feed URL", placeholder="https://…/feed")
         else:
-            new_value = st.text_input("查询语句", placeholder="site:example.com China when:1d")
-        new_lane = st.selectbox("分组", options=list(LANE_LABELS), index=len(LANE_LABELS) - 1,
-                                format_func=lambda k: LANE_LABELS[k])
+            new_value = st.text_input(i18n.t("src_query"), placeholder="site:example.com China when:1d")
+        new_lane = st.selectbox(i18n.t("src_lane"), options=list(LANE_LABELS), index=len(LANE_LABELS) - 1,
+                                format_func=lambda k: (i18n.LANE_EN.get(k, k) if i18n.is_en() else LANE_LABELS[k]))
         new_filter = st.selectbox(
-            "相关性过滤", options=["china", "europe", "none"], index=0,
-            format_func=lambda v: {"china": "china — 综合流,须提到中国",
-                                   "europe": "europe — 中方源,须提到欧洲",
-                                   "none": "none — 已自带限定,不过滤"}[v])
-        new_lang = st.selectbox("语言", ["en", "de", "fr", "zh"], index=0,
-                                help="gnews 查询会按语言选 Google News 区域(法语查询在英文区搜不到)")
+            i18n.t("src_filter"), options=["china", "europe", "none"], index=0,
+            format_func=lambda v: i18n.t(f"src_filter_{v}"))
+        new_lang = st.selectbox(i18n.t("src_lang"), ["en", "de", "fr", "zh"], index=0,
+                                help=i18n.t("src_lang_help"))
         if st.session_state.pop("add_ok_msg", None):
-            st.success(st.session_state.pop("add_ok_msg_text", "已添加"))
-        if st.button("测试并添加"):
+            st.success(st.session_state.pop("add_ok_msg_text", i18n.t("src_added")))
+        if st.button(i18n.t("src_test_add")):
             new_locale = {"fr": "fr", "de": "de", "zh": "zh"}.get(new_lang, "en")
             if not new_name or not new_value:
-                st.warning("名称和地址/查询语句都要填")
+                st.warning(i18n.t("src_need_both"))
             elif any(s["value"] == new_value for s in st.session_state.sources):
-                st.warning("该地址/查询已在监控列表中")
+                st.warning(i18n.t("src_dup"))
             else:
                 ok, msg = test_feed(new_type, new_value, new_locale)
                 if ok:

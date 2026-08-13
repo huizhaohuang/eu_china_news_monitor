@@ -228,10 +228,8 @@ def render_setup(prefill: dict | None = None, notices: list[str] | None = None) 
                      format_func=lambda t: (i18n.STYPE_EN[t] if en else TYPE_LABELS[t]),
                      key="bp_types")
     background = st.toggle(i18n.t("bg_toggle"), key="bp_bg", help=i18n.t("bg_help"))
-    kw_in = st.text_input(i18n.t("kw_label"), key="bp_kw",
-                          placeholder="稀土, Nexperia, 中欧班列, 集采")
-    ent_in = st.text_input(i18n.t("ent_label"), key="bp_ent",
-                           placeholder="宁德时代, 万科, BioNTech, 商务部")
+    kw_in = st.text_input(i18n.t("kw_label"), key="bp_kw", placeholder=i18n.t("kw_ph"))
+    ent_in = st.text_input(i18n.t("ent_label"), key="bp_ent", placeholder=i18n.t("ent_ph"))
 
     cfg = {
         "regions": all_regions,
