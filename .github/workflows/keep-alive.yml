@@ -1,0 +1,26 @@
+# 保活:每 4 小时用无头浏览器真实访问 app(休眠阈值 12h,留 3 倍冗余)。
+# 纯 HTTP ping 无效(平台按 WebSocket 会话计活跃),必须真实浏览器,见 scripts/keepalive.py。
+# 启用方法:仓库 Settings → Secrets and variables → Actions → Variables
+#          新建 APP_URL = https://<你的应用>.streamlit.app  (未设置时本工作流静默跳过)
+name: keep-alive
+
+on:
+  schedule:
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    if: vars.APP_URL != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+      - name: Visit app (wake if sleeping)
+        run: python scripts/keepalive.py "${{ vars.APP_URL }}"
