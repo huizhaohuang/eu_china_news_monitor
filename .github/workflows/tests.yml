@@ -1,0 +1,19 @@
+# 测试 CI:跑离线测试集(SKIP_E2E=1 跳过联网端到端,保证确定性;
+# 联网 e2e 在本地开发时跑)。徽章挂在 README 顶部。
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt pytest
+      - run: python -m pytest tests/ -q
+        env:
+          SKIP_E2E: "1"

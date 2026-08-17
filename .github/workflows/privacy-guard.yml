@@ -1,5 +1,5 @@
 # 零落盘防呆:个人配置(记者的勾选/关键词/实体/订阅邮箱)绝不允许进入 public 仓库。
-# 三层防线之二(一 = .gitignore,三 = 代码层无写入路径),见 DESIGN.md 公私边界。
+# 三层防线之二(一 = .gitignore,三 = 代码层无写入路径);公私边界见 README「Data & privacy」节。
 name: privacy-guard
 
 on: [push, pull_request]

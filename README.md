@@ -1,116 +1,124 @@
-# 中欧新闻监测 · China-Europe News Monitor
+# China–Europe News Monitor
 
-为柏林中欧地缘政治 + 产经条线记者定制的新闻监测台。刷新即得过去 6–72 小时内、
-59 个精选信源(46 个默认启用)的中欧交叉新闻,按 8 个主题自动归类,突发信号自动标红。
+[![tests](https://github.com/huizhaohuang/eu_china_news_monitor/actions/workflows/tests.yml/badge.svg)](https://github.com/huizhaohuang/eu_china_news_monitor/actions/workflows/tests.yml)
+[![privacy-guard](https://github.com/huizhaohuang/eu_china_news_monitor/actions/workflows/privacy-guard.yml/badge.svg)](https://github.com/huizhaohuang/eu_china_news_monitor/actions/workflows/privacy-guard.yml)
 
-## 运行
+A self-serve news monitor built for a China-desk of journalists (macro, finance, tech,
+autos, energy, health, education, shipping …). One shared deployment; every reporter
+assembles their own monitoring page in ~60 seconds and saves it as a bookmark.
+
+**Live app:** <https://china-eu-monitor.streamlit.app/> · UI in Chinese and English (`?lang=en`)
+
+**Scale (2026-08):** a vetted registry of **415 sources** (283 active) tagged across
+**16 beat packs** × 3 region tiers (China domestic / China–EU / China–US, with
+China–DE / China–FR / Hong Kong sub-tiers) × 6 source types — in Chinese, English,
+German and French, including WeChat-account mirror channels. The default landing page
+is the original China–EU monitor: 71 curated sources, 9 themed tabs, unchanged.
+
+## Quick start
 
 ```bash
 pip install -r requirements.txt
 streamlit run china_europe_monitor.py
 ```
 
-首次运行会在脚本旁生成 `sources.json`(信源配置,侧边栏可增删启停)和
-`monitor_state.json`(上次访问时间,用于 🆕 标记)。
+First run creates `sources.json` (source config, editable in the sidebar) and
+`monitor_state.json` (last-visit timestamp for 🆕 badges) next to the script.
 
-## 功能
+## What it does
 
-| 功能 | 说明 |
+| Feature | Notes |
 |---|---|
-| ⚡ 重点 tab | 突发信号词(制裁/关税裁决/搜查/召见/国事访问…,中英德三语)+ ≥2 家独立媒体同题报道,最近 12h |
-| 9 个主题 tab | 中欧政治外交 / 德中关系 / **法中关系** / 贸易防御 / 汽车与电池 / 能源光伏 / 科技AI芯片 / **国防与战略原材料** / 中国宏观(兜底);**多标签归类**,一篇稿可同时出现在多个相关 tab |
-| 跨源聚类 | 同题报道合并为一张卡,标注首发媒体与时间,可展开看各家标题("Handelsblatt 首发…"的出处依据) |
-| 🌐 独立报道数 | 通稿被聚合站原样转载只算一家;各家自拟标题才算独立编辑判断 |
-| 📋 早报摘要 | 一键生成 Markdown(按主题分组、柏林时间戳、链接),可下载或直接粘给编辑 |
-| 相关性闸门 | 欧洲综合流须提到中国(`china` 闸门),中方宽流须提到欧洲(`europe` 闸门),已限定的查询不过滤(`none`) |
-| 并发抓取 | 46 源约 6 秒,每源独立超时;📡 抓取状态面板可见每源健康度;缓存 10 分钟 |
-| 兜底安全网 | 两条不限站点的 Google News 全网查询(China×Germany / China×EU),未订阅媒体的大新闻也不漏 |
+| ⚡ Top tab | Breaking-signal keywords (sanctions, tariff rulings, raids, summonses … zh/en/de) + stories covered by ≥2 independent outlets, last 12h. In custom mode, pinned to *your* beats only |
+| Beat tabs | Multi-label classification — one story can appear under several relevant beats. Keyword/entity scoring is deterministic (kw=1, entity=3, title×2, ≥2 to qualify) |
+| Cross-source clustering | Same-story variants merge into one card (first-mover outlet shown, other takes in a fold-out). CJK-aware: Chinese titles cluster via character bigrams; near-duplicate wire rewrites collapse instead of flooding the feed |
+| Link decoding | Google News redirect links are resolved server-side to real publisher URLs — so readers in mainland China can actually open them (budgeted, circuit-broken, silently falls back to the original link) |
+| Source-type filter | Inside every tab: Official / Mainstream / Trade media / WeChat mirrors / Newswires / Think tanks, with live counts |
+| Outlet demotion | Low-quality outlets (journalist-flagged) never front a cluster and don't count toward "independent outlets" — demoted, not deleted |
+| 📋 Digest | One-click Markdown digest (grouped by beat, Berlin timestamps), downloadable |
+| 📮 Feedback | Front-page feedback widget delivering to the maintainer's inbox (Resend / webhook via `st.secrets`) |
+| Relevance gates | European general feeds must mention China; Chinese broad feeds must mention Europe; pre-scoped queries pass through |
 
-## 信源结构(sources.json)
+## Self-serve customization (`?setup=1`)
 
-```json
+Three steps — **regions → beats → source types** — then one click generates a personal
+monitoring page. The entire config lives in the URL (`?profile=p3.<code>`, ≤600 chars):
+
+- **bookmark = save, share = share** — nothing is ever written server-side;
+- supply badges are honest: beats with no dedicated sources for your regions say
+  "0→fallback" up front instead of silently under-delivering;
+- old config codes survive beat renames/merges via an alias table (with a notice).
+
+## Data & privacy
+
+The repo is public; the boundary is **"menu public, orders private"**:
+
+| In this repo (the menu) | Never in the repo (the orders) |
+|---|---|
+| Code, beat vocabularies (`packs.json`), source registry (`source_registry.json`) — generic knowledge, no personal data | Personal beat selections, custom keywords, watchlist entities, subscriber emails, API keys |
+
+Enforced three ways: `.gitignore`, a CI assertion
+([privacy-guard](.github/workflows/privacy-guard.yml)) that fails any commit containing
+personal-config paths, and — by design — the app has no code path that writes personal
+config into the repo directory (configs serialize only to URL params and download buttons).
+
+> **Note on internal docs:** design/strategy documents (`DESIGN.md`, `SOURCE_TREE.md`,
+> `WECHAT_SOURCES.md`, `ASSESSMENT.md`, `BEAT_SOURCES.md`) are deliberately gitignored
+> local working files — references to them in code comments or history will 404 for
+> outside readers. The privacy summary above is the public digest of that material.
+
+## Source config (`sources.json` / `source_registry.json`)
+
+```jsonc
 {
   "name": "Reuters · China×Europe",
-  "type": "gnews",            // rss = 原生 feed;gnews = Google News RSS 查询
+  "type": "gnews",            // rss = native feed; gnews = Google News RSS query
   "value": "site:reuters.com (China OR Chinese) (EU OR Europe ...) when:1d",
-  "lane": "wires",            // de-media | fr-media | eu-brussels | wires | cn-media | industry | gov | thinktank | custom
+  "lane": "wires",            // sidebar grouping
   "lang": "en",               // en | de | fr | zh
-  "filter": "china",          // china | europe | none(相关性闸门)
-  "gnews_locale": "fr",       // 可选:gnews 查询的 Google News 语言区(en/de/fr,默认 en)
+  "filter": "china",          // relevance gate: china | europe | none
+  "gnews_locale": "zh",       // gnews language region — see trap below
   "enabled": true
 }
 ```
 
-注意:**法语 site: 查询在英文区(hl=en-US)返回 0 条**(2026-07 实测,Les Echos/La Tribune),
-法语 gnews 源必须带 `"gnews_locale": "fr"`。闸门词表为中英德法四语
-(RFI 中文、DW 中文等中文源的闸门为中文词)。
+`source_registry.json` (the customization catalog) adds `region`, `source_type`,
+`domains` (beat tags) and `tier` per source. `gen_beat_sources.py` renders it into a
+human-review inventory.
 
-约定俗成的经验(2026-07 实测):
+**Field-tested traps** (all verified, do not relearn them the hard way):
 
-- Politico.eu / Euractiv / consilium.europa.eu 的原生 RSS 被 Cloudflare 挡,走 gnews。
-- Global Times / Xinhua 的原生 RSS 已停止更新(内容停在 2018),必须走 gnews。
-- FT / Reuters / Bloomberg / WSJ 无公开内容 RSS,走 gnews site: 查询。
-- SCMP feed 模式:`scmp.com/rss/{id}/feed`(318199 中国外交、318421 中国经济、36 科技)。
-- gnews 按**正文**匹配查询词,标题可能与中国无关,所以通讯社 gnews 源配 `filter: "china"`。
-- 时间窗放宽到 >24h 时,gnews 查询里的 `when:1d` 会自动放宽(只放宽不收窄)。
+- **A `gnews` query for a Chinese/French/German site MUST set `gnews_locale`** —
+  the English locale returns 200 with 0 items, silently.
+- Localized RFC-822 dates (`星期三, 05 八月 2026 …`) break feedparser; the app
+  normalizes them — without this a healthy-looking feed yields zero items.
+- `site:` queries against `.gov.cn` return decade-old archive pages; count only
+  entry-level fresh items.
+- Politico.eu / Euractiv native RSS are Cloudflare-blocked; Reuters / Bloomberg / WSJ
+  have no public RSS — use gnews `site:` queries. Most mainland-China native RSS is
+  dead or frozen (live exceptions: China News Service, CGTN, Jiemian flash).
+- Never invent RSS URLs. Every source in the registry was fetched and verified
+  (entry dates, freshness) before inclusion — verified working sources have died
+  within a month before; expect rot and re-verify periodically.
 
-## 📅 活动 tab(会议/展会跟踪)
+## Ops
 
-与新闻流逻辑相反的实体模型:主键 = 活动名+届次年份,种子数据+人工核定,v1 零爬虫。
-代码独立在 `events_monitor.py`,数据在 `events.json`(首次运行自动生成种子,纳入 git);
-`events_state.json`(v2 抓取时间戳)与 `monitor_state.json` 一样不入库。
+- **Keep-alive:** Streamlit Community Cloud sleeps after 12h without traffic, and plain
+  HTTP pings don't count (activity = WebSocket sessions). A
+  [scheduled headless-browser visit](.github/workflows/keep-alive.yml) every 4h keeps
+  the app awake and clicks the wake button if needed.
+- **Events tab** (`events_monitor.py`, conference/trade-fair radar with press-deadline
+  countdowns) is currently hidden behind `SHOW_EVENTS_TAB` — code and data intact.
 
-| 概念 | 说明 |
-|---|---|
-| 行动日 | `press_deadline`(媒体注册截止)优先,否则 `start_date`;倒计时与提醒都基于它 |
-| 提醒档位 | 默认 T-60(申请 press accreditation)/ T-30(向参展企业发采访请求)/ T-14(最后窗口);每活动可覆盖 `reminder_offsets`(如智库活动 `[21,7]`) |
-| `needs_verification` | 日期/链接未核实的条目:年历中显示 ⚠️「日期待核实」,**不参与提醒**(避免按错误日期提醒);在「⚙️ 管理」视图核实(建议 [AUMA 数据库](https://www.auma.de/messen-finden/))后取消勾选转正 |
-| `action_status` | `todo` / `registered` / `interview_requested` / `skipped` / `done`;倒计时视图只显示前三种 |
-| 三个子视图 | ⏰ 行动倒计时(90 天内或已触发提醒,🔴≤14 天/🟡≤30 天)· 🗓️ 年历(未来 18 个月按月分组,可按板块筛选)· ⚙️ 管理(全字段表格编辑+校验保存+Markdown 导出) |
+## Tests
 
-**📡 发现(会议雷达,v2)**:短周期会议(智库研讨/商会论坛,提前数周才公布)的
-自动发现。34 个渠道(2026-07 逐一实测),三种类型:
+```bash
+pip install pytest
+python -m pytest tests/            # full suite (includes networked e2e, ~30s)
+SKIP_E2E=1 python -m pytest tests/ # offline-only, what CI runs
+```
 
-| 类型 | 说明 | 例 |
-|---|---|---|
-| `rss` | 活动型 feed(实测确认条目为活动) | ECFR `?post_type=event`、DIW `rss_events.xml`、Politico Live、DG TRADE |
-| `page` | 页面变化侦测:抓纯文本行与基线比对,新增的中国相关行 → ⚠️ 提示 | Kiel GCC、DIHK Newsroom、MERICS、DCW(整页皆中德活动) |
-| `gnews` | 被墙机构(KAS/Chatham/欧盟商会/Körber)与通用雷达;德语查询须 `"locale": "de"` | `"Kiel Institute" China`、`DIHK China` |
-
-渠道清单在 `event_sources.json`;扫描状态/页面基线/已忽略清单在
-`events_state.json`(不入库)。原则:发现只进候选收件箱,**人工「加入跟踪」后仍为
-待核实状态**——不自动写库、不自动解析日期。经验:德国主要机构(Kiel/DIHK/MERICS/
-SWP/DGAP)均无活动 RSS;DIW 的 RSS 端点封浏览器 UA、放行阅读器 UA(代码已做 403 退避)。
-
-约束:代码**严禁构造/猜测任何 URL**,`source_url` 只允许人工填入
-(发现雷达候选的链接来自公告 feed 本身,经人工点击确认后写入);
-无 `start_date` 的条目保存时自动标记待核实。
-v2 后续(未实现,见 `check_date_drift()` 桩):日期漂移检测——仅检测
-已知日期是否从官网页面消失并打回待核实,不自动解析新日期。
-
-## 档案(profiles)与访谈式配置
-
-- `?profile=名字` → 加载 `profiles/<名>/sources.json`(+ 可选 `taxonomy.json`);
-  不带参数 = 默认档案(根目录文件,即原中欧监测,行为不变)。
-- `taxonomy.json`:`categories/specificity/breaking_keywords/priority_pairs`
-  整体替换,`china_gate_extra/europe_gate_extra/title_blocklist_extra` 追加;
-  所有词经与内置词表相同的 `_nt` 规范化(空格词边界、连字符=空格语义一致)。
-- `beat_interview.py`(💬 定制 tab):Claude 访谈生成档案。硬规则:模型不发明
-  RSS URL,只能选用已验证目录(根 sources.json + `source_library.json` 领域
-  扩展库)或组装 gnews 查询;生成后逐源实测 + 一轮自动修复;交付经 GitHub PR
-  (代码硬性限定只写 `profiles/`、只开 PR),人工 Merge 后生效。Secrets 见
-  USAGE 第 6½ 节。
-- `source_library.json`(领域扩展库):98 个实测源、5 个领域包——教育/国际主流
-  分版面(BBC·Guardian·NYT·Economist·NPR·CNBC 分版面 feed 模式均已验证)/
-  中国大陆媒体/金融与市场/医疗健康。**中文 gnews 必须 `"gnews_locale": "zh"`**
-  (英文区对大陆站点返回 0 条,实测);大陆原生 RSS 大多已死,活例外:中新社、
-  CGTN、界面快报。扩新领域包时按同法实测后合入本文件。
-
-## 归类与优先级调校
-
-关键词表在 `china_europe_monitor.py` 的 `CATEGORIES` / `BREAKING_KEYWORDS` /
-`PRIORITY_PAIRS` / `CHINA_GATE` / `EUROPE_GATE`。匹配在规范化文本(小写、标点转空格、
-首尾补空格)上进行,短词用 `" ev "` 形式的空格包裹做词边界保护。
-
-计分:关键词命中 1 分、实体命中 3 分、标题命中 ×2,总分 ≥2 归入该类;
-`china-macro` 是兜底类,仅在未命中任何其他类时归入。
+Golden-baseline tests freeze the default monitor's behavior (taxonomy fingerprint,
+source inventory, tab structure); i18n invariant tests guarantee no Chinese UI labels
+leak into the English interface; clustering/dedup/decoder logic is unit-tested against
+real-world regression cases.

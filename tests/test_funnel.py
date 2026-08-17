@@ -95,6 +95,7 @@ def test_english_p3_title_has_no_chinese():
     assert not _re.search(r"[一-鿿]", title), f"英文标题里仍有中文: {title}"
 
 
+@pytest.mark.skipif(os.environ.get("SKIP_E2E") == "1", reason="跳过联网 e2e(坏码回退到默认监测台=全量抓取)")
 def test_bad_p3_code_falls_back_gracefully():
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(APP, default_timeout=180)
