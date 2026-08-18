@@ -820,6 +820,9 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
     cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
     gate = {"china": CHINA_GATE, "europe": EUROPE_GATE}.get(src.get("filter", "none"))
     is_gnews = src["type"] == "gnews"
+    # 开放式 gnews(不带 site:)是"陈年新闻盖新时间戳"的重灾区(实锤:2020 年旧文
+    # 标当日日期混入)→ 标记出来,解码后由 stale_guard 核验真实发布时间
+    open_query = is_gnews and "site:" not in src["value"]
     items: list[dict] = []
     health["total"] = len(parsed.entries)
     n_nodate = 0
@@ -859,6 +862,7 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
             items.append({
                 "source": src["name"], "lane": src.get("lane", "custom"),
                 "stype": src.get("stype", ""),  # 口径(p3 模式的注册表源携带;默认源为空)
+                "verify_date": open_query,
                 "lang": src.get("lang", "en"), "outlet": outlet,
                 "title": title, "summary": summary, "link": link, "time": ts,
                 "cats": cats, "primary": primary,
@@ -996,6 +1000,14 @@ def fetch_all(sources_json: str, hours: int, taxo_fp: str = "default") -> tuple[
             if real:
                 it["link"] = real
         unique = _dedup(unique)
+    except Exception:
+        pass
+    # 陈年新闻防御:Google 会给重新索引的旧文盖新时间戳(实锤 2020 旧文标当日),
+    # 解码拿到真实 URL 后按 URL 日期矛盾 + 文章页发布时间核验,确凿旧证据才丢
+    try:
+        import stale_guard
+        unique, _n_stale = stale_guard.filter_stale(
+            unique, datetime.now(timezone.utc) - timedelta(hours=hours))
     except Exception:
         pass
     clusters = cluster_items(unique)
@@ -1239,6 +1251,10 @@ with st.sidebar:
             _ds = gnews_decoder.stats()
             _cd = i18n.t("decode_cooldown", m=_ds["cooldown_min"]) if _ds["cooldown_min"] else ""
             st.caption(i18n.t("decode_stats", cached=_ds["cached"], trips=_ds["trips"], cd=_cd))
+            import stale_guard as _sg
+            _sgs = _sg.stats()
+            if _sgs["last_dropped"] or _sgs["verified_cached"]:
+                st.caption(i18n.t("stale_stats", n=_sgs["last_dropped"], v=_sgs["verified_cached"]))
         except Exception:
             pass
 

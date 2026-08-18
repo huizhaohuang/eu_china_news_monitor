@@ -37,6 +37,8 @@ _TR: dict[str, tuple[str, str]] = {
     "decode_stats": ("🔗 链接解码缓存 {cached} 条 · 熔断 {trips} 次{cd}",
                      "🔗 Link-decode cache {cached} · breaker trips {trips}{cd}"),
     "decode_cooldown": (" · 熔断冷却 {m}min", " · cooling down {m}min"),
+    "stale_stats": ("🕰 拦截陈年新闻 {n} 条 · 已核验 {v} 链接",
+                    "🕰 stale-news blocked {n} · {v} links verified"),
 
     # --- 主区 ---
     "summary_caption": ("{groups} 组报道({items} 条)· 过去 {hours}h · 更新于 {ts} Berlin · 缓存 10 分钟",
