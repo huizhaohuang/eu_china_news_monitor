@@ -914,9 +914,78 @@ def _canon_link(url: str) -> str:
         return url
 
 
+def _merge_same_event(clusters: list[dict]) -> list[dict]:
+    """②③级合并:跨媒体加权重叠(≥0.45 直并;0.28-0.45 灰带 LLM 裁决)。
+    权重 = idf(本批次罕见词权重高):同事件报道共享的正是「实体+地点」类罕见锚词,
+    而 byd 这种满屏词贡献很小。任何异常回退为不合并,绝不影响抓取。"""
+    if len(clusters) < 2:
+        return clusters
+    try:
+        from collections import Counter
+        df: Counter = Counter()
+        for cl in clusters:
+            df.update(cl["tokens"])
+        n = len(clusters)
+        idf = {t: math.log(1 + n / c) for t, c in df.items()}
+
+        def wsum(tk):
+            return sum(idf[t] for t in tk)
+
+        def sim(a, b):
+            sh = a & b
+            if len(sh) < 2:
+                return 0.0
+            return sum(idf[t] for t in sh) / max(min(wsum(a), wsum(b)), 1e-9)
+
+        parent = list(range(n))
+
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        outlet = [cl["items"][0]["outlet"].lower() for cl in clusters]
+        gray: list[tuple[int, int]] = []
+        for i in range(n):
+            for j in range(i + 1, n):
+                if outlet[i] == outlet[j]:
+                    continue
+                s = sim(clusters[i]["tokens"], clusters[j]["tokens"])
+                if s >= 0.45:
+                    parent[find(i)] = find(j)
+                elif s >= 0.28:
+                    gray.append((i, j))
+        if gray:
+            import event_merge
+            gray = gray[:event_merge.MAX_PAIRS_PER_CALL]
+            titles = [(clusters[i]["items"][0]["title"], clusters[j]["items"][0]["title"])
+                      for i, j in gray]
+            verdicts = event_merge.adjudicate(titles)
+            for (i, j), (a, b) in zip(gray, titles):
+                if verdicts.get(frozenset((a, b))):
+                    parent[find(i)] = find(j)
+
+        merged: dict[int, dict] = {}
+        for i, cl in enumerate(clusters):
+            r = find(i)
+            if r in merged:
+                merged[r]["items"].extend(cl["items"])
+                merged[r]["tokens"] = merged[r]["tokens"] | cl["tokens"]
+            else:
+                merged[r] = {"tokens": cl["tokens"], "items": list(cl["items"])}
+        return list(merged.values())
+    except Exception:
+        return clusters
+
+
 def cluster_items(items: list[dict]) -> list[dict]:
-    """跨源同题聚类:标题词集 Jaccard≥0.5 或包含关系即合并。
-    (0.5 实测恰好合并同一事件的措辞变体,如 summoned/summons 各家改写)"""
+    """跨源同题聚类,三级合并:
+    ① 词集 Jaccard≥0.5(短标题 0.66)或包含关系 —— 通稿改写变体(原有强规则)
+    ② 跨媒体 idf 加权重叠 ≥0.45 —— 同事件不同措辞(实测该阈值零误判;
+       同媒体排除:模板内容农场的相似标题不是同稿,财联社时间戳流走①即可)
+    ③ 0.28-0.45 灰带 → LLM 裁决(event_merge,缓存+fail-open,判不了=不合并)
+       —— BYD 米兰设计中心三家各自拟题仅 0.28-0.33,纯阈值到不了(实测校准)"""
     clusters: list[dict] = []
     for it in sorted(items, key=lambda x: x["time"], reverse=True):
         tk = it["tokens"]
@@ -938,6 +1007,8 @@ def cluster_items(items: list[dict]) -> list[dict]:
             clusters.append({"tokens": tk, "items": [it]})
         else:
             target["items"].append(it)
+
+    clusters = _merge_same_event(clusters)
 
     out = []
     for cl in clusters:

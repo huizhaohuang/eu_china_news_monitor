@@ -1,6 +1,23 @@
-"""重复消息修复:CJK 二元组聚类 / 链接归一去重 / 降权媒体(汽车之家)。"""
+"""重复消息修复:CJK 二元组聚类 / 链接归一去重 / 降权媒体 / 同事件跨媒体合并。"""
 
+import sys
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import event_merge
+
+
+@pytest.fixture(autouse=True)
+def _no_real_llm(monkeypatch):
+    """单测绝不打真实 API:默认无 key(灰带判不了=不合并);缓存清空防跨测试污染。"""
+    monkeypatch.setattr(event_merge, "_api_key", lambda: None)
+    event_merge._cache.clear()
+    yield
+    event_merge._cache.clear()
 
 
 def _item(ns, title, link="https://x.com/a", outlet="A", minutes=0):
@@ -61,6 +78,56 @@ def test_demoted_outlet_not_rep_and_not_in_diversity(head_ns):
     assert cl["n"] == 2                       # 条目保留(降权≠剔除)
     assert cl["diversity"] == 1               # 汽车之家不计独立报道
     assert cl["items"][0]["outlet"] == "汽车之家"  # 首发时间序保持
+
+
+def test_weighted_merge_cross_outlet(head_ns):
+    # 同事件不同措辞、跨媒体、共享罕见锚词(geely/founder/steps)→ ②级加权合并
+    a = _item(head_ns, "Geely Founder Steps Down as Auto Unit Chairman",
+              "https://a.com/1", "Caixin")
+    b = _item(head_ns, "Geely founder Li Shufu steps down",
+              "https://b.com/2", "electrive", 30)
+    assert len(head_ns["cluster_items"]([a, b])) == 1
+
+
+def test_weighted_merge_excludes_same_outlet(head_ns):
+    # IndexBox 式模板标题:加权相似度高但同一媒体 → 绝不并(不同报告不是同稿)
+    a = _item(head_ns, "Fluorocarbon Elastomer Gaskets Market Growth Driven by Semiconductor",
+              "https://x.com/1", "IndexBox")
+    b = _item(head_ns, "Cleanroom Window Frames Market Growth Driven by Semiconductor",
+              "https://x.com/2", "IndexBox", 5)
+    assert len(head_ns["cluster_items"]([a, b])) == 2
+
+
+def test_gray_band_llm_merges_byd_trio(head_ns, monkeypatch):
+    # 实测用户报告案例:三家各自拟题,词集重叠仅 0.28-0.33 → 灰带 LLM 判同事件后合并
+    monkeypatch.setattr(event_merge, "_call_llm", lambda pairs: [True] * len(pairs))
+    t = ["BYD Opens Milan Design Studio to Spearhead European Luxury Expansion for Denza",
+         "BYD sets up Milan design hub amid bid to conquer European market",
+         "Chinese Automaker BYD To Open Research And Design Center In Milan To Understand European Tastes"]
+    items = [_item(head_ns, ti, f"https://o{i}.com/x", f"Outlet{i}", i * 9)
+             for i, ti in enumerate(t)]
+    # 填充无关条目模拟真实批次(小批次里 idf 无法区分罕见/常见词,灰带判定失真)
+    fillers = [_item(head_ns, f"unrelated story about topic{i} sector{i} update{i}",
+                     f"https://f{i}.com/x", f"Filler{i}", 60 + i) for i in range(20)]
+    cls = head_ns["cluster_items"](items + fillers)
+    byd = [c for c in cls if any("byd" in i["tokens"] for i in c["items"])]
+    assert len(byd) == 1 and byd[0]["diversity"] == 3
+
+
+def test_gray_band_fail_open_keeps_separate(head_ns):
+    # 无 key(autouse fixture)→ 灰带判不了 → 保持分开(回到现状,绝不误合)
+    t = ["BYD Opens Milan Design Studio to Spearhead European Luxury Expansion for Denza",
+         "BYD sets up Milan design hub amid bid to conquer European market"]
+    items = [_item(head_ns, ti, f"https://o{i}.com/x", f"Outlet{i}", i * 9)
+             for i, ti in enumerate(t)]
+    assert len(head_ns["cluster_items"](items)) == 2
+
+
+def test_event_merge_cache_and_nokey():
+    assert event_merge._call_llm([("a", "b")]) == [False]      # 无 key → 全 False
+    event_merge._cache[frozenset(("t1", "t2"))] = True
+    out = event_merge.adjudicate([("t1", "t2")])
+    assert out[frozenset(("t1", "t2"))] is True                # 缓存命中,零调用
 
 
 def test_demoted_solo_cluster_still_shows(head_ns):
