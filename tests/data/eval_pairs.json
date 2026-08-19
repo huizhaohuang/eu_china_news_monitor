@@ -1,0 +1,1624 @@
+{
+ "pairs": [
+  {
+   "title_a": "BYD Opens Milan Design Studio to Spearhead European Luxury Expansion for Denza",
+   "outlet_a": "Hypebeast",
+   "lang_a": "en",
+   "title_b": "BYD sets up Milan design hub amid bid to conquer European market",
+   "outlet_b": "Autocar",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史实锤:同一BYD米兰设计中心事件,两家外媒措辞差异大"
+  },
+  {
+   "title_a": "BYD Opens Milan Design Studio to Spearhead European Luxury Expansion for Denza",
+   "outlet_a": "Hypebeast",
+   "lang_a": "en",
+   "title_b": "Chinese Automaker BYD To Open Research And Design Center In Milan To Understand European Tastes",
+   "outlet_b": "unknown",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史实锤:同一BYD米兰事件,标题长度与用词差异极大(Design Studio vs Research And Design Center)"
+  },
+  {
+   "title_a": "BYD sets up Milan design hub amid bid to conquer European market",
+   "outlet_a": "Autocar",
+   "lang_a": "en",
+   "title_b": "Chinese Automaker BYD To Open Research And Design Center In Milan To Understand European Tastes",
+   "outlet_b": "unknown",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史实锤:同一BYD米兰事件,hub/center 用词不同"
+  },
+  {
+   "title_a": "Geely Founder Steps Down as Auto Unit Chairman",
+   "outlet_a": "Caixin Global",
+   "lang_a": "en",
+   "title_b": "Geely founder Li Shufu steps down",
+   "outlet_b": "electrive",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史实锤:吉利换帅,一题不含人名一题含中文名Li Shufu"
+  },
+  {
+   "title_a": "Geely Founder Steps Down as Auto Unit Chairman",
+   "outlet_a": "Caixin Global",
+   "lang_a": "en",
+   "title_b": "Geely founder Eric Li to step down as chair of flagship automaker",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史实锤:吉利换帅,英文名Eric Li vs 无人名——实体归一难点"
+  },
+  {
+   "title_a": "Geely founder Li Shufu steps down",
+   "outlet_a": "electrive",
+   "lang_a": "en",
+   "title_b": "Geely founder Eric Li to step down as chair of flagship automaker",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史实锤:同一人Li Shufu/Eric Li两种称呼——实体变体"
+  },
+  {
+   "title_a": "中汽协:7月汽车国内销量154.1万辆 同比下降23.6%",
+   "outlet_a": "观点网",
+   "lang_a": "zh",
+   "title_b": "中汽协:7月汽车国内销量环比下降13.1% 同比下降23.6%",
+   "outlet_b": "Sohu",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "历史实锤:同一中汽协数据发布,一题给绝对量一题给环比——数字守卫须放行"
+  },
+  {
+   "title_a": "网传“星巴克纸杯吸管或由蜜雪冰城代工” 星巴克中国回应:严重失实",
+   "outlet_a": "每日经济新闻",
+   "lang_a": "zh",
+   "title_b": "星巴克纸杯吸管由蜜雪冰城代工?星巴克中国回应:严重失实",
+   "outlet_b": "新京报",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "历史实锤:同一辟谣事件,陈述句式 vs 疑问句式"
+  },
+  {
+   "title_a": "科创50指数涨幅扩大至2%",
+   "outlet_a": "第一财经",
+   "lang_a": "zh",
+   "title_b": "韩国综合指数涨幅扩大至5%",
+   "outlet_b": "第一财经",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "历史难负例:同一媒体行情快讯模板,不同指数不同幅度"
+  },
+  {
+   "title_a": "日本5年期国债收益率上升1.5个基点,达到2.100%",
+   "outlet_a": "unknown",
+   "lang_a": "zh",
+   "title_b": "日本2年期国债收益率上升3.0个基点",
+   "outlet_b": "unknown",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "历史难负例:同为日债快讯,期限不同(5年 vs 2年)——数字守卫须拦截"
+  },
+  {
+   "title_a": "The Minister of Foreign Affairs of Chile begins visit to China",
+   "outlet_a": "unknown",
+   "lang_a": "en",
+   "title_b": "China's Foreign Minister Wang Yi to visit South Korea",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "different",
+   "note": "历史难负例:共享 foreign minister/visit/China 模板词,不同外长不同访问"
+  },
+  {
+   "title_a": "China's Baidu posts fifth straight quarterly sales drop",
+   "outlet_a": "unknown",
+   "lang_a": "en",
+   "title_b": "Xiaomi's EV business posts second straight quarterly profit",
+   "outlet_b": "unknown",
+   "lang_b": "en",
+   "label": "different",
+   "note": "历史难负例:posts nth straight quarterly 模板撞词,主体与方向都不同"
+  },
+  {
+   "title_a": "Sodium Silicate Corrosion Inhibitor Market Semiconductor Fab Expansion Drives High-Purity Demand Through 2035",
+   "outlet_a": "IndexBox",
+   "lang_a": "en",
+   "title_b": "Calcium Chloride Dihydrate Market Semiconductor Fab Expansion to Drive High-Purity Demand Through 2035",
+   "outlet_b": "IndexBox",
+   "lang_b": "en",
+   "label": "different",
+   "note": "IndexBox市场报告模板农场:两条标题结构近乎全同,仅化学品名不同"
+  },
+  {
+   "title_a": "长安汽车7月销量21万辆创新高",
+   "outlet_a": "unknown",
+   "lang_a": "zh",
+   "title_b": "比亚迪欧洲建厂选址匈牙利尘埃落定",
+   "outlet_b": "unknown",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "历史难负例:同为中国车企新闻但主体、事件完全不同"
+  },
+  {
+   "title_a": "中汽协：新能源汽车月度新车销量占比首次超过60%",
+   "outlet_a": "凤凰网",
+   "lang_a": "zh",
+   "title_b": "中汽协：7月新能源汽车月度新车销量占比首次超过60%",
+   "outlet_b": "汽车之家",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一中汽协发布:新能源月度销量占比首超60%,一题多“7月”二字"
+  },
+  {
+   "title_a": "中汽协：2026年7月汽车出口104.3万辆，同比增长81.3%",
+   "outlet_a": "Moomoo",
+   "lang_a": "zh",
+   "title_b": "中汽协：7月汽车出口104.3万辆 同比增长81.3%",
+   "outlet_b": "东方财富",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一中汽协出口数据,标点与年份写法不同"
+  },
+  {
+   "title_a": "中汽协：7月新能源汽车出口55.3万辆，同比增长1.5倍",
+   "outlet_a": "新浪汽车",
+   "lang_a": "zh",
+   "title_b": "中汽协：7月新能源汽车出口环比增长5.7% 同比增长1.5倍",
+   "outlet_b": "汽车之家",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一7月新能源汽车出口数据,一题给绝对量55.3万辆,一题给环比5.7%"
+  },
+  {
+   "title_a": "以色列足协撤回对国际足联主席因凡蒂诺连任支持",
+   "outlet_a": "中新社",
+   "lang_a": "zh",
+   "title_b": "外媒：以色列足协撤回对国际足联主席因凡蒂诺连任的支持",
+   "outlet_b": "环球网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一国际足联事件,一题多“外媒:”前缀"
+  },
+  {
+   "title_a": "外交部介绍约旦国王阿卜杜拉二世访华相关安排",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "外交部介绍约旦国王阿卜杜拉二世访华有关安排",
+   "outlet_b": "中国经济网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一外交部表态,仅“相关/有关”一词之差"
+  },
+  {
+   "title_a": "特朗普称与伊朗革命卫队秘密沟通，伊朗回应：幻觉",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "特朗普称与伊朗革命卫队秘密沟通 伊朗回应：幻觉",
+   "outlet_b": "中国经济网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一特朗普-伊朗表态,标点差异"
+  },
+  {
+   "title_a": "塞浦路斯政府官员称塞不会成为伊朗打击目标",
+   "outlet_a": "环球网",
+   "lang_a": "zh",
+   "title_b": "16:54:20【塞浦路斯政府官员称塞不会成为伊朗打击目标】",
+   "outlet_b": "api3.cls.cn",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一塞浦路斯表态,财联社版带时间戳前缀【】——前缀噪声"
+  },
+  {
+   "title_a": "李书福辞去吉利汽车董事长 上市公司称释放“去家族化”信号(含视频)",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "吉利汽车高层大调整：李书福辞任董事会主席，安聪慧接棒",
+   "outlet_b": "第一电动网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一李书福辞任事件,财新讲“去家族化”,第一电动网讲“安聪慧接棒”——补充细节不同"
+  },
+  {
+   "title_a": "宇树科技开盘暴涨629%，市值超4449亿元",
+   "outlet_a": "芯智讯",
+   "lang_a": "zh",
+   "title_b": "宇树科技科创板上市首日开盘暴涨629%，市值一度超4400亿元",
+   "outlet_b": "虎嗅",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一宇树科技上市首日暴涨629%,两家措辞不同"
+  },
+  {
+   "title_a": "宇树科技8月19日上市！",
+   "outlet_a": "华尔街见闻",
+   "lang_a": "zh",
+   "title_b": "宇树科技：将于8月19日科创板上市",
+   "outlet_b": "东方财富",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一宇树上市日期预告,一题带“将于/科创板”"
+  },
+  {
+   "title_a": "宇树科技科创板上市首日开盘暴涨629%，市值一度超4400亿元",
+   "outlet_a": "虎嗅",
+   "lang_a": "zh",
+   "title_b": "宇树科技IPO募61亿 上市首日开盘价买入当天亏损23%",
+   "outlet_b": "中国经济网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一宇树上市首日,一题讲暴涨629%,一题讲开盘价买入亏23%——同事件两角度"
+  },
+  {
+   "title_a": "朱雀三号重复使用遥二运载火箭实现入轨及回收成功",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "重大突破！我国首次实现火箭陆地回收",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一朱雀三号火箭回收成功,专业名称版 vs 通俗“重大突破”版"
+  },
+  {
+   "title_a": "我国首次实现火箭陆地回收，外媒反应来了",
+   "outlet_a": "环球网",
+   "lang_a": "zh",
+   "title_b": "重大突破！我国首次实现火箭陆地回收",
+   "outlet_b": "新京报",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一火箭回收事件,一题附加“外媒反应”角度"
+  },
+  {
+   "title_a": "国务院修改住房公积金管理条例：提取范围扩大至装修物业费，利率定价权上收国务院",
+   "outlet_a": "虎嗅",
+   "lang_a": "zh",
+   "title_b": "国务院关于修改《住房公积金管理条例》的决定",
+   "outlet_b": "database.caixin.com",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一国务院修改公积金条例,国务院令原文题 vs 媒体解读题"
+  },
+  {
+   "title_a": "住房公积金提取和使用范围拓宽",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "国务院：拓宽住房公积金提取和使用范围",
+   "outlet_b": "华尔街见闻",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一公积金新规,一题有“国务院:”前缀"
+  },
+  {
+   "title_a": "司法部：欧盟对京东调查中相关做法构成不当域外管辖",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "司法部发布关于欧盟外国补贴调查相关做法构成不当域外管辖的公告",
+   "outlet_b": "21财经",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一司法部公告:一题点名“京东”,一题只说“欧盟外国补贴调查”——部分实体重叠"
+  },
+  {
+   "title_a": "石家庄一居民楼部分坍塌 受伤人员送医救治",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "石家庄居民楼坍塌现场仍在搜救，警方：有人员被救出后送医",
+   "outlet_b": "新京报",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一石家庄居民楼坍塌事故,初报与现场进展"
+  },
+  {
+   "title_a": "石家庄新华区续报：某小区疑似燃气泄漏引发燃爆造成房屋部分坍塌，3人经送医抢救无效死亡",
+   "outlet_a": "环球网",
+   "lang_a": "zh",
+   "title_b": "石家庄一居民楼部分坍塌 受伤人员送医救治",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一坍塌事故,续报含死亡人数与燃气泄漏原因——续报与初报"
+  },
+  {
+   "title_a": "官方通报河南省运会彩排火炬掉落：志愿者代替火炬手排练操作不当，无人受伤",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "河南省第十五届运动会开幕式彩排火炬掉落，官方发布情况说明",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一河南省运会火炬掉落,通报角度与现场角度"
+  },
+  {
+   "title_a": "官方通报杭州酒局事件：赵某峰、郁某栋已被刑拘",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "杭州通报“酒局事件” 涉事招商蛇口高管与滨江区公职人员已刑拘",
+   "outlet_b": "china.caixin.com",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一杭州酒局刑拘通报,财新补充涉事人身份"
+  },
+  {
+   "title_a": "四部门发布《关于加强医院法治建设的意见》",
+   "outlet_a": "华商网",
+   "lang_a": "zh",
+   "title_b": "一图读懂《关于加强医院法治建设的意见》",
+   "outlet_b": "nhc.gov.cn",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一《关于加强医院法治建设的意见》发布,发文报道 vs 一图读懂"
+  },
+  {
+   "title_a": "国家卫健委回应代表建议：加强手术知情同意工作指导",
+   "outlet_a": "观点网",
+   "lang_a": "zh",
+   "title_b": "国家卫健委：持续加强对医疗机构手术知情同意工作的指导和管理",
+   "outlet_b": "QQ News",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一卫健委手术知情同意表态,一题带“回应代表建议”"
+  },
+  {
+   "title_a": "国家版医保“基层病种”亮相，这些常见病、手术将“同病同付”",
+   "outlet_a": "新浪财经",
+   "lang_a": "zh",
+   "title_b": "国家医保局初步遴选158个基层病种",
+   "outlet_b": "京报网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一医保局158个基层病种遴选结果,一题不含机构名"
+  },
+  {
+   "title_a": "特朗普将对加拿大商品加征关税的日期推迟三天",
+   "outlet_a": "Dairy News Today",
+   "lang_a": "zh",
+   "title_b": "特朗普刚刚重大发声！特朗普称美加达成协议，暂缓对加拿大商品加征关税",
+   "outlet_b": "FX168财经",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一特朗普暂缓对加关税决定,“推迟三天” vs “暂缓”"
+  },
+  {
+   "title_a": "特朗普政府将对进口无人机及零部件加征关税",
+   "outlet_a": "电子工程专辑",
+   "lang_a": "zh",
+   "title_b": "美国突然对无人机加征关税！最高税率100%，关键零部件也被全面纳入",
+   "outlet_b": "FX168财经",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一美对无人机加征关税,一题含税率100%细节"
+  },
+  {
+   "title_a": "英两款无人机参与对俄打击，俄外长称英国或被视为冲突“参与方”",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "英国无人机参战，俄罗斯警告：英国对俄乌冲突的介入越深，“付出的代价就越高”",
+   "outlet_b": "环球网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一俄外长就英国无人机警告事件,直接引语不同"
+  },
+  {
+   "title_a": "伊朗称正在起草与阿曼的海上航线计划，否认伊美谅解备忘录规定“60天期限”",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "伊朗称正在起草与阿曼的海上航线计划",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一伊朗-阿曼海上航线表态,21财经版多否认备忘录期限细节"
+  },
+  {
+   "title_a": "纪念江泽民同志诞辰100周年大会在京隆重举行 习近平发表重要讲话",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "纪念江泽民同志诞辰100周年大会在京隆重举行",
+   "outlet_b": "中国经济网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一江泽民诞辰100周年大会,一题多“习近平发表重要讲话”"
+  },
+  {
+   "title_a": "热点问答丨特朗普威胁轰炸阿曼为哪般",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "特朗普威胁轰炸阿曼为哪般",
+   "outlet_b": "中国经济网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一“热点问答”通稿转载,一题带栏目前缀“热点问答丨”"
+  },
+  {
+   "title_a": "吉利汽车：上半年营收增至1736亿元，净利润跌2%至91亿元",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "吉利汽车上半年营收1736亿元，核心归母净利润劲增46%",
+   "outlet_b": "中国经济网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一吉利汽车中报:一题“净利润跌2%”,一题“核心归母净利润增46%”——同一发布两种口径,聚类应合并"
+  },
+  {
+   "title_a": "株冶集团：上半年净利润19.48亿元 同比增长232.75%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "19:25:33【株冶集团：上半年净利润19.48亿元 同比增长233%】",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一株冶集团中报,232.75% vs 四舍五入233%——数字守卫须容忍舍入"
+  },
+  {
+   "title_a": "飞南资源上半年净利增长307.31%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "飞南资源：上半年净利润6.49亿元 同比增长307.31%",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一飞南资源中报,同媒体简版与详版标题"
+  },
+  {
+   "title_a": "贵州省政府国防动员办公室原党组书记、主任帅文接受纪律审查和监察调查",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "贵州省政府国防动员办公室原党组书记帅文接受审查调查",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一官员被查通报,职务全称版 vs 简化版"
+  },
+  {
+   "title_a": "一男子在四川崇州鸡冠山落水，目击者：人被冲上巨石后又被浪卷走",
+   "outlet_a": "新京报",
+   "lang_a": "zh",
+   "title_b": "成都崇州市鸡冠山附近一男子落水被急流冲走 当地多部门正在搜救",
+   "outlet_b": "新京报",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一崇州落水事故,目击者角度 vs 搜救进展角度"
+  },
+  {
+   "title_a": "国新办举行新闻发布会 介绍激发下沉市场活力活跃县域消费有关情况",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "多项举措进一步激发下沉市场活力",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一国新办下沉市场发布会,预告题 vs 内容题"
+  },
+  {
+   "title_a": "超3000件展品亮相 2026世界机器人大会今日开幕",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "2026世界机器人大会：150款新品首发，行业从炫技转向落地",
+   "outlet_b": "虎嗅",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一世界机器人大会开幕报道,展品数量 vs 新品数量两种数字"
+  },
+  {
+   "title_a": "沪深两市成交额突破2万亿 较上一日此时放量超500亿",
+   "outlet_a": "新浪财经",
+   "lang_a": "zh",
+   "title_b": "10:13:56【沪深两市成交额突破1万亿 较上一日此时放量超40亿】",
+   "outlet_b": "api3.cls.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "沪深成交额快讯模板:2万亿/500亿 vs 1万亿/40亿,不同交易日——数字守卫应拦截"
+  },
+  {
+   "title_a": "今年前7个月国民经济保持总体平稳、向新向优发展态势",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "1—7月份国民经济保持总体平稳、向新向优发展态势",
+   "outlet_b": "国家统计局",
+   "lang_b": "zh",
+   "label": "same",
+   "note": "同一统计局7月国民经济发布,央视转写与官网原题——“今年前7个月”vs“1—7月份”"
+  },
+  {
+   "title_a": "People's Bank of China adds eight banks to digital yuan network",
+   "outlet_a": "FinTech Futures",
+   "lang_a": "en",
+   "title_b": "PBOC Adds 8 More Digital Yuan Operating Institutions, Bringing Total to 30",
+   "outlet_b": "finance.biggo.com",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一数字人民币扩容:People's Bank of China 全称 vs PBOC 缩写——实体归一"
+  },
+  {
+   "title_a": "China Adds 8 Banks to Digital Yuan Network as Operator Count Hits 30",
+   "outlet_a": "CoinMarketCap",
+   "lang_a": "en",
+   "title_b": "China's central bank adds eight more banks to digital yuan network",
+   "outlet_b": "The Standard (HK)",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一数字人民币事件,adds 8 banks 措辞近似但词序不同"
+  },
+  {
+   "title_a": "China Adds Eight Banks to Digital Yuan Network in Latest Expansion",
+   "outlet_a": "Caixin Global",
+   "lang_a": "en",
+   "title_b": "China expands digital yuan network with 8 new banks to accelerate adoption",
+   "outlet_b": "South China Morning Post",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一数字人民币事件,一题无数字一题有“8 new banks”"
+  },
+  {
+   "title_a": "China triples digital yuan bank roster as eight more banks join network",
+   "outlet_a": "Crypto Briefing",
+   "lang_a": "en",
+   "title_b": "China adds banks to digital Yuan system",
+   "outlet_b": "Qatar Tribune",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一数字人民币事件,triples roster vs adds banks——数字表述完全不同"
+  },
+  {
+   "title_a": "Geely Founder Steps Down as Auto Unit Chairman",
+   "outlet_a": "Caixin Global",
+   "lang_a": "en",
+   "title_b": "Chinese Car Pioneer Steps Down as Head of Geely Automobile",
+   "outlet_b": "WSJ",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一李书福辞任:Geely Founder vs Chinese Car Pioneer——主实体称谓不同"
+  },
+  {
+   "title_a": "Chinese automaker Chery to open UK R&D centre",
+   "outlet_a": "Financial Times",
+   "lang_a": "en",
+   "title_b": "Chery to open UK R&D centre",
+   "outlet_b": "electrive (EN)",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一奇瑞英国研发中心,FT原题与electrive转写"
+  },
+  {
+   "title_a": "China orders entities not to assist EU's JD.com probe",
+   "outlet_a": "Reuters",
+   "lang_a": "en",
+   "title_b": "China blocks firms from aiding EU’s JD.com probe as regulatory clash deepens",
+   "outlet_b": "South China Morning Post",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一中方阻止配合欧盟京东调查,orders entities vs blocks firms"
+  },
+  {
+   "title_a": "China tells companies not to help with EU probe into JD.com",
+   "outlet_a": "euractiv.com",
+   "lang_a": "en",
+   "title_b": "China labels EU probe into JD.com unlawful",
+   "outlet_b": "香港電台新聞網",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一京东调查事件,tells companies not to help vs labels probe unlawful——两个侧面"
+  },
+  {
+   "title_a": "China's LandSpace lands rocket booster; joins SpaceX, Blue Origin with reusable tech",
+   "outlet_a": "Reuters",
+   "lang_a": "en",
+   "title_b": "China's LandSpace lands rocket booster; joins SpaceX with reusable tech",
+   "outlet_b": "Nikkei Asia",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一蓝箭航天火箭回收,Nikkei转写少了Blue Origin"
+  },
+  {
+   "title_a": "Unitree surges in Shanghai debut, a milestone for China's humanoid robotics sector",
+   "outlet_a": "Reuters",
+   "lang_a": "en",
+   "title_b": "Chinese Robot-Maker Unitree Soars 629% in Shanghai Debut",
+   "outlet_b": "Caixin Global",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一宇树上市,Reuters无涨幅数字,Caixin有629%"
+  },
+  {
+   "title_a": "Chinese humanoid robot maker Unitree to list in Shanghai on August 19",
+   "outlet_a": "The Standard (HK)",
+   "lang_a": "en",
+   "title_b": "Chinese Robot-Maker Unitree Soars 629% in Shanghai Debut",
+   "outlet_b": "Caixin Global",
+   "lang_b": "en",
+   "label": "different",
+   "note": "同一公司宇树:上市预告(to list) vs 上市首日表现(soars)——不同时间不同动作"
+  },
+  {
+   "title_a": "China's Unitree unveils 'Superman' robot as fervour builds ahead of Shanghai debut",
+   "outlet_a": "Reuters",
+   "lang_a": "en",
+   "title_b": "Unitree surges in Shanghai debut, a milestone for China's humanoid robotics sector",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "different",
+   "note": "同一公司宇树:发布Superman机器人 vs 上市首日——共享实体不同事件"
+  },
+  {
+   "title_a": "China to Let Mainland Insurers Buy Hong Kong ETFs Through Stock Connect",
+   "outlet_a": "Caixin Global",
+   "lang_a": "en",
+   "title_b": "China to Allow Mainland Insurers to Invest in Hong Kong-Listed ETFs via Stock Connect",
+   "outlet_b": "一财全球Yicai Global",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一险资投港股ETF政策,Let/Allow 及定语措辞不同"
+  },
+  {
+   "title_a": "CATL says core operations carbon neutral by end-2025, supply chain next",
+   "outlet_a": "CnEVPost",
+   "lang_a": "en",
+   "title_b": "CATL goes 100% zero-carbon electricity in core operations, targets value chain carbon neutrality by 2035",
+   "outlet_b": "CarNewsChina.com",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一CATL碳中和宣布,措辞与目标年细节差异"
+  },
+  {
+   "title_a": "China's Geely boosts export target as founder warns of 'deglobalization'",
+   "outlet_a": "Nikkei Asia",
+   "lang_a": "en",
+   "title_b": "Geely Auto lifts export goal to 920,000 as overseas becomes only growth engine",
+   "outlet_b": "CnEVPost",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一吉利上调出口目标,一题含具体数字92万辆"
+  },
+  {
+   "title_a": "Geely to produce vehicles in Volvo plants from 2028",
+   "outlet_a": "electrive (EN)",
+   "lang_a": "en",
+   "title_b": "Volvo’s European plants will build Geely cars, Li Shufu’s successor says",
+   "outlet_b": "Automotive News",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一吉利将用Volvo工厂产车,厂商稿角度 vs 继任者引语角度"
+  },
+  {
+   "title_a": "Geely's Q2 profit grows 36% as exports increasingly power sales",
+   "outlet_a": "Nikkei Asia",
+   "lang_a": "en",
+   "title_b": "Geely Auto profit up 36% as exports surge, offsetting weak China demand",
+   "outlet_b": "Automotive News",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一吉利业绩:Nikkei Q2口径 vs Automotive News profit up 36%——同一发布"
+  },
+  {
+   "title_a": "Geely's Q2 profit grows 37% as exports increasingly power sales",
+   "outlet_a": "Nikkei Asia",
+   "lang_a": "en",
+   "title_b": "Geely's Q2 profit grows 36% as exports increasingly power sales",
+   "outlet_b": "Nikkei Asia",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一Nikkei稿件改数重发:37%改36%——同稿异版,数字守卫须容忍"
+  },
+  {
+   "title_a": "Hong Kong’s Exchange Operator Posts Record Quarter on Surging IPOs, Trading Activity",
+   "outlet_a": "WSJ",
+   "lang_a": "en",
+   "title_b": "Hong Kong’s Exchange Operator Posts Record Quarter, Beats Estimates",
+   "outlet_b": "WSJ",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一WSJ港交所业绩稿两个版本标题"
+  },
+  {
+   "title_a": "Unitree shares soar 629% after robot maker raises $905m in Shanghai IPO",
+   "outlet_a": "Nikkei Asia",
+   "lang_a": "en",
+   "title_b": "Unitree shares soar in humanoid maker's landmark Shanghai IPO",
+   "outlet_b": "Nikkei Asia",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一Nikkei宇树稿两版:一版有629%与募资额,一版无数字"
+  },
+  {
+   "title_a": "Commerzbank: Chinese Yuan Faces Policy Support As Growth Momentum Fades",
+   "outlet_a": "Bitcoin World",
+   "lang_a": "en",
+   "title_b": "Chinese Yuan: Policy support eyed as growth slows – Commerzbank",
+   "outlet_b": "FXStreet",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一Commerzbank人民币观点,两家转写"
+  },
+  {
+   "title_a": "Germany's digital ministry gets suspected Russian spy hub as neighbour",
+   "outlet_a": "euractiv.com",
+   "lang_a": "en",
+   "title_b": "Germany's ditigal ministry gets a suspected Russian spy hub as neighbour",
+   "outlet_b": "euractiv.com",
+   "lang_b": "en",
+   "label": "same",
+   "note": "同一euractiv稿两版,含拼写错误ditigal——脏数据"
+  },
+  {
+   "title_a": "ContourGlobal And CATL Sign Multi-Country 3 GWh Deal",
+   "outlet_a": "TaiyangNews",
+   "lang_a": "en",
+   "title_b": "ContourGlobal to deploy 3GWh CATL batteries in UK, Greece and Chile",
+   "outlet_b": "Yahoo Finance",
+   "lang_b": "en",
+   "label": "same",
+   "note": "历史digest实锤(8月11日):同一CATL供货协议,一题列出三国名"
+  },
+  {
+   "title_a": "司法部：欧盟对京东调查中相关做法构成不当域外管辖",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "China labels EU probe into JD.com unlawful",
+   "outlet_b": "香港電台新聞網",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:司法部认定欧盟京东调查不当域外管辖,中文官方口径 vs 英文labels unlawful"
+  },
+  {
+   "title_a": "宇树科技开盘暴涨629%，市值超4449亿元",
+   "outlet_a": "芯智讯",
+   "lang_a": "zh",
+   "title_b": "Chinese Robot-Maker Unitree Soars 629% in Shanghai Debut",
+   "outlet_b": "Caixin Global",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:宇树科技/Unitree 上市首日暴涨629%——实体跨文字变体"
+  },
+  {
+   "title_a": "朱雀三号重复使用遥二运载火箭实现入轨及回收成功",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "China's LandSpace lands rocket booster; joins SpaceX, Blue Origin with reusable tech",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:朱雀三号/LandSpace 火箭回收,中文不点公司名只说型号——实体归一难点"
+  },
+  {
+   "title_a": "奇瑞将在英国设研发中心，欧洲本地化进入工程端",
+   "outlet_a": "汽车商业评论",
+   "lang_a": "zh",
+   "title_b": "Chinese automaker Chery to open UK R&D centre",
+   "outlet_b": "Financial Times",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:奇瑞/Chery 英国研发中心——实体跨文字变体"
+  },
+  {
+   "title_a": "李书福辞去吉利汽车董事长 上市公司称释放“去家族化”信号(含视频)",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "Geely founder Li Shufu steps down",
+   "outlet_b": "electrive (EN)",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:李书福/Li Shufu 辞任吉利董事长"
+  },
+  {
+   "title_a": "宁德时代拓展新业务 5个月内入股三家AIDC相关公司",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "CATL Buys Into AI Data-Center Supply Chain as It Seeks Next Growth Market",
+   "outlet_b": "Caixin Global",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:宁德时代/CATL 入股AIDC产业链——全称简称跨语言变体"
+  },
+  {
+   "title_a": "内地放宽保险资金参与“南向ETF通”",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "China to Let Mainland Insurers Buy Hong Kong ETFs Through Stock Connect",
+   "outlet_b": "Caixin Global",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:险资参与南向ETF通,中文政策术语 vs 英文Stock Connect表述"
+  },
+  {
+   "title_a": "住房公积金新规正式亮相 缴存覆盖面更广、申请提取手续简化",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "China Revamps $1.5 Trillion Housing Fund to Unlock Savings, Boost Consumption",
+   "outlet_b": "Caixin Global",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:公积金新规,财新中文 vs Caixin Global英文$1.5 Trillion框架"
+  },
+  {
+   "title_a": "人工智能竞赛升级 中国放宽对英伟达 H200 芯片的限制",
+   "outlet_a": "RFI",
+   "lang_a": "zh",
+   "title_b": "Nvidia H200 chips reach China in small shipments, FT reports",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:同一FT独家(H200芯片限制放宽/小批量到货),RFI与Reuters两家转引角度不同——灰区偏same"
+  },
+  {
+   "title_a": "7月动力电池装车TOP15排位生变：宁德时代增势最猛！蜂巢能源跃居三元第二",
+   "outlet_a": "itdcw.com",
+   "lang_a": "zh",
+   "title_b": "Top battery makers' share in China in July 2026: CATL 42.33%, BYD 19.23%",
+   "outlet_b": "CnEVPost",
+   "lang_b": "en",
+   "label": "same",
+   "note": "跨语言:同一7月动力电池装车月度数据发布,中文讲排位生变,英文给份额数字"
+  },
+  {
+   "title_a": "港股收评：恒生指数涨0.09% 恒生科技指数跌1.21%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "港股收评：恒生指数涨0.07% 恒生科技指数跌0.9%",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "港股收评模板:恒指0.09% vs 0.07%,不同交易日——数字守卫"
+  },
+  {
+   "title_a": "今日开盘：两市双双低开 沪指跌幅0.96%",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "今日开盘：小幅低开 沪指跌幅0.08%",
+   "outlet_b": "财新",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "今日开盘模板:沪指跌0.96% vs 0.08%,不同交易日"
+  },
+  {
+   "title_a": "光迅科技：上半年净利润同比增长56.34% 拟10派3.7元",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "凌玮科技：上半年净利润同比增长4.07% 拟10派2元",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "证券时报中报模板:光迅科技 vs 凌玮科技,结构全同仅实体和数字不同"
+  },
+  {
+   "title_a": "锡业股份：上半年净利润15.04亿元 同比增长41.6%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "金田股份：上半年净利润4.42亿元 同比增长18.44%",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中报模板:锡业股份 vs 金田股份"
+  },
+  {
+   "title_a": "新和成：上半年净利润同比增长11.31% 拟10派2元",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "艾力斯：上半年净利润同比增长46.57% 拟10派6元",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中报模板:新和成 vs 艾力斯"
+  },
+  {
+   "title_a": "山金国际：上半年净利润24.16亿元 同比增长51.43%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "敷尔佳：上半年净利润2.56亿元 同比增长11.46%",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中报模板:山金国际 vs 敷尔佳"
+  },
+  {
+   "title_a": "圆通速递：上半年净利润同比增长73.44% 拟10派1.2元",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "中国西电：上半年净利润同比增长15.03% 拟10派0.55元",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中报模板:圆通速递 vs 中国西电"
+  },
+  {
+   "title_a": "20:42:06【达瑞电子：2026年半年度净利润同比增长23.02%】",
+   "outlet_a": "财联社",
+   "lang_a": "zh",
+   "title_b": "20:00:47【兴福电子：2026年半年度净利润同比增长17.91%】",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财联社中报快讯模板:达瑞电子 vs 兴福电子,连时间戳格式都同"
+  },
+  {
+   "title_a": "19:23:21【蔚蓝锂芯：2026年半年度净利润同比增长53.39%】",
+   "outlet_a": "财联社",
+   "lang_a": "zh",
+   "title_b": "20:06:07【和邦生物：上半年净利润同比增长634.3% 双甘膦、草甘膦、蛋氨酸市场价格上涨】",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财联社中报模板:蔚蓝锂芯 vs 和邦生物"
+  },
+  {
+   "title_a": "盛视科技上半年净利增长342.91%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "飞南资源：上半年净利润6.49亿元 同比增长307.31%",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中报模板:盛视科技 vs 飞南资源,增幅都是三位数——模板+大数字"
+  },
+  {
+   "title_a": "3只上证180指数ETF成交额环比增超100%",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "3只国证2000指数ETF成交额环比增超50%",
+   "outlet_b": "证券时报",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "ETF成交额模板:上证180 vs 国证2000,涨幅数字不同"
+  },
+  {
+   "title_a": "2026年08月19日医疗器械批准证明文件（电子证照纠错）送达信息",
+   "outlet_a": "nmpa.gov.cn",
+   "lang_a": "zh",
+   "title_b": "2026年08月18日医疗器械批准证明文件（电子证照纠错）送达信息",
+   "outlet_b": "nmpa.gov.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "NMPA公告模板:同名文件仅日期不同(19日 vs 18日)——逐日重发,不是同一事件"
+  },
+  {
+   "title_a": "2026年08月19日医疗器械批准证明文件送达信息",
+   "outlet_a": "nmpa.gov.cn",
+   "lang_a": "zh",
+   "title_b": "2026年08月19日药品批准证明文件送达信息",
+   "outlet_b": "nmpa.gov.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "NMPA同日公告:医疗器械 vs 药品——一字之差不同文件"
+  },
+  {
+   "title_a": "2026年08月18日医疗器械说明书不予同意通知件送达信息",
+   "outlet_a": "nmpa.gov.cn",
+   "lang_a": "zh",
+   "title_b": "2026年08月17日医疗器械说明书不予同意通知件送达信息",
+   "outlet_b": "nmpa.gov.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "NMPA说明书不予同意模板,日期不同"
+  },
+  {
+   "title_a": "华尔街见闻早餐FM-Radio | 2026年8月19日",
+   "outlet_a": "华尔街见闻",
+   "lang_a": "zh",
+   "title_b": "华尔街见闻早餐FM-Radio | 2026年8月18日",
+   "outlet_b": "华尔街见闻",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "华尔街见闻早餐FM模板,8月19日 vs 18日——日更栏目"
+  },
+  {
+   "title_a": "财联社汽车早报【8月19日】",
+   "outlet_a": "财联社",
+   "lang_a": "zh",
+   "title_b": "财联社汽车早报8月18日",
+   "outlet_b": "新浪财经",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财联社汽车早报模板,日期不同"
+  },
+  {
+   "title_a": "财联社8月18日午间新闻精选- Futubull",
+   "outlet_a": "富途牛牛",
+   "lang_a": "zh",
+   "title_b": "21:42:15【财联社8月19日晚间新闻精选】",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财联社新闻精选:18日午间 vs 19日晚间——同栏目不同期"
+  },
+  {
+   "title_a": "中汽协：7月汽车销258.4万辆 同比降0.3% 新能源车月度占比首次超60%",
+   "outlet_a": "搜狐网",
+   "lang_a": "zh",
+   "title_b": "中汽协：1-7月汽车销量排名前十企业共销售1482.2万辆",
+   "outlet_b": "搜狐网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "同为中汽协7月发布会:总销量258.4万辆 vs 前十企业销量——同主体同场合不同数据点"
+  },
+  {
+   "title_a": "中汽协：2026年7月汽车出口104.3万辆，同比增长81.3%",
+   "outlet_a": "Moomoo",
+   "lang_a": "zh",
+   "title_b": "中汽协：7月乘用车出口92.2万辆，同比增长84.6%",
+   "outlet_b": "汽车之家",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中汽协出口数据:汽车总出口104.3万 vs 乘用车出口92.2万——上下级口径不同数据点"
+  },
+  {
+   "title_a": "中汽协：7月新能源汽车出口55.3万辆，同比增长1.5倍",
+   "outlet_a": "新浪财经",
+   "lang_a": "zh",
+   "title_b": "中汽协：7月汽车出口104.3万辆 同比增长81.3%",
+   "outlet_b": "东方财富",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中汽协:新能源出口55.3万 vs 汽车总出口104.3万——共享中汽协+出口+7月"
+  },
+  {
+   "title_a": "中汽协：1-7月前十车企销量1482.2万辆 占比84.2%",
+   "outlet_a": "观点网",
+   "lang_a": "zh",
+   "title_b": "中汽协：1-7月销量排名前十位的轿车生产企业共销售345.8万辆",
+   "outlet_b": "新浪财经",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "中汽协前十榜:车企总榜1482.2万 vs 轿车榜345.8万——模板高度相似"
+  },
+  {
+   "title_a": "“OTA锁电”风波起 中汽协、八家“涉事”车企集体辟谣",
+   "outlet_a": "财联社",
+   "lang_a": "zh",
+   "title_b": "中汽协：新能源汽车月度新车销量占比首次超过60%",
+   "outlet_b": "凤凰网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "同为中汽协:OTA锁电辟谣 vs 销量数据——同实体完全不同事件"
+  },
+  {
+   "title_a": "京东方Ａ成交额超150亿元",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "司法部：欧盟对京东调查中相关做法构成不当域外管辖",
+   "outlet_b": "thepaper.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "京东方(BOE)成交额 vs 京东(JD)被欧盟调查——“京东”二字重叠的实体撞名"
+  },
+  {
+   "title_a": "宇树科技笑了，半导体股民们都哭了",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "宇树科技开盘暴涨629%，市值超4449亿元",
+   "outlet_b": "芯智讯",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "宇树上市当日:评论“宇树笑了半导体哭了” vs 首日暴涨快讯——衍生评论非同一报道事件"
+  },
+  {
+   "title_a": "90后新首富诞生，宇树科技王兴兴身家超千亿",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "梁文峰打新宇树科技浮盈11亿",
+   "outlet_b": "21财经",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "宇树IPO衍生:王兴兴身家 vs 梁文峰打新浮盈——同一IPO派生的不同主体故事"
+  },
+  {
+   "title_a": "美国30年期国债收益率继续走低，短时跌8个基点",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "美国30年期国债收益率创19年新高",
+   "outlet_b": "21财经",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "美债30年收益率:继续走低 vs 创19年新高——同标的相反走向,不同交易日"
+  },
+  {
+   "title_a": "美国财政部宣布扩大长期名义国债回购规模！30年期美债收益率快速走低，美股期货转涨，金、银大幅拉升",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "债市收盘| 市场继续升温，10年国债收益率盘中接近1.66%",
+   "outlet_b": "手机网易网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "国债收益率:美国30年 vs 中国10年——期限国别都不同,模板词共享"
+  },
+  {
+   "title_a": "美债在被重新定价？6月多国抛美债，30年期美债收益率创19年新高",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "G7长端国债收益率上行，市场在定价什么",
+   "outlet_b": "财新",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "美债重新定价分析 vs G7长端收益率分析——同题材不同稿"
+  },
+  {
+   "title_a": "财联社8月19日电，Moderna美股盘前涨超100%，公司与默沙东宣布黑色素瘤皮肤癌疫苗在大型试验中达到目标影响。",
+   "outlet_a": "财联社",
+   "lang_a": "zh",
+   "title_b": "财联社8月19日电，纳斯达克生物科技指数上涨3.2%，此前Moderna与默克的黑色素瘤疫苗在大规模试验中取得成功。",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "Moderna疫苗成功 vs 纳指生物科技指数上涨——事件与其市场反应,主体不同"
+  },
+  {
+   "title_a": "贵州省政府国防动员办公室原党组书记帅文接受审查调查",
+   "outlet_a": "央视网",
+   "lang_a": "zh",
+   "title_b": "黑龙江省政协民族和宗教委员会副主任高环接受审查调查",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "官员被查模板:贵州帅文 vs 黑龙江高环——结构全同不同人"
+  },
+  {
+   "title_a": "中华人民共和国蛇口海关对义乌市魅崇进出口有限公司侵犯“NB”商标专用权商品案行政处罚结果公示",
+   "outlet_a": "中华人民共和国深圳海关",
+   "lang_a": "zh",
+   "title_b": "马尾海关关于福建格林进出口有限公司违规案行政处罚决定书（马关缉违字〔2026〕12号）",
+   "outlet_b": "中华人民共和国福州海关",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "海关行政处罚公示模板:蛇口海关NB商标案 vs 马尾海关违规案"
+  },
+  {
+   "title_a": "中华人民共和国莲塘海关对中国图书进出口广州有限公司行政处罚结果公示",
+   "outlet_a": "中华人民共和国深圳海关",
+   "lang_a": "zh",
+   "title_b": "资源池数据治理服务项目中标结果公告",
+   "outlet_b": "中华人民共和国深圳海关",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "深圳海关:行政处罚公示 vs 数据治理中标公告——同源不同类公文"
+  },
+  {
+   "title_a": "2026年7月安徽省进出口商品国别（地区）总值表（人民币）",
+   "outlet_a": "合肥海关",
+   "lang_a": "zh",
+   "title_b": "2026年7月安徽省进出口商品贸易方式总值表（人民币）",
+   "outlet_b": "合肥海关",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "合肥海关统计表模板:国别总值表 vs 贸易方式总值表——同月同省不同表"
+  },
+  {
+   "title_a": "（5）2026年7月进出口商品贸易方式总值表（美元值）",
+   "outlet_a": "customs.gov.cn",
+   "lang_a": "zh",
+   "title_b": "2026年7月安徽省进出口商品贸易方式总值表（美元）",
+   "outlet_b": "合肥海关",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "贸易方式总值表:全国版 vs 安徽省版——同表名不同层级"
+  },
+  {
+   "title_a": "2026年前7个月安徽省进出口商品收发货人所在地外贸占比情况（人民币）",
+   "outlet_a": "合肥海关",
+   "lang_a": "zh",
+   "title_b": "2026年前7个月我省外贸进出口增长7.8%",
+   "outlet_b": "中华人民共和国福州海关",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "安徽外贸占比表 vs 福建外贸增长7.8%——省份不同"
+  },
+  {
+   "title_a": "PNAS：跨界“打工”的PDS5B，浙江大学熊波团队发现不靠黏连靠纺锤体，卵母细胞衰老的新开关- 进展专区",
+   "outlet_a": "生物谷",
+   "lang_a": "zh",
+   "title_b": "Mol Cell：浙江大学徐易尘团队发现乳酸“误装”tRNA，代谢物直接连接能量代谢与蛋白质翻译- 进展专区",
+   "outlet_b": "生物谷",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "生物谷论文模板:同是浙江大学团队发现,PDS5B卵母细胞 vs 乳酸tRNA——不同论文"
+  },
+  {
+   "title_a": "Cancer Res：CAFs被自己的乳酸\"表观洗脑\"，南京医科大学孙跃明等发现H3K18la打开ROCK1硬化程序，建起CD8⁺ T细胞的\"基质牢笼\" - 进展专区",
+   "outlet_a": "生物谷",
+   "lang_a": "zh",
+   "title_b": "Cancer Res：肿瘤细胞的“硬度简历”，中山大学蔡俊超/汪建成等发现基质刚度经RhoA-ROCK1写入染色质",
+   "outlet_b": "生物谷",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "两篇Cancer Res都讲ROCK1与基质硬度——主题词高度重叠的不同论文,极难负例"
+  },
+  {
+   "title_a": "Cancer Res： | 巨噬细胞“催老”CAF，郑州大学刘灶渠等发现IL1B按下衰老开关，sCAF用IL6/CXCL12为肿瘤披上化疗“防弹衣” - 进展专区",
+   "outlet_a": "生物谷",
+   "lang_a": "zh",
+   "title_b": "Cell子刊：三维基因组是肿瘤干性的“顶层设计师”，郑州大学刘本宇等发现一个染色质重构让TP53RK和SYBU走向善恶两极",
+   "outlet_b": "生物谷",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "郑州大学刘灶渠 vs 刘本宇——姓氏机构重叠的不同研究"
+  },
+  {
+   "title_a": "Cell子刊：华南理工大学张译月/李高飞揭示嗜酸性粒细胞成熟的“解锁”机制，ID2搬走TCF3封条，释放RA信号",
+   "outlet_a": "生物谷",
+   "lang_a": "zh",
+   "title_b": "Science子刊：空军军医大学窦国睿等揭示视网膜新生血管的“免疫挖坑”机制，小胶质细胞用GAL3召唤中性粒细胞，形成自我放大环路- 进展专区",
+   "outlet_b": "生物谷",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "揭示机制模板:嗜酸性粒细胞 vs 中性粒细胞——共享“粒细胞”"
+  },
+  {
+   "title_a": "瑞博生物-B(06938)股票股价_股价行情_讨论_资讯_财报_数据报告",
+   "outlet_a": "雪球",
+   "lang_a": "zh",
+   "title_b": "英派药业-B(07630)股票股价_股价行情_讨论_资讯_财报_数据报告",
+   "outlet_b": "雪球",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "雪球股票页模板:瑞博生物-B vs 英派药业-B——纯模板标题"
+  },
+  {
+   "title_a": "凯赛生物：2026年半年度报告",
+   "outlet_a": "ByDrug",
+   "lang_a": "zh",
+   "title_b": "普洛药业：2026年半年度报告",
+   "outlet_b": "ByDrug",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "半年报公告模板:凯赛生物 vs 普洛药业"
+  },
+  {
+   "title_a": "盐津铺子(002847):“质量回报双提升”行动方案的进展公告",
+   "outlet_a": "中财网",
+   "lang_a": "zh",
+   "title_b": "敷尔佳(301371):“质量回报双提升”行动方案的进展公告",
+   "outlet_b": "中财网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "质量回报双提升公告模板:盐津铺子 vs 敷尔佳"
+  },
+  {
+   "title_a": "收录实践丨2026【“健康为民体验提升”实践探索与研究项目】|实践|成果|发布会|项目|研究|-健康界 - Cn-healthcare.com",
+   "outlet_a": "医药",
+   "lang_a": "zh",
+   "title_b": "中南区收录实践名单丨2026“健康为民 体验提升”实践探索与研究项目 - Cn-healthcare.com",
+   "outlet_b": "医药",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "健康界收录实践名单:总榜 vs 中南区榜——同项目不同名单"
+  },
+  {
+   "title_a": "浙江“十五五”卫生健康规划：医疗机构医学大模型应用率100%|健康|医疗|建设|人工智能|数据|-健康界 - Cn-healthcare.com",
+   "outlet_a": "医药",
+   "lang_a": "zh",
+   "title_b": "医疗机构缴纳增值税解析（一）|增值税|财务|医院财务制度|-健康界 - Cn-healthcare.com",
+   "outlet_b": "医药",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "健康界站内:浙江十五五规划 vs 医疗机构增值税——仅共享站名后缀与“医疗机构”"
+  },
+  {
+   "title_a": "国家医保局启动按病种付费3.0版基层病种遴选调研",
+   "outlet_a": "观点网",
+   "lang_a": "zh",
+   "title_b": "国家医保局初步遴选158个基层病种",
+   "outlet_b": "京报网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "医保局基层病种:启动调研(动作1) vs 初步遴选158个(动作2)——同主体同议题不同阶段动作"
+  },
+  {
+   "title_a": "国家版医保“基层病种”亮相，这些常见病、手术将“同病同付”",
+   "outlet_a": "新浪财经",
+   "lang_a": "zh",
+   "title_b": "从“鼓励”到“大力推动”：医保局升级商业医保支持力度",
+   "outlet_b": "财新",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "医保局:基层病种亮相 vs 升级商业医保支持——同实体不同政策"
+  },
+  {
+   "title_a": "国家卫健委：持续加强对医疗机构手术知情同意工作的指导和管理",
+   "outlet_a": "QQ News",
+   "lang_a": "zh",
+   "title_b": "快来自测一下，你达标了吗？国家卫健委：成年男性腰围控制在90cm以内，女性在85cm以内，将持续开展健康体重管理行动",
+   "outlet_b": "搜狐网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "国家卫健委:手术知情同意 vs 腰围体重管理——同实体不同发布"
+  },
+  {
+   "title_a": "事关超7800万个体户 市场监管总局详解“一照多址”举措",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "市场监管总局：1至7月依法办结垄断协议和滥用市场支配地位案件13件",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "市场监管总局:一照多址 vs 垄断案件数据——同实体不同事件"
+  },
+  {
+   "title_a": "国新办举行新闻发布会 介绍激发下沉市场活力活跃县域消费有关情况",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "国家统计局：2026年7月中国平板玻璃产量7598万重量箱 同比下降3.6%",
+   "outlet_b": "新浪财经",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "国新办下沉市场发布会 vs 统计局平板玻璃产量——都是官方数据发布,无关"
+  },
+  {
+   "title_a": "国家统计局：就业形势总体稳定 城镇调查失业率季节性上升",
+   "outlet_a": "新浪财经",
+   "lang_a": "zh",
+   "title_b": "1—7月份国民经济保持总体平稳、向新向优发展态势",
+   "outlet_b": "国家统计局",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "统计局7月发布:失业率单项 vs 国民经济总述——同场发布不同数据点,灰区偏different"
+  },
+  {
+   "title_a": "2026年1—7月份全国固定资产投资基本情况",
+   "outlet_a": "国家统计局",
+   "lang_a": "zh",
+   "title_b": "2026年1—7月份全国房地产市场基本情况",
+   "outlet_b": "国家统计局",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "统计局模板:固定资产投资 vs 房地产市场——同日同源不同报表"
+  },
+  {
+   "title_a": "比亚迪8系唐成都车展亮相：730km续航+5分钟快充，智能驾驶新标杆",
+   "outlet_a": "第一电动网",
+   "lang_a": "zh",
+   "title_b": "比亚迪腾势N8亮相：1003km超长续航，大五座纯电新标杆",
+   "outlet_b": "第一电动网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "比亚迪成都车展:8系唐 vs 腾势N8——同品牌两款车发布,共享续航/快充模板词"
+  },
+  {
+   "title_a": "宝马新世代i3国产长轴版将于成都车展亮相，800V平台+630马力",
+   "outlet_a": "第一电动网",
+   "lang_a": "zh",
+   "title_b": "成都车展亮相 大众ID.ERA 8X内饰官图发布",
+   "outlet_b": "第一电动网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "成都车展亮相模板:宝马i3 vs 大众ID.ERA"
+  },
+  {
+   "title_a": "比亚迪腾势N8亮相：1003km超长续航，5分钟闪充，大五座纯电新选择",
+   "outlet_a": "第一电动网",
+   "lang_a": "zh",
+   "title_b": "BYD Fang Cheng Bao launches Tai 7 DM long-range version with over 300 km EV range",
+   "outlet_b": "CnEVPost",
+   "lang_b": "en",
+   "label": "different",
+   "note": "跨语言难负例:比亚迪腾势N8(zh) vs BYD方程豹Tai 7(en)——同集团不同子品牌车型"
+  },
+  {
+   "title_a": "星海V6量产下线，搭载华为乾崑智驾ADS 5 SE",
+   "outlet_a": "第一电动网",
+   "lang_a": "zh",
+   "title_b": "华为乾崑智驾车位到车位累计使用次数突破1亿次",
+   "outlet_b": "第一电动网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "华为乾崑智驾:星海V6量产下线 vs 使用次数破亿——共享实体不同事件"
+  },
+  {
+   "title_a": "7月新能源商用车装车8.3GWh！宁德时代再签5年战略合作",
+   "outlet_a": "itdcw.com",
+   "lang_a": "zh",
+   "title_b": "年产能约10万吨！宁德时代江西枧下窝锂矿复产迈出关键一步",
+   "outlet_b": "itdcw.com",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "宁德时代:商用车战略合作 vs 锂矿复产——同实体不同事件"
+  },
+  {
+   "title_a": "CATL Buys Into AI Data-Center Supply Chain as It Seeks Next Growth Market",
+   "outlet_a": "Caixin Global",
+   "lang_a": "en",
+   "title_b": "CATL says core operations carbon neutral by end-2025, supply chain next",
+   "outlet_b": "CnEVPost",
+   "lang_b": "en",
+   "label": "different",
+   "note": "CATL:入股AIDC vs 碳中和宣布——同实体同期两件事"
+  },
+  {
+   "title_a": "Geely to produce vehicles in Volvo plants from 2028",
+   "outlet_a": "electrive (EN)",
+   "lang_a": "en",
+   "title_b": "Geely Auto reshuffles top management to advance One Geely strategy",
+   "outlet_b": "CnEVPost",
+   "lang_b": "en",
+   "label": "different",
+   "note": "吉利同日两公告:Volvo工厂产车 vs 管理层改组——同实体不同动作"
+  },
+  {
+   "title_a": "吉利汽车业绩高点，李书福激流勇退",
+   "outlet_a": "量子位",
+   "lang_a": "zh",
+   "title_b": "18:40:55【吉利控股CEO安聪慧：吉利汽车未来超六成销量将来自海外市场】",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "吉利:李书福辞任评论 vs 安聪慧谈海外销量目标——换帅与出口目标两条线"
+  },
+  {
+   "title_a": "China robot makers seek to turn humanoid hype into useful work",
+   "outlet_a": "Reuters",
+   "lang_a": "en",
+   "title_b": "Beyond marathons and backflips, China's robots face a commercial test",
+   "outlet_b": "Reuters",
+   "lang_b": "en",
+   "label": "different",
+   "note": "Reuters机器人特稿两篇:humanoid hype vs commercial test——同题材不同稿件"
+  },
+  {
+   "title_a": "总投资11亿！星翰微纳年产2000吨电子元器件专用功能材料项目开工",
+   "outlet_a": "itdcw.com",
+   "lang_a": "zh",
+   "title_b": "总投资近6亿！甘肃兰州年产8万吨碳基新材料项目9月试产",
+   "outlet_b": "itdcw.com",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "电池网项目开工模板:星翰微纳 vs 兰州碳基——总投资+年产模板"
+  },
+  {
+   "title_a": "约5亿元！钠美科技四川巴中1.5GWh钠电池项目投产在即",
+   "outlet_a": "itdcw.com",
+   "lang_a": "zh",
+   "title_b": "年产能6万吨！湖南省首个锂盐产业化项目投产在即",
+   "outlet_b": "itdcw.com",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "投产在即模板:钠电池项目 vs 锂盐项目"
+  },
+  {
+   "title_a": "特朗普将对加拿大商品加征关税的日期推迟三天",
+   "outlet_a": "Dairy News Today",
+   "lang_a": "zh",
+   "title_b": "美加汽车关税谈判陷入僵局 周三或对200亿加商品加征关税",
+   "outlet_b": "观点网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "美加关税一周两拍:谈判僵局或将加征(前) vs 宣布推迟三天(后)——同一议题链上的不同节点"
+  },
+  {
+   "title_a": "美元兑加元跌至1.3877，特朗普暂停加征关税",
+   "outlet_a": "币界网",
+   "lang_a": "zh",
+   "title_b": "特朗普政府将对进口无人机及零部件加征关税",
+   "outlet_b": "电子工程专辑",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "特朗普关税:加元汇率反应 vs 无人机关税——共享“特朗普加征关税”"
+  },
+  {
+   "title_a": "国际观察丨美国“缩减”美韩联合军演规模暴露政策挫败感",
+   "outlet_a": "thepaper.cn",
+   "lang_a": "zh",
+   "title_b": "全球前瞻｜美韩联合军演缩水，美国对加拿大加征关税本周生效",
+   "outlet_b": "thepaper.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "美韩军演分析稿 vs 全球前瞻周报提要——提要含该事件但非同一事件报道"
+  },
+  {
+   "title_a": "【市场动态】霍尔木兹海峡对峙持续 特朗普对伊朗采取强硬立场",
+   "outlet_a": "database.caixin.com",
+   "lang_a": "zh",
+   "title_b": "【市场动态】特朗普拒绝延长伊朗停火协议还威胁炸烂阿曼",
+   "outlet_b": "database.caixin.com",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财新市场动态模板:霍尔木兹对峙 vs 拒绝延长停火——伊朗局势不同进展日"
+  },
+  {
+   "title_a": "外媒：以色列足协撤回对国际足联主席因凡蒂诺连任的支持",
+   "outlet_a": "hqtime.huanqiu.com",
+   "lang_a": "zh",
+   "title_b": "曾公开批评因凡蒂诺 国际足联首席运营官已离任",
+   "outlet_b": "央视网",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "国际足联:以色列足协撤回支持 vs 首席运营官离任——共享因凡蒂诺,不同事件"
+  },
+  {
+   "title_a": "苏州工业园区企业组团亮相国家级医疗展会",
+   "outlet_a": "sipac.gov.cn",
+   "lang_a": "zh",
+   "title_b": "前7月苏州工业园区进出口值超1万亿元",
+   "outlet_b": "customs.gov.cn",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "苏州工业园区:医疗展会 vs 进出口值——同园区不同新闻"
+  },
+  {
+   "title_a": "高温催热“冷经济”，福建夏日掀起“冰雪热潮” - 人民网-福建频道",
+   "outlet_a": "人民日报 (via GNews)",
+   "lang_a": "zh",
+   "title_b": "厦门市政府任免2名干部 - 人民网-福建频道",
+   "outlet_b": "人民日报 (via GNews)",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "人民网福建频道:冷经济 vs 干部任免——共享频道后缀词,内容无关"
+  },
+  {
+   "title_a": "财联社8月19日电，时隔9个交易日，科创板50ETF华夏（588000）、创业板ETF易方达（159915）成交额再度双双破百亿。",
+   "outlet_a": "财联社",
+   "lang_a": "zh",
+   "title_b": "财联社8月18日电，广期所品种仓单及变化如下：碳酸锂期货仓单37369手，环比上个交易日增加680手",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财联社快讯:ETF成交破百亿 vs 广期所仓单——共享日期格式模板"
+  },
+  {
+   "title_a": "南向资金净卖出额超50亿港元",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "17:39:01【南向资金今日净买入近31亿港元 中芯国际获净买入居前】",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "南向资金:净卖出50亿(某日) vs 净买入31亿(另一日)——同指标不同交易日相反方向"
+  },
+  {
+   "title_a": "现货黄金突破4490美元/盎司",
+   "outlet_a": "证券时报",
+   "lang_a": "zh",
+   "title_b": "财联社8月19日电，纽约期金站上4500美元/盎司，日内涨2.52%。现货黄金上涨2.5%，现报4442美元/盎司。",
+   "outlet_b": "财联社",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "黄金行情快讯:4490美元 vs 4442美元——不同时点价位,数字守卫"
+  },
+  {
+   "title_a": "T早报｜阿里巴巴剥离游戏业务灵犀互娱；最高法披露许垚故意杀人案；宇树将于8月19日在上交所科创板上市；《牛来》票房破900万元",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "宇树科技：将于8月19日科创板上市",
+   "outlet_b": "东方财富",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财新T早报提要(含宇树上市) vs 宇树上市单条——摘要汇编与单条新闻"
+  },
+  {
+   "title_a": "能源内参｜李书福辞去吉利汽车董事长上市公司称释放“去家族化”信号；宁德时代拓展新业务5个月内入股三家AIDC相关公司",
+   "outlet_a": "财新",
+   "lang_a": "zh",
+   "title_b": "宁德时代拓展新业务 5个月内入股三家AIDC相关公司",
+   "outlet_b": "财新",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "财新能源内参汇编(含宁德时代AIDC) vs 宁德时代AIDC单条——汇编标题含两事件"
+  },
+  {
+   "title_a": "2026年九大NMN抗衰品牌权威排名：基于成分、功效与口碑的全面盘点- 进展专区",
+   "outlet_a": "生物谷",
+   "lang_a": "zh",
+   "title_b": "2026年NMN九大品牌综合实力排行：基于成分科技、安全资质与用户复购的深度观察- 进展专区",
+   "outlet_b": "生物谷",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "NMN品牌排行软文模板两条:九大品牌排名措辞近似——SEO农场,非同一篇"
+  },
+  {
+   "title_a": "中澳（大利亚）两国央行续签双边本币互换协议",
+   "outlet_a": "21财经",
+   "lang_a": "zh",
+   "title_b": "China’s PBOC injects 565.5B yuan via overnight reverse repos",
+   "outlet_b": "Crypto Briefing",
+   "lang_b": "en",
+   "label": "different",
+   "note": "跨语言:中澳央行互换协议(zh) vs PBOC逆回购投放(en)——同为央行动作,不同事件"
+  },
+  {
+   "title_a": "China's delayed July data looms as markets eye demand and PBOC's yuan stance",
+   "outlet_a": "investingLive",
+   "lang_a": "en",
+   "title_b": "1—7月份国民经济保持总体平稳、向新向优发展态势",
+   "outlet_b": "国家统计局",
+   "lang_b": "zh",
+   "label": "different",
+   "note": "跨语言:7月数据前瞻(en,looms) vs 数据正式发布(zh)——前瞻与发布不同事件"
+  }
+ ]
+}

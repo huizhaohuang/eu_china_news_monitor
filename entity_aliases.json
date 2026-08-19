@@ -1,0 +1,423 @@
+{
+ "aliases": {
+  "ndrc": [
+   "ndrc",
+   "发改委",
+   "国家发改委",
+   "国家发展和改革委员会"
+  ],
+  "miit": [
+   "miit",
+   "工信部",
+   "工业和信息化部"
+  ],
+  "mofcom": [
+   "mofcom",
+   "商务部"
+  ],
+  "mfa_china": [
+   "外交部",
+   "中国外交部"
+  ],
+  "mof_china": [
+   "财政部",
+   "中国财政部"
+  ],
+  "pboc": [
+   "pboc",
+   "人民银行",
+   "中国人民银行",
+   "中国央行"
+  ],
+  "csrc": [
+   "csrc",
+   "证监会",
+   "中国证监会"
+  ],
+  "nfra": [
+   "nfra",
+   "金融监管总局",
+   "国家金融监督管理总局"
+  ],
+  "gacc": [
+   "海关总署",
+   "中国海关总署"
+  ],
+  "sasac": [
+   "sasac",
+   "国资委"
+  ],
+  "nhsa": [
+   "医保局",
+   "国家医保局"
+  ],
+  "nmpa": [
+   "nmpa",
+   "药监局",
+   "国家药监局",
+   "国家药品监督管理局"
+  ],
+  "nhc": [
+   "卫健委",
+   "国家卫健委"
+  ],
+  "mee": [
+   "生态环境部"
+  ],
+  "mot_china": [
+   "交通运输部"
+  ],
+  "moe_china": [
+   "教育部"
+  ],
+  "nbs": [
+   "国家统计局",
+   "中国国家统计局"
+  ],
+  "cac": [
+   "网信办",
+   "国家网信办",
+   "cyberspace administration",
+   "cyberspace administration of china"
+  ],
+  "samr": [
+   "samr",
+   "市场监管总局",
+   "国家市场监督管理总局"
+  ],
+  "caam": [
+   "caam",
+   "中汽协",
+   "中国汽车工业协会"
+  ],
+  "cpca": [
+   "乘联会",
+   "乘用车市场信息联席会"
+  ],
+  "european_commission": [
+   "european commission",
+   "europäische kommission",
+   "eu kommission",
+   "欧盟委员会",
+   "欧委会"
+  ],
+  "european_parliament": [
+   "european parliament",
+   "europäisches parlament",
+   "欧洲议会"
+  ],
+  "ecb": [
+   "ecb",
+   "ezb",
+   "european central bank",
+   "europäische zentralbank",
+   "欧洲央行"
+  ],
+  "fed": [
+   "federal reserve",
+   "美联储"
+  ],
+  "wto": [
+   "wto",
+   "世贸组织",
+   "世界贸易组织"
+  ],
+  "imf": [
+   "imf",
+   "iwf",
+   "international monetary fund",
+   "国际货币基金组织"
+  ],
+  "nato": [
+   "nato",
+   "北约"
+  ],
+  "xi_jinping": [
+   "xi jinping",
+   "习近平"
+  ],
+  "li_qiang": [
+   "li qiang",
+   "李强"
+  ],
+  "wang_yi": [
+   "wang yi",
+   "王毅"
+  ],
+  "he_lifeng": [
+   "he lifeng",
+   "何立峰"
+  ],
+  "von_der_leyen": [
+   "von der leyen",
+   "ursula von der leyen",
+   "冯德莱恩"
+  ],
+  "lagarde": [
+   "lagarde",
+   "christine lagarde",
+   "拉加德"
+  ],
+  "merz": [
+   "merz",
+   "friedrich merz",
+   "默茨"
+  ],
+  "macron": [
+   "macron",
+   "emmanuel macron",
+   "马克龙"
+  ],
+  "trump": [
+   "trump",
+   "donald trump",
+   "特朗普",
+   "川普"
+  ],
+  "sefcovic": [
+   "sefcovic",
+   "šefčovič",
+   "谢夫乔维奇"
+  ],
+  "catl": [
+   "catl",
+   "宁德时代"
+  ],
+  "byd": [
+   "byd",
+   "比亚迪"
+  ],
+  "huawei": [
+   "huawei",
+   "华为"
+  ],
+  "alibaba": [
+   "alibaba",
+   "阿里巴巴"
+  ],
+  "tencent": [
+   "tencent",
+   "腾讯"
+  ],
+  "bytedance": [
+   "bytedance",
+   "字节跳动"
+  ],
+  "smic": [
+   "smic",
+   "中芯国际"
+  ],
+  "tsmc": [
+   "tsmc",
+   "台积电"
+  ],
+  "nvidia": [
+   "nvidia",
+   "英伟达"
+  ],
+  "asml": [
+   "asml",
+   "阿斯麦"
+  ],
+  "infineon": [
+   "infineon",
+   "英飞凌"
+  ],
+  "geely": [
+   "geely",
+   "吉利",
+   "吉利汽车"
+  ],
+  "nio": [
+   "nio",
+   "蔚来"
+  ],
+  "xpeng": [
+   "xpeng",
+   "小鹏",
+   "小鹏汽车"
+  ],
+  "li_auto": [
+   "li auto",
+   "理想汽车"
+  ],
+  "leapmotor": [
+   "leapmotor",
+   "零跑",
+   "零跑汽车"
+  ],
+  "saic": [
+   "saic",
+   "上汽",
+   "上汽集团",
+   "mg motor"
+  ],
+  "tesla": [
+   "tesla",
+   "特斯拉"
+  ],
+  "volkswagen": [
+   "volkswagen",
+   "vw",
+   "大众汽车"
+  ],
+  "bmw": [
+   "bmw",
+   "宝马"
+  ],
+  "mercedes": [
+   "mercedes",
+   "mercedes benz",
+   "奔驰",
+   "梅赛德斯"
+  ],
+  "porsche": [
+   "porsche",
+   "保时捷"
+  ],
+  "meituan": [
+   "meituan",
+   "美团"
+  ],
+  "jd": [
+   "jd com",
+   "京东"
+  ],
+  "baidu": [
+   "baidu",
+   "百度"
+  ],
+  "xiaomi": [
+   "xiaomi",
+   "小米"
+  ],
+  "pinduoduo": [
+   "pinduoduo",
+   "pdd holdings",
+   "拼多多"
+  ],
+  "wechat": [
+   "wechat",
+   "微信"
+  ],
+  "dji": [
+   "dji",
+   "大疆"
+  ],
+  "hikvision": [
+   "hikvision",
+   "海康威视",
+   "海康"
+  ],
+  "zte": [
+   "zte",
+   "中兴",
+   "中兴通讯"
+  ],
+  "crrc": [
+   "crrc",
+   "中国中车",
+   "中车"
+  ],
+  "cosco": [
+   "cosco",
+   "中远海运",
+   "中远海控"
+  ],
+  "maersk": [
+   "maersk",
+   "马士基"
+  ],
+  "hapag_lloyd": [
+   "hapag lloyd",
+   "赫伯罗特"
+  ],
+  "state_grid": [
+   "state grid",
+   "国家电网"
+  ],
+  "longi": [
+   "longi",
+   "隆基",
+   "隆基绿能"
+  ],
+  "sungrow": [
+   "sungrow",
+   "阳光电源"
+  ],
+  "gotion": [
+   "gotion",
+   "国轩",
+   "国轩高科"
+  ],
+  "evergrande": [
+   "evergrande",
+   "恒大"
+  ],
+  "country_garden": [
+   "country garden",
+   "碧桂园"
+  ],
+  "hengrui": [
+   "hengrui",
+   "恒瑞",
+   "恒瑞医药"
+  ],
+  "wuxi_apptec": [
+   "wuxi apptec",
+   "药明康德"
+  ],
+  "astrazeneca": [
+   "astrazeneca",
+   "阿斯利康"
+  ],
+  "hsbc": [
+   "hsbc",
+   "汇丰"
+  ],
+  "goldman_sachs": [
+   "goldman sachs",
+   "高盛"
+  ],
+  "blackrock": [
+   "blackrock",
+   "贝莱德"
+  ],
+  "deutsche_bank": [
+   "deutsche bank",
+   "德意志银行",
+   "德银"
+  ],
+  "siemens": [
+   "siemens",
+   "西门子"
+  ],
+  "basf": [
+   "basf",
+   "巴斯夫"
+  ],
+  "airbus": [
+   "airbus",
+   "空客",
+   "空中客车"
+  ],
+  "deepseek": [
+   "deepseek",
+   "深度求索"
+  ],
+  "unitree": [
+   "宇树",
+   "unitree"
+  ],
+  "chery": [
+   "奇瑞",
+   "chery"
+  ],
+  "landspace": [
+   "朱雀三号",
+   "蓝箭航天",
+   "landspace",
+   "zhuque"
+  ]
+ }
+}

@@ -777,12 +777,47 @@ def _clean_gnews_title(title: str) -> tuple[str, str | None]:
 
 _CJK_RE = re.compile(r"[一-鿿぀-ヿ가-힯]+")
 
+# 实体变体归一表(93 实体/230+ 变体):"国家发展和改革委员会"↔"发改委"、"宁德时代"↔"CATL"
+# 归一成同一 §token,同事件异写法/跨语言标题才对得上。加载失败=空表(聚类退化不炸)。
+try:
+    _ALIASES: dict[str, list[str]] = json.loads(
+        Path(__file__).with_name("entity_aliases.json").read_text(encoding="utf-8"))["aliases"]
+except Exception:
+    _ALIASES = {}
+
+# 日期(期号守卫用)与"判别性数字"(数字守卫用)。低信息数字(年份/≤2位纯整数)不算,
+# 但"2万亿/154.1万辆/23.6%"这类数字+单位复合是强判别信号(实测:漏了单位复合,
+# "沪深突破2万亿 vs 1万亿"就会因模板高相似被错并)。
+_DATE_RE = re.compile(r"\d{4}年\d{1,2}月\d{1,2}日|\d{1,2}月\d{1,2}日|\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}:\d{2}(?::\d{2})?\b")
+_UNIT_NUM_RE = re.compile(r"\d+(?:\.\d+)?(?:万亿|亿|万辆|万|个基点|个百分点|%)")
+
+
+def _dates_of(title: str) -> frozenset[str]:
+    return frozenset(_DATE_RE.findall(title))
+
+
+def _numbers_of(title: str) -> frozenset[str]:
+    t = _DATE_RE.sub(" ", title)
+    out = set(_UNIT_NUM_RE.findall(t))
+    for n in re.findall(r"\d+(?:\.\d+)?", t):
+        if re.fullmatch(r"(19|20)\d{2}", n) or ("." not in n and len(n) <= 2):
+            continue
+        out.add(n)
+    return frozenset(out)
+
+
+def _same_outlet(a: str, b: str) -> bool:
+    x = re.sub(r"[^a-z0-9一-鿿]", "", a.lower())
+    y = re.sub(r"[^a-z0-9一-鿿]", "", b.lower())
+    return bool(x and y) and (x.startswith(y) or y.startswith(x))
+
 
 def _tokens(title: str) -> frozenset[str]:
-    """聚类分词。拉丁词按空格切(原规则);CJK 段切成字符二元组——
-    中文标题没有空格,按空格切会把整题变成一个 token,导致同稿异题
-    (通稿转写/镜像加前后缀)永远无法聚类,只有逐字全同才合并(实测中文
-    合并率仅 4%,这是"重复消息"反馈的主因)。二元组让 Jaccard 对中文生效。"""
+    """聚类分词。拉丁词按空格切;CJK 段切字符二元组(中文无空格,整题单 token 会让
+    同稿异题永不合并,实测中文合并率仅 4% —— "重复消息"反馈的主因)。
+    另注入两类锚 token(2026-08-19 评测集校准,P 0.57→0.97):
+      §实体  变体归一(发改委全称/简称、宁德时代/CATL),跨写法跨语言对齐
+      #数字  判别性数字(154.1/23.6%/2万亿),同数据同事件的强证据"""
     t = re.sub(r"[^\w\s]", " ", title.lower())
     out: set[str] = set()
     for seg in _CJK_RE.findall(t):
@@ -791,6 +826,14 @@ def _tokens(title: str) -> frozenset[str]:
         out.update(seg[i:i + 2] for i in range(len(seg) - 1))
     latin = _CJK_RE.sub(" ", t)
     out.update(w for w in latin.split() if len(w) >= 3 and w not in _TOKEN_STOP)
+    norm = " " + " ".join(t.split()) + " "
+    for canon, variants in _ALIASES.items():
+        for v in variants:
+            vv = v if _CJK_RE.search(v) else f" {v} "
+            if vv in norm:
+                out.add("§" + canon)
+                break
+    out.update("#" + n for n in _numbers_of(title))
     return frozenset(out)
 
 
@@ -941,7 +984,9 @@ def _canon_link(url: str) -> str:
 
 
 def _merge_same_event(clusters: list[dict]) -> list[dict]:
-    """②③级合并:跨媒体加权重叠(≥0.45 直并;0.28-0.45 灰带 LLM 裁决)。
+    """②③级合并:跨媒体加权重叠(≥0.50 直并;灰带 LLM 裁决)。
+    2026-08-19 评测集(162 对)校准版:日期守卫/数字守卫/同媒体只进灰带/
+    单侧数字帽/集锦 ratio 帽/跨语言实体锚。P 0.57→0.97,R+灰带 0.74→0.92。
     权重 = idf(本批次罕见词权重高):同事件报道共享的正是「实体+地点」类罕见锚词,
     而 byd 这种满屏词贡献很小。任何异常回退为不合并,绝不影响抓取。"""
     if len(clusters) < 2:
@@ -971,16 +1016,51 @@ def _merge_same_event(clusters: list[dict]) -> list[dict]:
                 x = parent[x]
             return x
 
-        outlet = [cl["items"][0]["outlet"].lower() for cl in clusters]
+        meta = []
+        for cl in clusters:
+            r0 = cl["items"][0]
+            meta.append(dict(
+                outlet=r0["outlet"],
+                lang=r0.get("lang", ""),
+                nums=cl.get("_nums", _numbers_of(r0["title"])),
+                dates=cl.get("_dates", _dates_of(r0["title"])),
+            ))
         gray: list[tuple[int, int]] = []
         for i in range(n):
+            ti, mi = clusters[i]["tokens"], meta[i]
             for j in range(i + 1, n):
-                if outlet[i] == outlet[j]:
+                tj, mj = clusters[j]["tokens"], meta[j]
+                if mi["dates"] and mj["dates"] and not (mi["dates"] & mj["dates"]):
+                    continue                     # 期号不同,永不合并
+                inter = ti & tj
+                ents = [t for t in inter if t.startswith("§")]
+                xl = bool(ents) and mi["lang"] != mj["lang"]
+                if _same_outlet(mi["outlet"], mj["outlet"]):
+                    # 同媒体不做算法合并(模板流水线≠同稿);高相似的交灰带由 LLM 分辨
+                    # "目录 vs 真更新"(需两侧数字不全异)
+                    disj = bool(mi["nums"] and mj["nums"] and not (mi["nums"] & mj["nums"]))
+                    if not disj and len(inter) >= 2:
+                        wj = sum(idf[t] for t in inter) / max(
+                            sum(idf[t] for t in (ti | tj)), 1e-9)
+                        if wj >= 0.35:
+                            gray.append((i, j))
                     continue
-                s = sim(clusters[i]["tokens"], clusters[j]["tokens"])
-                if s >= 0.45:
+                if len(inter) < 2:
+                    if xl:
+                        gray.append((i, j))      # 跨语言共享实体锚:词面对不上,交 LLM
+                    continue
+                s = sim(ti, tj)
+                disj = bool(mi["nums"] and mj["nums"] and not (mi["nums"] & mj["nums"]))
+                one_sided = bool(mi["nums"]) ^ bool(mj["nums"])
+                ratio = max(len(ti), len(tj)) / max(min(len(ti), len(tj)), 1)
+                if disj or ratio > 2.5 or (one_sided and s < 0.60):
+                    # 数字全异/集锦吸稿/单侧引数:最多进灰带,不自动合并
+                    if s >= 0.28 or xl:
+                        gray.append((i, j))
+                    continue
+                if s >= 0.50:
                     parent[find(i)] = find(j)
-                elif s >= 0.28:
+                elif s >= 0.28 or xl:
                     gray.append((i, j))
         if gray:
             import event_merge
@@ -1012,27 +1092,58 @@ def cluster_items(items: list[dict]) -> list[dict]:
        同媒体排除:模板内容农场的相似标题不是同稿,财联社时间戳流走①即可)
     ③ 0.28-0.45 灰带 → LLM 裁决(event_merge,缓存+fail-open,判不了=不合并)
        —— BYD 米兰设计中心三家各自拟题仅 0.28-0.33,纯阈值到不了(实测校准)"""
+    # 批内 idf(罕见锚词权重高),L1 补充路径与 L2 共用
+    from collections import Counter as _Counter
+    _df: _Counter = _Counter()
+    for it in items:
+        _df.update(it["tokens"])
+    _n_items = max(len(items), 1)
+    _idf = {t: math.log(1 + _n_items / c) for t, c in _df.items()}
+
     clusters: list[dict] = []
     for it in sorted(items, key=lambda x: x["time"], reverse=True):
         tk = it["tokens"]
+        ttl = it["title"]
+        nums, dts = _numbers_of(ttl), _dates_of(ttl)
         target = None
         for cl in clusters:
             ref = cl["tokens"]
             if not tk or not ref:
                 continue
-            inter = len(tk & ref)
+            r0 = cl["items"][0]
+            # 日期守卫:两侧都有显式日期且不相交 = 不同期号(早报/逐日公告),永不合并
+            if dts and cl["_dates"] and not (dts & cl["_dates"]):
+                continue
+            # 数字守卫:两侧都有判别性数字且全异 = 不同数据点(不同指数/期限/公司财报
+            # 模板),一级整级封锁(灰带仍可经 L2 走 LLM 裁决)
+            if nums and cl["_nums"] and not (nums & cl["_nums"]):
+                continue
+            inter_set = tk & ref
+            inter = len(inter_set)
             union = len(tk | ref)
-            contained = min(len(tk), len(ref)) >= 4 and (tk <= ref or ref <= tk)
-            # 短标题(快讯模板如"X指数涨幅扩大至N%")模板字符占比高,0.5 会把
-            # 不同指数/标的错并 —— 实测收紧到 0.66 可分开,真同稿(近全同)仍 ≥0.8
-            thr = 0.5 if min(len(tk), len(ref)) >= 12 else 0.66
-            if (union and inter / union >= thr) or contained:
+            ratio = max(len(tk), len(ref)) / max(min(len(tk), len(ref)), 1)
+            # 包含关系限 ratio≤2:集锦稿(内参|早报)全文包含子标题,曾借道包含吸走单条稿
+            contained = min(len(tk), len(ref)) >= 4 and ratio <= 2.0 and (tk <= ref or ref <= tk)
+            so = _same_outlet(it["outlet"], r0["outlet"])
+            # 阈值:同媒体 0.8(目录流水线高相似但不是同稿);跨媒体 0.5,短标题 0.66
+            # (快讯模板如"X指数涨幅扩大至N%"模板字符占比高,0.5 会错并不同指数)
+            thr = 0.8 if so else (0.5 if min(len(tk), len(ref)) >= 12 else 0.66)
+            j_ok = union and inter / union >= thr
+            # idf 加权补充路径(跨媒体):罕见锚词重、模板词轻(评测:仅作补充,替代主路径会退化)
+            wj_ok = False
+            if not so and not j_ok and inter >= 2 and ratio <= 2.5:
+                wj = sum(_idf[t] for t in inter_set) / max(
+                    sum(_idf[t] for t in (tk | ref)), 1e-9)
+                wj_ok = wj >= 0.40
+            if j_ok or contained or wj_ok:
                 target = cl
                 break
         if target is None:
-            clusters.append({"tokens": tk, "items": [it]})
+            clusters.append({"tokens": tk, "items": [it], "_nums": nums, "_dates": dts})
         else:
             target["items"].append(it)
+            target["_nums"] = target["_nums"] | nums
+            target["_dates"] = target["_dates"] | dts
 
     clusters = _merge_same_event(clusters)
 
