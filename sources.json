@@ -640,14 +640,5 @@
     "lang": "en",
     "filter": "china",
     "enabled": false
-  },
-  {
-    "name": "FreightWaves · 航运物流",
-    "type": "rss",
-    "value": "https://www.freightwaves.com/news/feed",
-    "lane": "industry",
-    "lang": "en",
-    "filter": "china",
-    "enabled": true
   }
 ]
