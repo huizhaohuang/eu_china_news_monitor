@@ -885,7 +885,8 @@ def fetch_one(src: dict, hours: int) -> tuple[list[dict], dict]:
 # 低质出口媒体降权(记者反馈驱动;降权≠剔除):
 # ① 不当聚类代表(同稿多源时优先展示非降权媒体的版本) ② 不计入"独立报道数"
 # (防止其转载把普通稿抬进 ⚡重点)。匹配 outlet 名或链接域名的小写子串。
-DEMOTED_OUTLETS = ("汽车之家", "autohome")
+# indexbox:市场报告内容农场("X Market Growth Driven by …"模板),2026-08 用户裁定
+DEMOTED_OUTLETS = ("汽车之家", "autohome", "indexbox")
 
 
 def _demoted(it: dict) -> bool:

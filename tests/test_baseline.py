@@ -23,9 +23,10 @@ sys.path.insert(0, str(REPO))
 
 # ---- 冻结值(2026-08-08) ----
 TAXONOMY_FP = "1f0a5c8b6b9d1ef66b476172054f5d094648d348"
-SOURCES_FP = "d97549f68632e73d6bf2474813ae86b1d042d26c"
-SOURCES_TOTAL = 71
-SOURCES_ENABLED = 56
+# 2026-08-18 有意变更:默认台新增 FreightWaves(用户点名;filter=china 只进涉华物流稿)
+SOURCES_FP = "fbc190efc5626ec1e86eca26e4df8c90a7cfa208"
+SOURCES_TOTAL = 72
+SOURCES_ENABLED = 57
 CATEGORY_IDS = ["china-eu-politics", "germany-china", "france-china",
                 "trade-defence", "autos-ev", "energy-solar",
                 "tech-ai-chips", "defence-materials", "china-macro"]
