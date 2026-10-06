@@ -24,9 +24,10 @@ sys.path.insert(0, str(REPO))
 # ---- 冻结值(2026-08-08) ----
 TAXONOMY_FP = "1f0a5c8b6b9d1ef66b476172054f5d094648d348"
 # FreightWaves 按用户裁定只留在注册表(中美×航运物流),不进默认台(中欧向)
-SOURCES_FP = "d97549f68632e73d6bf2474813ae86b1d042d26c"
-SOURCES_TOTAL = 71
-SOURCES_ENABLED = 56
+# 2026-10-06 有意变更:微信线上线,玉渊谭天(w2r 公众号直通)进默认台(中欧谈判信号号)
+SOURCES_FP = "df4523e90a209cc227044956dfd0f6456f4b062f"
+SOURCES_TOTAL = 72
+SOURCES_ENABLED = 57
 CATEGORY_IDS = ["china-eu-politics", "germany-china", "france-china",
                 "trade-defence", "autos-ev", "energy-solar",
                 "tech-ai-chips", "defence-materials", "china-macro"]

@@ -41,6 +41,7 @@ import concurrent.futures as cf
 import email.utils
 import json
 import math
+import os
 import re
 import time
 from datetime import datetime, timedelta, timezone
@@ -159,6 +160,9 @@ DEFAULT_SOURCES = [
     {"name": "Xinhua EN · Europe", "type": "gnews", "value": "site:english.news.cn (China OR Chinese) (Europe OR EU OR Germany) when:1d", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": True},
     {"name": "MOFCOM / 外交部 公告", "type": "gnews", "value": "(site:english.mofcom.gov.cn OR site:mfa.gov.cn) when:7d", "lane": "gov", "lang": "en", "filter": "none", "enabled": True},
     {"name": "Sixth Tone", "type": "rss", "value": "https://www.sixthtone.com/rss", "lane": "cn-media", "lang": "en", "filter": "europe", "enabled": False},
+    # 微信公众号直通(Wechat2RSS 私有实例):w2r:<加密id>,主机走 st.secrets["W2R_HOST"]
+    # 玉渊谭天=央媒背景谈判信号号,中欧/中美经贸节点常独家吹风;低频高信号
+    {"name": "玉渊谭天(公众号)", "type": "rss", "value": "w2r:7325bee8dfef429733bca59a16964a2742cde106", "lane": "cn-media", "lang": "zh", "filter": "none", "enabled": True},
     # --- 行业垂直 ---
     {"name": "CnEVPost", "type": "rss", "value": "https://cnevpost.com/feed/", "lane": "industry", "lang": "en", "filter": "none", "enabled": True},
     {"name": "electrive (EN)", "type": "rss", "value": "https://www.electrive.com/feed/", "lane": "industry", "lang": "en", "filter": "china", "enabled": True},
@@ -761,10 +765,27 @@ def gnews_url(query: str, hours: int, locale: str = "en") -> str:
     return base.format(q=quote_plus(query))
 
 
+def _expand_w2r(value: str) -> str:
+    """微信公众号源(Wechat2RSS 私有实例)的地址展开。
+
+    公开仓库里只存 `w2r:<加密feed id>`;实例主机名只活在 st.secrets["W2R_HOST"]
+    或环境变量(许可条款禁止内容分发,且不给扫描器指路)。未配置主机时展开成
+    保留域名 .invalid → 抓取按"源失败"记入 health,公开克隆不炸也不泄露。"""
+    if not value.startswith("w2r:"):
+        return value
+    host = ""
+    try:
+        host = st.secrets.get("W2R_HOST", "")
+    except Exception:
+        pass
+    host = host or os.environ.get("W2R_HOST", "") or "w2r-host-not-configured.invalid"
+    return f"http://{host}/feed/{value[4:]}.xml"
+
+
 def _source_url(src: dict, hours: int) -> str:
     if src["type"] == "gnews":
         return gnews_url(src["value"], hours, src.get("gnews_locale", "en"))
-    return src["value"]
+    return _expand_w2r(src["value"])
 
 
 def _clean_gnews_title(title: str) -> tuple[str, str | None]:
@@ -842,7 +863,7 @@ def test_feed(src_type: str, value: str, locale: str = "en") -> tuple[bool, str]
     if src_type == "gnews":
         url = GNEWS_LOCALES.get(locale, GNEWS_BASE).format(q=quote_plus(value))
     else:
-        url = value
+        url = _expand_w2r(value)
     try:
         r = requests.get(url, headers=UA, timeout=FETCH_TIMEOUT)
         if r.status_code == 403:  # 与 fetch_one 一致的阅读器 UA 退避

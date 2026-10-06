@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "updated": "2026-08-08",
+ "updated": "2026-10-06",
  "note": "三层筛选流的源注册表;个人配置绝不入此文件(公私边界见 DESIGN.md)",
  "sources": [
   {
@@ -6807,6 +6807,224 @@
    "origin": "beat-interview",
    "enabled": true,
    "caveat": "实测 3 条/30d(含 China engagement/EU ETS),-\"Open Positions\" 已滤掉招聘页污染;官网无 RSS(/rss.xml /feed 等实测 404);中文号'博众智合'镜像仅 2 条/30d 太薄,故走机构官网 en 面;量小但权威,filter 保持 none 以免漏 EU 政策声明"
+  },
+  {
+   "name": "玉渊谭天(公众号)",
+   "type": "rss",
+   "value": "w2r:7325bee8dfef429733bca59a16964a2742cde106",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "mainstream",
+   "domains": [
+    "diplomacy",
+    "trade-tariff",
+    "macro"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "远川研究所(公众号)",
+   "type": "rss",
+   "value": "w2r:4c36cbb1d6fae8d663ef1c7b76d3ae08d7367168",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "macro",
+    "semiconductor",
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "晚点LatePost(公众号)",
+   "type": "rss",
+   "value": "w2r:fadfb6d1eb0ac6750c5bea883783846be98f64e8",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "platforms",
+    "ai",
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "E药经理人(公众号)",
+   "type": "rss",
+   "value": "w2r:f3028dd794a3d43dad3fbc881f592ab820b9d2f0",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "赛柏蓝(公众号)",
+   "type": "rss",
+   "value": "w2r:51c72c6df291d059e296432cdc8ece74f311109f",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "深蓝观(公众号)",
+   "type": "rss",
+   "value": "w2r:d317eef7aaffd79a59d4edc788a294cfbb5f3d79",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "health"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "真叫卢俊(公众号)",
+   "type": "rss",
+   "value": "w2r:763f117788f3e9499849c5cffab0059dc07d8234",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "real-estate"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "丁祖昱评楼市(公众号)",
+   "type": "rss",
+   "value": "w2r:79747f53505381bcf82f61d530b4c799a894ba2f",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "real-estate"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "餐企老板内参(公众号)",
+   "type": "rss",
+   "value": "w2r:66c63fb1166c6c9a1f7694277881faf48c7da626",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "consumer"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "半导体行业观察(公众号)",
+   "type": "rss",
+   "value": "w2r:4544b0de32b25dfc1057d34fde08f02505a4db89",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "电动汽车观察家(公众号)",
+   "type": "rss",
+   "value": "w2r:3821e9f96777c7249b9de94413bb28893c1614e7",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "wechat-mirror",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "高工锂电(公众号)",
+   "type": "rss",
+   "value": "w2r:99d772b19f8fe2deadd85e7f97652f433ec61d2d",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "battery",
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "中汽协会数据(公众号)",
+   "type": "rss",
+   "value": "w2r:3bae01ad6c9f47d3cc075251717cd35ebfd4d001",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "nev"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "崔东树(公众号·乘联会数据)",
+   "type": "rss",
+   "value": "w2r:a4b2bd366e33cbfb864ba90a508bdaf206d7b486",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "nev",
+    "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
   }
  ]
 }

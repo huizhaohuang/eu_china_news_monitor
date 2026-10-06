@@ -27,3 +27,6 @@ BEAT_SOURCES.md
 
 # 反馈本地兜底(仅开发;云端无持久磁盘)
 feedback.jsonl
+
+# Wechat2RSS 私有部署(含激活码,绝不入库)
+wechat2rss-deploy/
