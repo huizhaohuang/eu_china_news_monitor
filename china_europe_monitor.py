@@ -363,7 +363,10 @@ CATEGORIES = [
                    "mingyang", "ming yang", "envision", "meyer burger", "solarwatt", "sma solar",
                    "siemens energy", "siemens gamesa", "vestas", "orsted", "ørsted", "nordex",
                    "state grid", " cgn ", "solarpower europe", "windeurope", "bundesnetzagentur"]),
-    dict(id="tech-ai-chips", emoji="🤖", zh="科技·AI·芯片", en="Tech, AI & Chips",
+    # 2026-10-21 用户转半导体/人形机器人线:改名「半导体+机器人」(id 不变,p3 码/packs 兼容),
+    # 补中文词(此前 55 词全英文,中文公众号 67 条仅 3 条入类)。AI 词保留,AI 稿仍归此类。
+    # 避开会误中英文单词的缩写:nand(Ferdinand)、dram(drama)、eda 不收。
+    dict(id="tech-ai-chips", emoji="🤖", zh="半导体+机器人", en="Semiconductors + Robotics",
          kw=["semiconductor", "chip", "chips act", "foundry", "lithography", " euv", "artificial intelligence",
              " ai ", "ai act", "ai model", "large language model", " llm ", " gpu ", "computing power",
              "data center", "data centre", " 5g ", " 6g ", "telecom", "network equipment", "cybersecurity",
@@ -372,11 +375,15 @@ CATEGORIES = [
              "halbleiter", "chiphersteller", "chipfabrik", "chipindustrie", "lithografie", "lithographie",
              "künstliche intelligenz", " ki ", "cybersicherheit", "datenschutz", "datentransfer",
              "überwachung", "gesichtserkennung", "mobilfunk", "netzausrüster", "rechenzentrum", "quanten",
-             "robotik", "humanoide", "drohne", "tiktok-verbot", "spionagesoftware", "digitalpolitik"],
+             "robotik", "humanoide", "drohne", "tiktok-verbot", "spionagesoftware", "digitalpolitik",
+             "芯片", "半导体", "晶圆", "封测", "先进封装", "光刻", "刻蚀", "制程", "存储器", "hbm",
+             "算力", "大模型", "人工智能", "机器人", "具身智能", "人形", "灵巧手"],
          entities=["huawei", " zte ", "asml", "zeiss", "trumpf", "tsmc", " smic ", "nvidia", "infineon",
                    "aixtron", "nexperia", "wingtech", "tiktok", "bytedance", "deepseek", "alibaba",
                    "tencent", "baidu", "xiaomi", " dji ", "hikvision", "dahua", "unitree",
-                   "deutsche telekom", "vodafone", "ericsson", "nokia", " bsi ", " sap "]),
+                   "deutsche telekom", "vodafone", "ericsson", "nokia", " bsi ", " sap ",
+                   "英伟达", "台积电", "中芯国际", "华为", "海思", "长江存储", "长鑫", "三星电子", "海力士",
+                   "美光", "阿斯麦", "宇树", "优必选", "智元", "特斯拉擎天柱", "optimus"]),
     # 国防与战略原材料:军工/国防/航空航天 + 稀土等战略物资(SCMP 核心领域)。
     # 原「安全与间谍」并入取消:间谍案仍由 germany-china 关键词(verfassungsschutz 等)
     # 和 BREAKING_KEYWORDS(spionage/razzia/festnahme…)覆盖,不会漏报,只是不再单列 tab。
