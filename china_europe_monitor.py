@@ -163,6 +163,11 @@ DEFAULT_SOURCES = [
     # 微信公众号直通(Wechat2RSS 私有实例):w2r:<加密id>,主机走 st.secrets["W2R_HOST"]
     # 玉渊谭天=央媒背景谈判信号号,中欧/中美经贸节点常独家吹风;低频高信号
     {"name": "玉渊谭天(公众号)", "type": "rss", "value": "w2r:7325bee8dfef429733bca59a16964a2742cde106", "lane": "cn-media", "lang": "zh", "filter": "none", "enabled": True},
+    # 2026-10-21 用户转向半导体/人形机器人线:四个产业公众号进默认台(用户裁定)
+    {"name": "半导体行业观察(公众号)", "type": "rss", "value": "w2r:4544b0de32b25dfc1057d34fde08f02505a4db89", "lane": "industry", "lang": "zh", "filter": "none", "enabled": True},
+    {"name": "集微网(公众号)", "type": "rss", "value": "w2r:0b3f10c359e4c799f2c9ce0024ae66b321ec8f5b", "lane": "industry", "lang": "zh", "filter": "none", "enabled": True},
+    {"name": "半导体封测(公众号)", "type": "rss", "value": "w2r:9680d3ed0d5d7da833e6e17a3776e81c7bfa00c2", "lane": "industry", "lang": "zh", "filter": "none", "enabled": True},
+    {"name": "高工人形机器人(公众号)", "type": "rss", "value": "w2r:49062a97ec81be1ad066e1052c4f58819d06af83", "lane": "industry", "lang": "zh", "filter": "none", "enabled": True},
     # --- 行业垂直 ---
     {"name": "CnEVPost", "type": "rss", "value": "https://cnevpost.com/feed/", "lane": "industry", "lang": "en", "filter": "none", "enabled": True},
     {"name": "electrive (EN)", "type": "rss", "value": "https://www.electrive.com/feed/", "lane": "industry", "lang": "en", "filter": "china", "enabled": True},

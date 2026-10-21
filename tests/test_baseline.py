@@ -25,9 +25,10 @@ sys.path.insert(0, str(REPO))
 TAXONOMY_FP = "1f0a5c8b6b9d1ef66b476172054f5d094648d348"
 # FreightWaves 按用户裁定只留在注册表(中美×航运物流),不进默认台(中欧向)
 # 2026-10-06 有意变更:微信线上线,玉渊谭天(w2r 公众号直通)进默认台(中欧谈判信号号)
-SOURCES_FP = "df4523e90a209cc227044956dfd0f6456f4b062f"
-SOURCES_TOTAL = 72
-SOURCES_ENABLED = 57
+# 2026-10-21 有意变更:用户转半导体/人形机器人线,4 个产业公众号进默认台
+SOURCES_FP = "5c7bcb430f0569a142c875e33e4138261077653a"
+SOURCES_TOTAL = 76
+SOURCES_ENABLED = 61
 CATEGORY_IDS = ["china-eu-politics", "germany-china", "france-china",
                 "trade-defence", "autos-ev", "energy-solar",
                 "tech-ai-chips", "defence-materials", "china-macro"]

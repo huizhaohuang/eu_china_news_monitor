@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "updated": "2026-10-06",
+ "updated": "2026-10-21",
  "note": "三层筛选流的源注册表;个人配置绝不入此文件(公私边界见 DESIGN.md)",
  "sources": [
   {
@@ -7021,6 +7021,51 @@
    "domains": [
     "nev",
     "trade-tariff"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "集微网(公众号)",
+   "type": "rss",
+   "value": "w2r:0b3f10c359e4c799f2c9ce0024ae66b321ec8f5b",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "半导体封测(公众号)",
+   "type": "rss",
+   "value": "w2r:9680d3ed0d5d7da833e6e17a3776e81c7bfa00c2",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "semiconductor"
+   ],
+   "tier": "core",
+   "origin": "w2r",
+   "enabled": true
+  },
+  {
+   "name": "高工人形机器人(公众号)",
+   "type": "rss",
+   "value": "w2r:49062a97ec81be1ad066e1052c4f58819d06af83",
+   "lang": "zh",
+   "filter": "none",
+   "region": "cn",
+   "source_type": "industry",
+   "domains": [
+    "ai"
    ],
    "tier": "core",
    "origin": "w2r",
